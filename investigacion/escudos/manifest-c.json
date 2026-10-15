@@ -1,0 +1,82 @@
+[
+  {
+    "codigo": "SAR",
+    "club": "Club Atlético Sarmiento (Junín)",
+    "archivo": "SAR.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Escudo_del_Club_Atl%C3%A9tico_Sarmiento_de_Jun%C3%ADn.svg",
+    "licencia": "Public domain",
+    "bytes": 13886
+  },
+  {
+    "codigo": "IRI",
+    "club": "Club Sportivo Independiente Rivadavia (Mendoza)",
+    "archivo": "IRI.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Escudo_del_Club_Independiente_Rivadavia.svg",
+    "licencia": "Public domain",
+    "bytes": 14294
+  },
+  {
+    "codigo": "ATU",
+    "club": "Club Atlético Tucumán",
+    "archivo": "ATU.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Atletico_tucuman_nuevo2.svg",
+    "licencia": "Public domain",
+    "bytes": 20656
+  },
+  {
+    "codigo": "RIV",
+    "club": "Club Atlético River Plate",
+    "archivo": "RIV.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/43/Club_Atl%C3%A9tico_River_Plate_logo.svg",
+    "licencia": "Public domain",
+    "bytes": 6127
+  },
+  {
+    "codigo": "BAR",
+    "club": "Club Atlético Barracas Central",
+    "archivo": "BAR.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/99/Barracas_central_logo.svg",
+    "licencia": "Public domain",
+    "bytes": 20692
+  },
+  {
+    "codigo": "BAN",
+    "club": "Club Atlético Banfield",
+    "archivo": "BAN.png",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Banfield_2022.png",
+    "licencia": "CC BY-SA 3.0",
+    "bytes": 198327
+  },
+  {
+    "codigo": "RAC",
+    "club": "Racing Club (Avellaneda)",
+    "archivo": "RAC.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Escudo_de_Racing_Club_%282014%29.svg",
+    "licencia": "Public domain",
+    "bytes": 2963
+  },
+  {
+    "codigo": "ERC",
+    "club": "Asociación Atlética Estudiantes (Río Cuarto, Córdoba)",
+    "archivo": "ERC.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Escudo_Asociacion_Atl%C3%A9tica_Estudiantes_de_R%C3%ADo_Cuarto.svg",
+    "licencia": "Public domain",
+    "bytes": 10394
+  },
+  {
+    "codigo": "ALD",
+    "club": "Club Atlético Aldosivi (Mar del Plata)",
+    "archivo": "ALD.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/en/2/2a/Aldosivi_logo.svg",
+    "licencia": "Fair use (en.wiki, archivo local no libre)",
+    "bytes": 32442
+  },
+  {
+    "codigo": "TIG",
+    "club": "Club Atlético Tigre (Victoria, Buenos Aires)",
+    "archivo": "TIG.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Escudo_del_Club_Atl%C3%A9tico_Tigre.svg",
+    "licencia": "Public domain",
+    "bytes": 3328
+  }
+]

@@ -1,0 +1,13 @@
+# Backups viejos
+*.bak-*
+
+# Basura de sistema
+Thumbs.db
+desktop.ini
+
+# Los JSON de investigacion/ SI se versionan (son la data cruda con fuentes
+# del Elo y de los escudos). Solo se excluye lo regenerable o pesado sin valor:
+
+# Cache de Python
+__pycache__/
+*.pyc

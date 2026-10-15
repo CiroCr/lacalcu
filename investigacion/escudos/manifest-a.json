@@ -1,0 +1,94 @@
+[
+  {
+    "codigo": "VEL",
+    "club": "Club Atlético Vélez Sarsfield",
+    "archivo": "VEL.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Escudo_del_Club_Atl%C3%A9tico_V%C3%A9lez_Sarsfield.svg",
+    "licencia": "Public domain",
+    "bytes": 5451,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_del_Club_Atl%C3%A9tico_V%C3%A9lez_Sarsfield.svg"
+  },
+  {
+    "codigo": "DYJ",
+    "club": "Club Social y Deportivo Defensa y Justicia",
+    "archivo": "DYJ.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Escudo_del_Club_Social_y_Deportivo_Defensa_y_Justicia.svg",
+    "licencia": "Public domain",
+    "bytes": 10239,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_del_Club_Social_y_Deportivo_Defensa_y_Justicia.svg"
+  },
+  {
+    "codigo": "GEM",
+    "club": "Club Deportivo Gimnasia y Esgrima (Mendoza)",
+    "archivo": "GEM.png",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Escudo_Club_Atl%C3%A9tico_Gimnasia_y_Esgrima_Mendoza.png",
+    "licencia": "Public domain",
+    "bytes": 48433,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_Club_Atl%C3%A9tico_Gimnasia_y_Esgrima_Mendoza.png"
+  },
+  {
+    "codigo": "INS",
+    "club": "Instituto Atlético Central Córdoba",
+    "archivo": "INS.png",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Escudo_Instituto_Atletico_Central_Cordoba.png",
+    "licencia": "CC BY-SA 4.0",
+    "bytes": 135885,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_Instituto_Atletico_Central_Cordoba.png"
+  },
+  {
+    "codigo": "BOC",
+    "club": "Club Atlético Boca Juniors",
+    "archivo": "BOC.png",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Club_Atl%C3%A9tico_Boca_Juniors_logo_%2870_stars%29.png/500px-Club_Atl%C3%A9tico_Boca_Juniors_logo_%2870_stars%29.png",
+    "licencia": "Public domain",
+    "bytes": 125212,
+    "origen": "https://commons.wikimedia.org/wiki/File:Club_Atl%C3%A9tico_Boca_Juniors_logo_(70_stars).png",
+    "nota": "Escudo oficial vigente (aprobado 2021, 70 estrellas). PNG original de 16 MB; se descargó el render a 500px del mismo archivo de Commons."
+  },
+  {
+    "codigo": "UNI",
+    "club": "Club Atlético Unión (Santa Fe)",
+    "archivo": "UNI.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Escudo_club_Atl%C3%A9tico_Uni%C3%B3n_de_santa_fe.svg",
+    "licencia": "Public domain",
+    "bytes": 2727,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_club_Atl%C3%A9tico_Uni%C3%B3n_de_santa_fe.svg"
+  },
+  {
+    "codigo": "NOB",
+    "club": "Club Atlético Newell's Old Boys",
+    "archivo": "NOB.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Escudo_del_Club_Atl%C3%A9tico_Newell%27s_Old_Boys_de_Rosario.svg",
+    "licencia": "Public domain",
+    "bytes": 9280,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_del_Club_Atl%C3%A9tico_Newell%27s_Old_Boys_de_Rosario.svg"
+  },
+  {
+    "codigo": "IND",
+    "club": "Club Atlético Independiente",
+    "archivo": "IND.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/db/Escudo_del_Club_Atl%C3%A9tico_Independiente.svg",
+    "licencia": "Public domain",
+    "bytes": 5748,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_del_Club_Atl%C3%A9tico_Independiente.svg"
+  },
+  {
+    "codigo": "EST",
+    "club": "Club Estudiantes de La Plata",
+    "archivo": "EST.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Estudiantes_de_la_Plata_crest_%282025%29.svg",
+    "licencia": "Public domain",
+    "bytes": 2141,
+    "origen": "https://commons.wikimedia.org/wiki/File:Estudiantes_de_la_Plata_crest_(2025).svg"
+  },
+  {
+    "codigo": "LAN",
+    "club": "Club Atlético Lanús",
+    "archivo": "LAN.svg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Escudo_de_Lan%C3%BAs_%28sin_estrellas%29.svg",
+    "licencia": "Public domain",
+    "bytes": 5701,
+    "origen": "https://commons.wikimedia.org/wiki/File:Escudo_de_Lan%C3%BAs_(sin_estrellas).svg",
+    "nota": "Versión oficial sin estrellas de la infobox de Wikipedia."
+  }
+]

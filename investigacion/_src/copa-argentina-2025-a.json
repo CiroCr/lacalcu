@@ -1,0 +1,562 @@
+{
+  "partidos": [
+    {
+      "fecha": "2025-01-23",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "BOC",
+      "visitante": "LOW",
+      "gl": 5,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Boca Juniors",
+      "nombreV": "Argentino de Monte Maíz",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": "Fecha según TheSportsDB 23/01; Wikipedia dice que el torneo arrancó 22/01 — verificar"
+    },
+    {
+      "fecha": "2025-02-05",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "LAN",
+      "visitante": "LOW",
+      "gl": 4,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Lanús",
+      "nombreV": "General Lamadrid",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-02-06",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "GLP",
+      "visitante": "LOW",
+      "gl": 1,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Gimnasia y Esgrima (LP)",
+      "nombreV": "Deportivo Español",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-02-12",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "GEM",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Gimnasia y Esgrima (M)",
+      "nombreV": "Nueva Chicago",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-02-20",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "DYJ",
+      "visitante": "LOW",
+      "gl": 3,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Defensa y Justicia",
+      "nombreV": "Racing de Córdoba",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-02-25",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "EST",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Estudiantes (LP)",
+      "nombreV": "Sarmiento de La Banda",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-02-26",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "VEL",
+      "visitante": "LOW",
+      "gl": 1,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Vélez Sarsfield",
+      "nombreV": "Ferrocarril Midland",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-02-27",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "IND",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Independiente",
+      "nombreV": "Sportivo Belgrano (San Francisco)",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-02-27",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "GOD",
+      "visitante": "LOW",
+      "gl": 0,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Godoy Cruz",
+      "nombreV": "Excursionistas",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-05",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "DRI",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 2,
+      "penL": 3,
+      "penV": 1,
+      "nombreL": "Deportivo Riestra",
+      "nombreV": "San Telmo",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-05",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "UNI",
+      "visitante": "LOW",
+      "gl": 3,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Unión",
+      "nombreV": "Colegiales",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-12",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "PLA",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Platense",
+      "nombreV": "Argentino de Quilmes",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-13",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "HUR",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Huracán",
+      "nombreV": "San Martín de Formosa",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-19",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "ALD",
+      "visitante": "LOW",
+      "gl": 1,
+      "gv": 1,
+      "penL": 6,
+      "penV": 5,
+      "nombreL": "Aldosivi",
+      "nombreV": "Gimnasia y Tiro (Salta)",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": "Penales 6-5 según TyC; TheSportsDB no los lista — confirmar"
+    },
+    {
+      "fecha": "2025-03-19",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "TAL",
+      "visitante": "LOW",
+      "gl": 3,
+      "gv": 3,
+      "penL": 4,
+      "penV": 5,
+      "nombreL": "Talleres (C)",
+      "nombreV": "Deportivo Armenio",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-20",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "RIV",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "River Plate",
+      "nombreV": "Ciudad de Bolívar",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-22",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "TIG",
+      "visitante": "LOW",
+      "gl": 3,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Tigre",
+      "nombreV": "Berazategui",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-23",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "CCO",
+      "visitante": "LOW",
+      "gl": 0,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Central Córdoba (SdE)",
+      "nombreV": "Quilmes",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-23",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "RAC",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Racing Club",
+      "nombreV": "Santamarina",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-23",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "SLO",
+      "visitante": "LOW",
+      "gl": 0,
+      "gv": 0,
+      "penL": 6,
+      "penV": 5,
+      "nombreL": "San Lorenzo",
+      "nombreV": "Sportivo Las Parejas",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-03-26",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "SMA",
+      "visitante": "LOW",
+      "gl": 0,
+      "gv": 0,
+      "penL": 3,
+      "penV": 0,
+      "nombreL": "San Martín (SJ)",
+      "nombreV": "Gimnasia y Esgrima de Jujuy",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-01",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "BAN",
+      "visitante": "LOW",
+      "gl": 1,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Banfield",
+      "nombreV": "Villa Mitre",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-02",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "ATU",
+      "visitante": "LOW",
+      "gl": 2,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Atlético Tucumán",
+      "nombreV": "All Boys",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-03",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "INS",
+      "visitante": "LOW",
+      "gl": 3,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Instituto",
+      "nombreV": "Deportivo Madryn",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-04",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "NOB",
+      "visitante": "LOW",
+      "gl": 0,
+      "gv": 0,
+      "penL": 5,
+      "penV": 4,
+      "nombreL": "Newell's Old Boys",
+      "nombreV": "Kimberley",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-09",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "ROS",
+      "visitante": "LOW",
+      "gl": 1,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Rosario Central",
+      "nombreV": "Los Andes",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-10",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "SAR",
+      "visitante": "LOW",
+      "gl": 0,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Sarmiento (J)",
+      "nombreV": "Central Córdoba de Rosario",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-16",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "IRI",
+      "visitante": "LOW",
+      "gl": 1,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Independiente Rivadavia",
+      "nombreV": "Estudiantes de Buenos Aires",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-16",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "ARG",
+      "visitante": "LOW",
+      "gl": 3,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Argentinos Juniors",
+      "nombreV": "Central Norte",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-17",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "BEL",
+      "visitante": "LOW",
+      "gl": 3,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Belgrano",
+      "nombreV": "Real Pilar",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    },
+    {
+      "fecha": "2025-04-17",
+      "torneo": "Copa Argentina 2025",
+      "ronda": "32avos",
+      "local": "BAR",
+      "visitante": "LOW",
+      "gl": 0,
+      "gv": 2,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Barracas Central",
+      "nombreV": "Defensores de Belgrano",
+      "fuentes": [
+        "https://www.tycsports.com/copa-argentina/cuando-arranca-la-copa-argentina-2025-y-calendario-de-partidos-id625028.html",
+        "https://www.thesportsdb.com/season/4500-copa-argentina/2025&r=64"
+      ],
+      "dudas": ""
+    }
+  ]
+}

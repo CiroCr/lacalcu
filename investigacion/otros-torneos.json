@@ -1,0 +1,300 @@
+{
+  "partidos": [
+    {
+      "fecha": "2025-06-16",
+      "torneo": "Mundial de Clubes FIFA 2025",
+      "ronda": "Fase de grupos - Grupo C - Fecha 1",
+      "local": "BOC",
+      "visitante": "EXT",
+      "gl": 2,
+      "gv": 2,
+      "penL": null,
+      "penV": null,
+      "nombreL": "CA Boca Juniors",
+      "nombreV": "SL Benfica",
+      "fuentes": [
+        "https://espndeportes.espn.com/futbol/mundial-clubes/nota/_/id/14536486/fixture-del-mundial-de-clubes-2025-fecha-hora-sede-de-los-partidos",
+        "https://www.mundodeportivo.com/us/futbol/20250616/724608/boca-juniors-vs-benfica-mundial-clubes-2025-vivo-hoy-resultado-marcador-minuto-minuto.html"
+      ],
+      "dudas": "Hard Rock Stadium, Miami. Ambos terminaron con 10 jugadores."
+    },
+    {
+      "fecha": "2025-06-20",
+      "torneo": "Mundial de Clubes FIFA 2025",
+      "ronda": "Fase de grupos - Grupo C - Fecha 2",
+      "local": "EXT",
+      "visitante": "BOC",
+      "gl": 2,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "FC Bayern München",
+      "nombreV": "CA Boca Juniors",
+      "fuentes": [
+        "https://miamigardens-fl.gov/Calendar.aspx?EID=2915&month=6&year=2025&day=9&calType=0",
+        "https://batimes.com.ar/news/sports/bayern-overcome-battling-boca-juniors-to-reach-club-world-cup-last-16.phtml",
+        "https://espndeportes.espn.com/futbol/mundial-clubes/nota/_/id/14536830/fixture-boca-mundial-de-clubes-2025-hora-fecha-y-sedes"
+      ],
+      "dudas": "Jugado viernes 20/6 21:00 ET en Hard Rock Stadium, Miami (calendario oficial de Miami Gardens). ESPN UK lo lista como 'Sat 21 Jun' por zona horaria (terminó cerca de medianoche ET). Goles: Kane, Merentiel (BOC), Olise 84'."
+    },
+    {
+      "fecha": "2025-06-24",
+      "torneo": "Mundial de Clubes FIFA 2025",
+      "ronda": "Fase de grupos - Grupo C - Fecha 3",
+      "local": "EXT",
+      "visitante": "BOC",
+      "gl": 1,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Auckland City FC",
+      "nombreV": "CA Boca Juniors",
+      "fuentes": [
+        "https://www.lanacion.com.ar/deportes/futbol/boca-juniors-vs-auckland-city-resumen-goles-y-resultado-del-partido-del-mundial-de-clubes-nid24062025/",
+        "https://espndeportes.espn.com/futbol/mundial-clubes/nota/_/id/14536830/fixture-boca-mundial-de-clubes-2025-hora-fecha-y-sedes"
+      ],
+      "dudas": "Sede Nissan Stadium, Nashville. Tuvo suspensión momentánea por tormenta eléctrica pero se completó el mismo día. Boca eliminado (3° del grupo)."
+    },
+    {
+      "fecha": "2025-06-17",
+      "torneo": "Mundial de Clubes FIFA 2025",
+      "ronda": "Fase de grupos - Grupo E - Fecha 1",
+      "local": "RIV",
+      "visitante": "EXT",
+      "gl": 3,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "CA River Plate",
+      "nombreV": "Urawa Red Diamonds",
+      "fuentes": [
+        "https://www.espn.cl/futbol/mundial-clubes/nota/_/id/14536683/fixture-de-river-mundial-de-clubes-2025-fechas-horarios-sedes",
+        "https://us.marca.com/soccer/mundial-de-clubes/calendario/grupo-e.html"
+      ],
+      "dudas": "Lumen Field, Seattle."
+    },
+    {
+      "fecha": "2025-06-21",
+      "torneo": "Mundial de Clubes FIFA 2025",
+      "ronda": "Fase de grupos - Grupo E - Fecha 2",
+      "local": "RIV",
+      "visitante": "EXT",
+      "gl": 0,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "CA River Plate",
+      "nombreV": "CF Monterrey",
+      "fuentes": [
+        "https://www.espn.cl/futbol/mundial-clubes/nota/_/id/14536683/fixture-de-river-mundial-de-clubes-2025-fechas-horarios-sedes",
+        "https://espndeportes.espn.com/futbol/mundial-clubes/nota/_/id/14536486/fixture-del-mundial-de-clubes-2025-fecha-hora-sede-de-los-partidos"
+      ],
+      "dudas": "Rose Bowl Stadium, Los Ángeles."
+    },
+    {
+      "fecha": "2025-06-25",
+      "torneo": "Mundial de Clubes FIFA 2025",
+      "ronda": "Fase de grupos - Grupo E - Fecha 3",
+      "local": "EXT",
+      "visitante": "RIV",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "FC Internazionale Milano",
+      "nombreV": "CA River Plate",
+      "fuentes": [
+        "https://efe.com/other-news/2025-06-26/inter-milan-wins/",
+        "https://www.espn.cl/futbol/mundial-clubes/nota/_/id/14536683/fixture-de-river-mundial-de-clubes-2025-fechas-horarios-sedes"
+      ],
+      "dudas": "Lumen Field, Seattle. Goles: F. Pio Esposito 72' y Bastoni 90+3'. EFE publicó la nota el 26/6 pero el partido se jugó miércoles 25/6 hora local. River eliminado (3° del grupo)."
+    },
+    {
+      "fecha": "2025-02-20",
+      "torneo": "Recopa Sudamericana 2025",
+      "ronda": "Final - Partido de ida",
+      "local": "RAC",
+      "visitante": "BR",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Racing Club",
+      "nombreV": "Botafogo FR",
+      "fuentes": [
+        "https://es.wikipedia.org/wiki/Recopa_Sudamericana_2025",
+        "https://www.racingclub.com.ar/palmares/recopa-sudamericana-2025/",
+        "https://www.larepublica.pe/deportes/2025/02/19/racing-vs-botafogo-en-vivo-partido-por-recopa-sudamericana-2025-espn-1667991"
+      ],
+      "dudas": "Estadio Presidente Perón (Cilindro), Avellaneda. Botafogo llegaba como campeón de la Libertadores 2024; Racing como campeón de la Sudamericana 2024. Goles: Vietto de penal 31' y Adrián Martínez."
+    },
+    {
+      "fecha": "2025-02-27",
+      "torneo": "Recopa Sudamericana 2025",
+      "ronda": "Final - Partido de vuelta",
+      "local": "BR",
+      "visitante": "RAC",
+      "gl": 0,
+      "gv": 2,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Botafogo FR",
+      "nombreV": "Racing Club",
+      "fuentes": [
+        "https://www.conmebol.com/noticias/racing-es-el-campeon-de-la-conmebol-recopa-2025/",
+        "https://en.wikipedia.org/wiki/2025_Recopa_Sudamericana"
+      ],
+      "dudas": "Estadio Nilton Santos, Río de Janeiro, jueves 27/2 21:30 ART (CONMEBOL oficial y Wikipedia). 365scores lo lista como 28/02 por zona horaria del Reino Unido. Racing campeón 4-0 global. Goles: Zaracho 50', Zuculini 69'."
+    },
+    {
+      "fecha": "2026-02-19",
+      "torneo": "Recopa Sudamericana 2026",
+      "ronda": "Final - Partido de ida",
+      "local": "LAN",
+      "visitante": "BR",
+      "gl": 1,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "CA Lanús",
+      "nombreV": "CR Flamengo",
+      "fuentes": [
+        "https://www.espn.com/soccer/match/_/gameId/762261/flamengo-lanus",
+        "https://www.lanacion.com.ar/deportes/futbol/lanus-vs-flamengo-en-vivo-nid19022026/",
+        "https://en.wikipedia.org/wiki/2026_Recopa_Sudamericana"
+      ],
+      "dudas": "Estadio Ciudad de Lanús Néstor Díaz Pérez (La Fortaleza). Lanús campeón de la Sudamericana 2025 (ganó la final a Atlético Mineiro el 22/11/2025 por penales 5-4 tras 0-0: SÍ fue un argentino); Flamengo campeón de la Libertadores 2025. Gol: Rodrigo Castillo 77' de cabeza (tuvo 2 goles anulados por offside)."
+    },
+    {
+      "fecha": "2026-02-26",
+      "torneo": "Recopa Sudamericana 2026",
+      "ronda": "Final - Partido de vuelta",
+      "local": "BR",
+      "visitante": "LAN",
+      "gl": 2,
+      "gv": 3,
+      "penL": null,
+      "penV": null,
+      "nombreL": "CR Flamengo",
+      "nombreV": "CA Lanús",
+      "fuentes": [
+        "https://www.espn.com/soccer/match/_/gameId/762262/lanus-flamengo",
+        "https://en.wikipedia.org/wiki/2026_Recopa_Sudamericana",
+        "https://www.espn.com.ar/futbol/nota/_/id/16329567/flamengo-vs-lanus-final-recopa-2026-equipo-fecha-hora-y-tv-en-vivo"
+      ],
+      "dudas": "Maracaná, Río de Janeiro. Tras los 90' era 2-1 (Arrascaeta 37' penal, Jorginho 85' penal; Castillo 29' para Lanús); gl/gv reflejan el final tras los 120': prórroga con goles de José Canale 118' y Dylan Aquino 120+2'. NO hubo penales; Lanús campeón 4-2 global."
+    },
+    {
+      "fecha": "2024-12-21",
+      "torneo": "Trofeo de Campeones de la Liga Profesional 2024",
+      "ronda": "Final única",
+      "local": "VEL",
+      "visitante": "EST",
+      "gl": 0,
+      "gv": 3,
+      "penL": null,
+      "penV": null,
+      "nombreL": "CA Vélez Sarsfield",
+      "nombreV": "Estudiantes de La Plata",
+      "fuentes": [
+        "https://www.espn.com.ar/futbol/argentina/nota/_/id/14576736/estudiantes-gano-velez-campeon-trofeo-de-campeones-carrillo-piatti",
+        "https://es.wikipedia.org/wiki/Trofeo_de_Campeones_de_la_Liga_Profesional_2024"
+      ],
+      "dudas": "ACLARA LA DUDA DEL RECOLECTOR ANTERIOR: el Trofeo de Campeones 2024 SÍ se jugó, pero el 21/12/2024 (NO en 2025). Estadio Único Madre de Ciudades, Santiago del Estero. Vélez campeón Liga 2024 vs Estudiantes campeón Copa LPF 2024. Goles: el primero es reportado como Boselli por ESPN y como autogol de Marchiori por velez.com.ar; Manyoma y Carrillo. Medio tiempo 0-2."
+    },
+    {
+      "fecha": "2025-03-05",
+      "torneo": "Supercopa Internacional 2023 (LPF)",
+      "ronda": "Final única",
+      "local": "RIV",
+      "visitante": "TAL",
+      "gl": 0,
+      "gv": 0,
+      "penL": 2,
+      "penV": 3,
+      "nombreL": "CA River Plate",
+      "nombreV": "Talleres de Córdoba",
+      "fuentes": [
+        "https://www.ligaprofesional.ar/notas/supercopa-internacional/2025/03/04/gran-duelo-en-la-supercopa-internacional/",
+        "https://es.wikipedia.org/wiki/Supercopa_Internacional_2023",
+        "https://www.espn.com.ar/futbol/argentina/nota/_/id/14867645/river-vs-talleres-supercopa-internacional-2023-equipo-fecha-hora-y-tv-en-vivo"
+      ],
+      "dudas": "Edición correspondiente a la temporada 2023 pero disputada recién el 5/3/2025 en el Estadio General Pablo Rojas (La Nueva Olla), Asunción (originalmente Abu Dhabi, reubicada). 0-0 tras 90' y 120' (gl/gv=0-0); penales 2-3, Talleres campeón. River jugó como campeón TC 2023 y 1° tabla general 2023; Talleres como 2° de la tabla."
+    },
+    {
+      "fecha": "2025-07-08",
+      "torneo": "Supercopa Internacional 2024 (LPF)",
+      "ronda": "Final única",
+      "local": "EST",
+      "visitante": "VEL",
+      "gl": 0,
+      "gv": 2,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Estudiantes de La Plata",
+      "nombreV": "CA Vélez Sarsfield",
+      "fuentes": [
+        "https://www.espn.com/soccer/schedule/_/league/arg.supercopa.internacional",
+        "https://es.wikipedia.org/wiki/Supercopa_Internacional",
+        "https://www.tycsports.com/liga-profesional-de-futbol/todos-los-campeones-de-la-supercopa-internacional-id762849.html"
+      ],
+      "dudas": "Edición 'Supercopa Internacional 2024' (temporada 2024) jugada el 8/7/2025 en el Estadio Libertadores de América, Avellaneda; algunos medios la llaman 'Supercopa Internacional 2025' por el año de disputa. Vélez campeón (1° tabla general 2024) 2-0 sobre Estudiantes (campeón TC 2024)."
+    },
+    {
+      "fecha": "2025-09-06",
+      "torneo": "Supercopa Argentina 2024",
+      "ronda": "Final única",
+      "local": "VEL",
+      "visitante": "CCO",
+      "gl": 2,
+      "gv": 0,
+      "penL": null,
+      "penV": null,
+      "nombreL": "CA Vélez Sarsfield",
+      "nombreV": "Central Córdoba de Santiago del Estero",
+      "fuentes": [
+        "https://www.espn.com.ar/futbol/partido/_/juegoId/729692/central-cordoba-santiago-del-estero-velez-sarsfield",
+        "https://www.infobae.com/deportes/2025/09/06/velez-y-central-cordoba-disputaran-la-final-de-la-supercopa-argentina-hora-tv-y-probables-formaciones/"
+      ],
+      "dudas": "Edición 'Supercopa Argentina 2024' (campeón Liga 2024 vs campeón Copa Argentina 2024) jugada el 6/9/2025 en el Gigante de Arroyito, Rosario. Goles: Jano Gordon 50' y 86', ambos de cabeza tras tiros libres de Maher Carrizo."
+    },
+    {
+      "fecha": "2025-12-20",
+      "torneo": "Trofeo de Campeones de la Liga Profesional 2025",
+      "ronda": "Final única",
+      "local": "EST",
+      "visitante": "PLA",
+      "gl": 2,
+      "gv": 1,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Estudiantes de La Plata",
+      "nombreV": "CA Platense",
+      "fuentes": [
+        "https://www.espn.com.ar/futbol/argentina/nota/_/id/16091270/estudiantes-de-la-plata-vs-platense-trofeo-de-campeones-2025-equipo-fecha-hora-y-tv-en-vivo",
+        "https://en.wikipedia.org/wiki/2025_Trofeo_de_Campeones_de_la_Liga_Profesional",
+        "https://www.365scores.com/es-mx/football/match/trofeo-de-campeones-7285/estudiantes-de-la-plata-platense-867-7207-7285"
+      ],
+      "dudas": "Sede neutral (Estadio Único de San Nicolás). Orden local/visitante nominal: Wikipedia EN y 365scores listan a Estudiantes como local; el comunicado LPF menciona primero a Platense (campeón Apertura). Marcador 2-1 indiscutido: Zapiola 49' (PLA), Alario 79' y 90+1' (EST). Estudiantes bicampeón del trofeo."
+    },
+    {
+      "fecha": "2026-09-26",
+      "torneo": "Supercopa Internacional 2025 (LPF)",
+      "ronda": "Final única",
+      "local": "EST",
+      "visitante": "ROS",
+      "gl": 1,
+      "gv": 3,
+      "penL": null,
+      "penV": null,
+      "nombreL": "Estudiantes de La Plata",
+      "nombreV": "CA Rosario Central",
+      "fuentes": [
+        "https://rosariocentral.com/noticia/central-es-campeon-de-la-supercopa-internacional/",
+        "https://es.wikipedia.org/wiki/Supercopa_Internacional_2025",
+        "https://www.infobae.com/deportes/2026/09/26/rosario-central-y-estudiantes-de-la-plata-se-enfrentaran-por-la-supercopa-internacional-hora-tv-y-formaciones/"
+      ],
+      "dudas": "Cuarta edición, correspondiente a la temporada 2025, jugada el 26/9/2026 en el Estadio Único Madre de Ciudades, Santiago del Estero. Estudiantes (campeón TC 2025) vs Rosario Central (1° tabla general 2025). Goles: Alexis Castro 1' (EST), Di María 22' y 56' de penal (ROS), Julián Fernández ~95' (ROS). Central campeón 3-1."
+    }
+  ]
+}
