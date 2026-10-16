@@ -40,7 +40,7 @@ option{background:#0a2d16;color:#fff}
 .arr{background:none;border:0;color:#fff;font-size:1.7rem;line-height:1;padding:2px 16px 6px;cursor:pointer;border-radius:6px}.arr:hover:not(:disabled){background:rgba(255,255,255,.1)}.arr:disabled{opacity:.25;cursor:default}
 .dh{padding:7px 14px;font-size:.78rem;color:var(--muted);text-align:center;background:rgba(0,0,0,.18);border-bottom:1px solid var(--line)}
 .match input[readonly]{background:transparent;border-color:transparent;color:#fff;pointer-events:none}
-.match{display:grid;grid-template-columns:56px 1fr 36px 10px 36px 1fr;align-items:center;gap:6px;padding:0 10px 0 0;min-height:46px;border-bottom:1px solid var(--line);font-size:.85rem}
+.match{display:grid;grid-template-columns:56px 1fr 36px 10px 36px 1fr 26px;align-items:center;gap:6px;padding:0 10px 0 0;min-height:46px;border-bottom:1px solid var(--line);font-size:.85rem}
 .match.inter{box-shadow:inset 3px 0 0 #f2c200}
 .st{align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);font-size:.66rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,.12)}
 .st.fin{color:#fff}
@@ -62,9 +62,29 @@ tr.lib td,tr.camp td{background:var(--lib)}tr.camp td:first-child{box-shadow:ins
 .txt{padding:14px;background:var(--panel);border-radius:8px;margin-bottom:12px}
 .txt h2{font-size:1rem;margin:14px 0 6px}.txt h2:first-child{margin-top:0}
 .foot{max-width:1100px;margin:0 auto;padding:0 14px 30px;text-align:center}
+.det{padding:10px 12px;background:rgba(0,0,0,.22);border-bottom:1px solid var(--line)}
+.match[onclick]{cursor:pointer}
+.match[onclick]:hover{background:rgba(255,255,255,.05)}
+.match[aria-expanded="true"]{background:rgba(255,255,255,.06)}
+.chev{display:flex;align-items:center;justify-content:center;width:26px;color:var(--muted);font-size:.75rem;transition:transform .15s;flex:none}
+.match[aria-expanded="true"] .chev{transform:rotate(180deg);color:var(--acc)}
+.probrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.pcell{background:var(--inp);border:1px solid var(--line);border-radius:7px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:3px}
+.pcell.fav{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.pcell .pl{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcell b{font-size:1.15rem}
+.detcap{font-size:.72rem;color:var(--muted);margin-bottom:8px}
+.minitabs{max-width:420px}
+.minitabs.two{max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mt{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);margin:0 0 4px 2px}
+table.mini{width:100%;border-collapse:collapse;font-size:.8rem}
+table.mini th{padding:5px 6px;text-align:center;border-bottom:1px solid var(--line);color:var(--muted);font-size:.64rem;text-transform:uppercase}
+table.mini td{padding:5px 6px;text-align:center;border-bottom:1px solid rgba(28,90,46,.5)}
+table.mini tr.hi td{background:var(--pl)}
+table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 @media(max-width:760px){
 .shell{grid-template-columns:minmax(0,1fr);gap:10px}.col-p{position:static;max-height:none;overflow:visible}
-.match{grid-template-columns:44px 1fr 32px 6px 32px 1fr;gap:4px;font-size:.78rem}
+.match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
 #PART{position:sticky;top:60px;height:calc(100vh - 122px);min-height:420px;display:flex;flex-direction:column}
@@ -173,7 +193,10 @@ const SCH={"IND-INS":["Vie 02/10"],"IRI-GLP":["Vie 02/10"],"BOC-UNI":["Vie 02/10
 "BAR-HUR":["Sáb 10/10","15:45"],"CCO-EST":["Sáb 10/10","17:00"],"TIG-BAN":["Sáb 10/10","19:15"],"RIV-ERC":["Sáb 10/10","21:30"],
 "SLO-DRI":["Dom 11/10","14:45"],"PLA-ARG":["Dom 11/10","17:00"],"ROS-IRI":["Dom 11/10","17:00"],"RAC-BEL":["Dom 11/10","19:15"],"TAL-IND":["Dom 11/10","21:30"],
 "LAN-VEL":["Lun 12/10","16:00"],"GEM-NOB":["Lun 12/10","18:30"],
-"PLA-LAN":["Sáb 17/10","17:30"],"VEL-GEM":["Sáb 17/10","20:00"],"RAC-IND":["Dom 18/10","14:45"],"BEL-RIV":["Dom 18/10","20:15"]};
+"PLA-LAN":["Sáb 17/10","17:30"],"VEL-GEM":["Sáb 17/10","20:00"],"RAC-IND":["Dom 18/10","14:45"],"BEL-RIV":["Dom 18/10","20:15"],
+"HUR-GLP":["Jue 15/10","20:00"],"DYJ-INS":["Vie 16/10","19:00"],"BOC-TAL":["Vie 16/10","21:30"],"BAN-ARG":["Sáb 17/10","15:00"],"IRI-TIG":["Sáb 17/10","17:30"],"ATU-ROS":["Sáb 17/10","20:00"],"NOB-CCO":["Lun 19/10","19:00"],"SAR-BAR":["Lun 19/10","19:00"],"DRI-UNI":["Lun 19/10","21:15"],
+"GEM-PLA":["Vie 23/10","18:30"],"GLP-SAR":["Vie 23/10","19:00"],"TIG-ATU":["Vie 23/10","21:15"],"BAN-LAN":["Sáb 24/10","14:45"],"TAL-DYJ":["Sáb 24/10","17:00"],"SLO-NOB":["Sáb 24/10","19:15"],"ROS-HUR":["Sáb 24/10","21:30"],"ALD-BEL":["Dom 25/10","14:45"],"IND-BOC":["Dom 25/10","17:00"],"RIV-RAC":["Dom 25/10","19:15"],"CCO-VEL":["Dom 25/10","21:30"],"BAR-ERC":["Dom 25/10","21:30"],"UNI-EST":["Lun 26/10","19:00"],"INS-DRI":["Lun 26/10","21:15"],"ARG-IRI":["Mar 27/10","19:00"],
+"ERC-GLP":["Vie 30/10","19:00"],"HUR-TIG":["Vie 30/10","19:00"],"SAR-ROS":["Vie 30/10","21:15"],"RAC-ALD":["Vie 30/10","21:15"],"NOB-UNI":["Dom 1/11","18:30"],"BOC-RIV":["Dom 1/11","15:00"]};
 const POSTP={}; // postergados que no cuentan para elegir la "proxima fecha" (ninguno ahora)
 const tk=m=>{const t=(SCH[pk(m)]||[])[1];return t&&t.includes(':')?+t.slice(0,2)*60+ +t.slice(3,5):-1},pk=m=>m[1]+"-"+m[2],dnum=l=>{const[d,m]=l.split(' ')[1].split('/');return +m*100+ +d};
 const pend=i=>(SCH[pk(FX[i])]||[])[1]||"Pend.";
@@ -188,7 +211,29 @@ function setF(f){curF=Math.max(1,Math.min(16,f));fixture()}
 function goF(d){setF(curF+d)}
 function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
  const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)">`;
- return `<div class="match${m[3]&&!ALLI?' inter':''}"><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div></div>`}
+ return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="toggleDet(${i},event)" role="button" tabindex="0" aria-expanded="false" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9662;</div>':''}</div>${i>=0?`<div class="det" id="det${i}" hidden></div>`:''}`}
+function zoneRows(teams,cods){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
+ let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>DG</th></tr>';
+ r.forEach((x,k)=>{const hl=cods.includes(x.t.c)?` class="hi"`:'';h+=`<tr${hl}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${dg(x.p.DG)}</td></tr>`});
+ return h+'</table>'}
+function detBody(m){const hC=m[1],aC=m[2],i=FX.indexOf(m),fin=i>=0&&(m[4]||res[i]!==null);
+ // para partidos ya jugados: Elo antes de esa fecha (probabilidad previa); para pendientes: Elo actual
+ const E=(fin?eloRun(m[0]):eloRun()).R,dR=E[hC]+EL.HFA-E[aC],[lh,la]=lamElo(dR,2*avgG()),pH=pwin(lh,la),pD=pdraw(lh,la),pA=1-pH-pD;
+ const pct=x=>(100*x).toFixed(0)+'%';
+ const cell=(t,p,f)=>`<div class="pcell${f?' fav':''}"><span class="pl">${t}</span><b>${pct(p)}</b></div>`;
+ let h=`<div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
+ h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'} según Elo, con ventaja de local · Posiciones al día de hoy</div>`;
+ if(zi(hC)===zi(aC)){h+=`<div class="minitabs">${zoneRows(zi(hC)?TB:TA,[hC,aC])}</div>`}
+ else{h+=`<div class="minitabs two"><div><div class="mt">Zona ${zi(hC)?'B':'A'}</div>${zoneRows(zi(hC)?TB:TA,[hC])}</div><div><div class="mt">Zona ${zi(aC)?'B':'A'}</div>${zoneRows(zi(aC)?TB:TA,[aC])}</div></div>`}
+ return h}
+function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
+function toggleDet(i,ev){if(ev&&ev.target.tagName==='INPUT')return;
+ const det=document.getElementById('det'+i),mx=document.getElementById('mx'+i);
+ if(!det)return;const open=!det.hidden;
+ document.querySelectorAll('.det:not([hidden])').forEach(d=>{d.hidden=true});
+ document.querySelectorAll('.match[aria-expanded="true"]').forEach(m=>m.setAttribute('aria-expanded','false'));
+ if(open){return}
+ det.innerHTML=detBody(FX[i]);det.hidden=false;mx.setAttribute('aria-expanded','true')}
 function fixture(){
  const list=curF<=10?PAST.filter(m=>m[0]===curF).map(m=>[m,-1]):FX.map((m,i)=>[m,i]).filter(x=>x[0][0]===curF);
  ALLI=list.every(([m])=>m[3]);
