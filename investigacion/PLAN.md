@@ -18,6 +18,16 @@ Fecha: 12/10/2026. Este archivo es la guía de integración para cuando vuelva l
 | `conmebol-2026.json` | Lib+Sud 2026 eliminatorias | ✅ LISTO 14/10: 29 partidos (fase previa 2, repechaje Sud 6, octavos 14, cuartos 6, semifinal BOC 0-1 Vasco 13/10). Semis EST-FLA 15/10 aún no jugada. Discrepancia resuelta: ARG-Barcelona penales 4-5 (ESPN tenía 5-4 invertido) |
 | `otros-torneos.json` | Mundial Clubes, Recopas, Trofeo/Supercopa | ✅ LISTO 14/10: 16 partidos. Mundial: BOC 2-2 Benfica, 1-2 Bayern, 1-1 Auckland; RIV 3-1 Urawa, 0-0 Monterrey, 0-2 Inter. Recopa 2025: RAC campeón 4-0 global a Botafogo; Recopa 2026: LAN campeón 4-2 global a Flamengo (confirma Sud 2025 = LAN). Trofeos: TdC 2024 (21/12/2024 — FUERA de ventana Elo), Supercopas Int. 2023/2024/2025, Supercopa Arg 2024, TdC 2025. ⚠️ VEL-EST 21/12/2024 fuera de ventana; Supercopa Arg 2025 EST-IRI programada 11/11/2026 (pendiente) |
 
+## IDEAS PARA LA PRÓXIMA SESIÓN (pedido del usuario, 15/10 noche — NO arrancar sin releer esto)
+1. **Rediseño completo del aspecto**: fondo negro full ("full negro") con colores tipo LED (neón), look moderno. Rehacer la paleta/estilos del CSS (ya hay variables en :root para acelerar esto).
+2. **Reorganizar la página en pestañas/secciones**: hoy todo está en una sola página con anclas (Partidos, Zona A, Zona B, Anual, Promedios, Probabilidades, Necesita ganar). Separar en pestañas reales. NOTA: el usuario dice que originalmente imaginaba que al tocar un partido te lleve a otra pestaña (no al panel expandible); el panel le gustó igual ("me gustó"), pero al hacer pestañas conviene preguntarle si el partido merece su propia vista.
+3. **Reemplazar "¿Cuántas victorias necesita tu equipo?" por un gráfico de ejes cartesianos**: Y = puntos a conseguir (de 0 al máximo posible), X = porcentaje de 0 a 100. Varias líneas, una por cada cosa en juego (chances de entrar a playoffs, descenso, copas, etc.): cada línea = probabilidad de ese evento según los puntos que sume el equipo. Mi interpretación: hoy la tabla filtra por "gana exactamente k partidos"; el gráfico pasaría a "si suma N puntos más, X% de probabilidad". SVG inline, sin librerías, archivo único. Confirmar detalles con el usuario antes de codear.
+
+## DATA A CARGAR AL VOLVER (16/10)
+- Huracán–Gimnasia LP (fecha 13, jue 15/10 20:00, YA JUGADO): ESPN lo tenía 0-1 parcial para GLP — verificar resultado final y cargar en RAW.
+- Estudiantes–Flamengo (ida semifinal Libertadores, jue 15/10 21:30, se jugó anoche): cargar a investigacion/conmebol-2026.json y regenerar ELO_EXTRA.
+- Fecha 15: falta confirmar horarios del sábado 31/10. Fecha 16: sin programar aún.
+
 ## ESTADO AL 14/10/2026 (noche, cierre) — ELO ÚNICO + ESCUDOS EN CURSO
 1. **✅ Elo = modelo único y predeterminado.** Se eliminó el selector de modelos del HTML; MODEL='elo' fijo; sin menciones de "en prueba". Textos de "al 12/10" → "al 14/10". Tests verdes: verificar.js (la tabla de referencia ahora es post-SAR-RIV: SAR [17,11,18,17], RIV [14,11,14,13]) y ui.py 15 OK (sin el paso del selector eliminado). Backtest 90 partidos: goles 1.0233/44 vs elo 1.0145/46 vs base 1.0938/38.
 2. **✅ SAR-RIV cargado:** Sarmiento 1-1 River (Contrera 14', Montiel 26'ST; gol previo de Montiel anulado por VAR). Fecha 11 COMPLETA: 30 resultados oficiales, 60 pendientes, fecha por defecto 13. POSTP quedó vacío.

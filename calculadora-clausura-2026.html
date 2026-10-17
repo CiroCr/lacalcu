@@ -11,50 +11,72 @@
 <meta property="og:title" content="Calculadora Clausura 2026: tabla, anual y promedios">
 <meta property="og:description" content="Cargá los resultados que faltan y mirá quién clasifica, quién va a copas y quién desciende.">
 <meta property="og:url" content="https://TU-DOMINIO.com/">
-<meta name="theme-color" content="#0b2a14">
+<meta name="theme-color" content="#07090f">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Calculadora Clausura 2026","applicationCategory":"SportsApplication","operatingSystem":"Web","inLanguage":"es-AR","offers":{"@type":"Offer","price":"0","priceCurrency":"ARS"}}</script>
 <!-- Google AdSense: pegá acá tu código cuando te aprueben la cuenta -->
 <style>
-:root{--bg:#1b4a2a;--bg2:#0b2a14;--panel:#0e3a1d;--head:#0a2d16;--line:#1c5a2e;--text:#fff;--muted:#8fb99a;--acc:#4caf50;--inp:#082411;--pl:rgba(76,175,80,.18);--lib:rgba(242,194,0,.2);--sud:rgba(90,178,230,.2);--rel:rgba(215,25,32,.32);font-family:Roboto,-apple-system,"Segoe UI",Arial,sans-serif}
+:root{--bg:#07090f;--bg2:#03040a;--panel:#0b0e16;--head:#0f1320;--line:rgba(122,255,194,.11);--text:#e8f4ee;--muted:#8593a1;--acc:#00ff9c;--acc2:#00d4ff;--gold:#ffd60a;--inp:#080a12;--pl:rgba(0,255,156,.09);--lib:rgba(255,214,10,.10);--sud:rgba(0,212,255,.10);--rel:rgba(255,59,92,.14);font-family:Roboto,-apple-system,"Segoe UI",Arial,sans-serif}
 *{box-sizing:border-box}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(133,147,161,.25);border-radius:9px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,255,156,.4)}
+html{scrollbar-width:thin;scrollbar-color:rgba(133,147,161,.3) transparent}
 html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
-body{margin:0;color:var(--text);background:radial-gradient(circle at 20% 0,var(--bg),var(--bg2) 70%) fixed;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
-.top{display:flex;align-items:baseline;gap:14px;max-width:1100px;margin:0 auto;padding:14px 14px 4px}
+body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8%,rgba(0,255,156,.06),transparent 62%),radial-gradient(circle at 20% 0,var(--bg),var(--bg2) 78%) fixed;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.top{display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:16px 16px 6px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.logo{margin:0;font-size:1.6rem;font-weight:900;letter-spacing:.02em}.logo b{color:var(--acc)}
+.logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em}.logo b{color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55)}
 .top span{color:var(--muted);font-size:.85rem}
-.shell{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:18px;padding:0 14px 30px;align-items:start}
-.jump{position:sticky;top:calc(6px + env(safe-area-inset-top,0px));z-index:5;width:calc(100% - 28px);max-width:1172px;margin:6px auto 12px;display:flex;gap:2px;overflow-x:auto;background:var(--head);border-radius:8px;padding:4px}
-.jump a{color:#d7e9dc;text-decoration:none;font-size:.82rem;font-weight:600;padding:7px 11px;white-space:nowrap;border-radius:6px}.jump a:hover{background:rgba(255,255,255,.1);color:var(--acc)}
+.shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;padding:0 16px 30px;align-items:start}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em;cursor:pointer;transition:color .15s,border-color .15s,box-shadow .15s,background .15s}
+.tab:hover{color:var(--text);border-color:rgba(0,255,156,.45)}
+.tab.on{color:#02120b;background:var(--acc);border-color:var(--acc);box-shadow:0 0 18px rgba(0,255,156,.35)}
+.pane{display:none}
+.pane.on{display:block;animation:fadeUp .22s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}}
+@keyframes cellglow{from{background:rgba(0,255,156,.25)}}
+tr.mv td{animation:cellglow .9s ease}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
 .col-p{border-radius:8px}
 .pad{padding:12px 14px}
-select{width:100%;padding:9px;border-radius:6px;border:1px solid var(--line);background:var(--inp);color:#fff;font-size:.9rem}
-.panel{background:var(--panel);border-radius:8px;margin-bottom:12px;overflow:hidden}
-.ph{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--head);font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
-.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 14px;margin-bottom:12px;background:var(--panel);border-radius:8px}
+select{width:100%;padding:9px;border-radius:6px;border:1px solid var(--line);background:var(--inp);color:var(--text);font-size:.9rem;transition:border-color .15s,box-shadow .15s}
+select:focus{outline:none;border-color:var(--acc);box-shadow:0 0 12px rgba(0,255,156,.25)}
+.panel{background:var(--panel);border-radius:10px;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.45)}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--head);font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+.ph .x{background:none;border:0;color:var(--muted);font-size:1rem;cursor:pointer;padding:0 2px;transition:color .15s}
+.ph .x:hover{color:var(--rel)}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 14px;margin-bottom:12px;background:var(--panel);border-radius:10px;border:1px solid var(--line)}
 .note{font-size:.8rem;color:var(--muted);line-height:1.6}
-.btn{background:var(--acc);color:#04210d;border:none;padding:8px 16px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer}
-.fnav{display:flex;align-items:center;gap:6px;background:var(--head);border-radius:8px;padding:6px;margin-bottom:12px}
-.fnav select{flex:1;width:auto;text-align:center;text-align-last:center;font-weight:800;font-size:.95rem;text-transform:uppercase;background:transparent;border:0;cursor:pointer}
-option{background:#0a2d16;color:#fff}
-.arr{background:none;border:0;color:#fff;font-size:1.7rem;line-height:1;padding:2px 16px 6px;cursor:pointer;border-radius:6px}.arr:hover:not(:disabled){background:rgba(255,255,255,.1)}.arr:disabled{opacity:.25;cursor:default}
+.btn{background:transparent;color:var(--acc);border:1px solid var(--acc);padding:8px 16px;border-radius:999px;font-size:.8rem;font-weight:700;cursor:pointer;transition:background .15s,box-shadow .15s,color .15s}
+.btn:hover{background:var(--acc);color:#02120b;box-shadow:0 0 16px rgba(0,255,156,.35)}
+.fnav{display:flex;align-items:center;gap:6px;background:var(--head);border-radius:10px;border:1px solid var(--line);padding:6px;margin-bottom:12px}
+.fnav select{flex:1;width:auto;text-align:center;text-align-last:center;font-weight:800;font-size:.95rem;text-transform:uppercase;background:transparent;border:0;color:var(--text);cursor:pointer}
+option{background:#0f1320;color:var(--text)}
+.arr{background:none;border:0;color:var(--text);font-size:1.7rem;line-height:1;padding:2px 16px 6px;cursor:pointer;border-radius:8px;transition:color .15s,background .15s,text-shadow .15s}.arr:hover:not(:disabled){background:rgba(255,255,255,.07);color:var(--acc);text-shadow:0 0 12px rgba(0,255,156,.6)}.arr:disabled{opacity:.25;cursor:default}
 .dh{padding:7px 14px;font-size:.78rem;color:var(--muted);text-align:center;background:rgba(0,0,0,.18);border-bottom:1px solid var(--line)}
-.match input[readonly]{background:transparent;border-color:transparent;color:#fff;pointer-events:none}
-.match{display:grid;grid-template-columns:56px 1fr 36px 10px 36px 1fr 26px;align-items:center;gap:6px;padding:0 10px 0 0;min-height:46px;border-bottom:1px solid var(--line);font-size:.85rem}
-.match.inter{box-shadow:inset 3px 0 0 #f2c200}
-.st{align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);font-size:.66rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,.12)}
-.st.fin{color:#fff}
+.match input[readonly]{background:transparent;border-color:transparent;color:var(--text);pointer-events:none}
+.match{display:grid;grid-template-columns:56px 1fr 36px 10px 36px 1fr 26px;align-items:center;gap:6px;padding:0 10px 0 0;min-height:46px;border-bottom:1px solid var(--line);font-size:.85rem;transition:background .15s}
+.match.inter{box-shadow:inset 3px 0 0 var(--gold)}
+.st{align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);font-size:.66rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,.25)}
+.st.fin{color:var(--acc)}
 .side{display:flex;align-items:center;gap:8px;min-width:0;font-weight:600}.side .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .side.h{justify-content:flex-end;flex-direction:row-reverse;text-align:right}
-.match input{width:36px;padding:7px 0;border-radius:6px;border:1px solid var(--line);background:var(--inp);color:#fff;text-align:center;font-size:.95rem;font-weight:700}
-.match input:focus{outline:2px solid var(--acc)}.vs{color:var(--muted);text-align:center}
+.match input{width:36px;padding:7px 0;border-radius:6px;border:1px solid var(--line);background:var(--inp);color:var(--text);text-align:center;font-size:.95rem;font-weight:700;transition:border-color .15s,box-shadow .15s}
+.match input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 10px rgba(0,255,156,.3)}.vs{color:var(--muted);text-align:center}
 .tblwrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.85rem}
 th,td{padding:9px 6px;text-align:center;border-bottom:1px solid var(--line)}
 th{color:var(--muted);font-size:.68rem;font-weight:700;text-transform:uppercase}
+tbody tr{transition:background .2s,box-shadow .2s}
+tbody tr:hover{background:rgba(255,255,255,.03)}
 td.eq{text-align:left;font-weight:600}.nm{display:inline-flex;align-items:center;gap:9px}
 tr.playoff td{background:var(--pl)}tr.playoff td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
-tr.lib td,tr.camp td{background:var(--lib)}tr.camp td:first-child{box-shadow:inset 3px 0 0 #f2c200}.tag{font-size:.6rem;font-weight:700;color:#f2c200;border:1px solid #f2c200;border-radius:4px;padding:1px 5px;margin-left:8px;white-space:nowrap}tr.sud td{background:var(--sud)}tr.releg td{background:var(--rel)}
+tr.lib td,tr.camp td{background:var(--lib)}tr.camp td:first-child{box-shadow:inset 3px 0 0 var(--gold)}
+.tag{font-size:.6rem;font-weight:700;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;margin-left:8px;white-space:nowrap}
+tr.sud td{background:var(--sud)}tr.sud td:first-child{box-shadow:inset 3px 0 0 var(--acc2)}
+tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0 0 #ff3b5c}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.72rem;color:var(--muted);padding:10px 14px}
 .dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 .bdg2{display:inline-flex;flex:none;width:24px;height:24px;object-fit:contain;filter:drop-shadow(0 0 1px rgba(0,0,0,.5));border-radius:3px;vertical-align:-4px}
@@ -84,6 +106,8 @@ table.mini tr.hi td{background:var(--pl)}
 table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 @media(max-width:760px){
 .shell{grid-template-columns:minmax(0,1fr);gap:10px}.col-p{position:static;max-height:none;overflow:visible}
+.tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}.tab{white-space:nowrap;flex:none}
+.grid2{grid-template-columns:1fr}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
@@ -93,8 +117,8 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 #PART .fnav{padding:3px 6px}
 #fixtureList{flex:1;min-height:0;display:flex}
 #fixtureList .panel{flex:1;display:flex;flex-direction:column;min-height:0;overflow-y:hidden;margin:0}
-#fixtureList .ph{flex:none;padding:7px 14px}#fixtureList .dh{flex:none;padding:2px 14px;font-size:.72rem}
-#fixtureList .match{flex:1 1 0;min-height:22px;max-height:46px}
+#fixtureList .ph{flex:none;padding:5px 14px;font-size:.72rem}#fixtureList .dh{flex:none;padding:1px 14px;font-size:.7rem}
+#fixtureList .match{flex:1 1 0;min-height:20px;max-height:46px}
 #fixtureList .match input{padding:3px 0;font-size:.85rem}
 }
 @media(min-width:761px) and (max-height:759px){#fixtureList .panel{overflow-y:auto}}
@@ -102,18 +126,28 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 </head>
 <body>
 <div class="top"><h1 class="logo">SIMULA<b>DOR</b><span class="sr"> Calculadora del Clausura 2026 de la Liga Profesional</span></h1><span>Clausura 2026, Liga Profesional</span></div>
-<nav class="jump"><a href="#PART">Partidos</a><a href="#A">Zona A</a><a href="#B">Zona B</a><a href="#ANUAL">Anual</a><a href="#PROM">Promedios</a><a href="#PROB">Probabilidades</a><a href="#NEED">Necesita ganar</a></nav>
 <div class="shell">
   <section id="PART" class="col-p">
-    <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos).</span>
+    <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos). Tocá un partido para ver probabilidades y posiciones.</span>
     <button class="btn" onclick="resetAll()">Borrar resultados</button></div>
     <div class="fnav"><button class="arr" id="fPrev" onclick="goF(-1)" aria-label="Fecha anterior">&#8249;</button><select id="fSel" onchange="setF(+this.value)" aria-label="Elegir fecha"></select><button class="arr" id="fNext" onclick="goF(1)" aria-label="Fecha siguiente">&#8250;</button></div>
     <div id="fixtureList"></div>
   </section>
   <main>
-    <div id="A"></div><div id="B"></div><div id="ANUAL"></div><div id="PROM"></div><div class="bar"><span class="note">Simulaciones con el modelo <b>Elo</b>: la fuerza de cada equipo sale de su ranking (panel de abajo), que usa todos los partidos oficiales de 2025 y 2026, y se convierte a goles esperados.</span></div>
-    <div id="PROB"></div><div id="ELO"></div>
-    <div id="NEED" class="panel"><div class="ph">¿Cuántas victorias necesita tu equipo?</div><div class="pad"><select id="selEq" onchange="renderNeed()" aria-label="Elegir equipo"></select></div><div id="needOut"></div></div>
+    <div class="tabs">
+      <button class="tab" id="tab-zonas" onclick="showPane('zonas',this)">Zonas A + B</button>
+      <button class="tab" onclick="showPane('ANUAL',this)">Tabla anual</button>
+      <button class="tab" onclick="showPane('PROM',this)">Promedios</button>
+      <button class="tab" onclick="showPane('PROB',this)">Probabilidades</button>
+      <button class="tab" onclick="showPane('ELO',this)">Ranking Elo</button>
+      <button class="tab" onclick="showPane('NEED',this)">¿Cuánto necesita?</button>
+    </div>
+    <div id="pane-zonas" class="pane on"><div class="grid2"><div id="A"></div><div id="B"></div></div></div>
+    <div id="pane-ANUAL" class="pane"><div id="ANUAL"></div></div>
+    <div id="pane-PROM" class="pane"><div id="PROM"></div></div>
+    <div id="pane-PROB" class="pane"><div class="bar"><span class="note">Simulaciones con el modelo <b>Elo</b>: la fuerza de cada equipo sale de su ranking (pestaña Ranking Elo), que usa todos los partidos oficiales de 2025 y 2026, y se convierte a goles esperados.</span></div><div id="PROB"></div></div>
+    <div id="pane-ELO" class="pane"><div id="ELO"></div></div>
+    <div id="pane-NEED" class="pane"><div id="NEED" class="panel"><div class="ph">¿Cuántas victorias necesita tu equipo?</div><div class="pad"><select id="selEq" onchange="renderNeed()" aria-label="Elegir equipo"></select></div><div id="needOut"></div></div></div>
     <div class="txt note"><h2>Fuentes y datos</h2>
       <p><b>Fixture:</b> Liga Profesional de Fútbol de AFA, "Agenda para la temporada 2026" (ligaprofesional.ar), fechas 11 a 16 del Clausura. Las fechas/horarios pueden moverse, los cruces no.</p>
       <p><b>Base:</b> tablas de la Zona A y B con la fecha 10 completa (los 30 equipos con 10 PJ), según futbolargentino.com y Mendoza Post (21/09/2026). El Apertura (cerrado) y los puntos de 2024 y 2025 para los promedios salen de Wikipedia / AFA. Tabla Anual y Promedios se calculan sumando esos datos fijos a lo que cargues en las fechas 11 a 16. Verificá contra ligaprofesional.ar antes de usarlo para algo importante.</p>
@@ -122,7 +156,7 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
       <p><b>Escudos:</b> son insignias dibujadas con los colores de cada club, no los logos oficiales.</p></div>
     <div class="txt note">
       <h2>Cómo funciona la calculadora del Clausura 2026</h2>
-      <p>En la columna <b>Partidos</b> (a la izquierda; arriba en el celular) se ven las 16 fechas: las flechas cambian de fecha y arranca en la próxima. En las fechas 11 a 16 escribí los goles de los partidos pendientes y se actualizan al instante las dos zonas, la Tabla Anual y la Tabla de Promedios. Los 8 primeros de cada zona clasifican a los octavos de final. Más abajo, <b>Probabilidades</b> muestra qué tan probable es cada resultado y <b>Necesita ganar</b> te dice cuántas victorias le hacen falta a tu equipo.</p>
+      <p>En la columna <b>Partidos</b> (a la izquierda; arriba en el celular) se ven las 16 fechas: las flechas cambian de fecha y arranca en la próxima. En las fechas 11 a 16 escribí los goles de los partidos pendientes y las tablas se reordenan en vivo. Con las <b>pestañas</b> de la derecha cambiás entre las zonas, la Tabla Anual, los Promedios, las Probabilidades, el Ranking Elo y ¿Cuánto necesita tu equipo?. Tocá cualquier partido para ver sus probabilidades y las posiciones de los dos equipos. Los 8 primeros de cada zona clasifican a los octavos de final.</p>
       <h2>Preguntas frecuentes</h2>
       <p><b>¿Cómo se define el descenso en 2026?</b> Descienden dos equipos: el último de la Tabla Anual (puntos del Apertura más el Clausura) y el de peor promedio (puntos de 2024, 2025 y 2026 divididos por los partidos jugados en Primera). Si el mismo equipo es último en las dos tablas, desciende por promedios y el segundo descenso es para el anteúltimo de la anual.</p>
       <p><b>¿Quién clasifica a la Copa Libertadores y a la Sudamericana?</b> Son seis plazas a la Libertadores: los campeones del Apertura (Belgrano), del Clausura y de la Copa Argentina, más los tres mejores de la Tabla Anual que no clasificaron por título. A la Sudamericana van los seis siguientes de la anual, también sin contar a quienes ya tienen lugar. El 1° de la anual es el Campeón de Liga.</p>
@@ -159,22 +193,35 @@ function proj(t){let pj=0,gf=0,gc=0,pts=0;FX.forEach((f,i)=>{const r=res[i];if(!
  return{PJ:t.clPJ+pj,GF:t.clGF+gf,GC:t.clGC+gc,DG:t.clGF+gf-t.clGC-gc,Pts:t.clPts+pts}}
 const dg=n=>(n>0?"+":"")+n,nm=t=>`<span class="nm">${bdg(t.c)}${t.n}</span>`;
 const panel=(title,body,leg)=>`<div class="panel"><div class="ph">${title}</div><div class="tblwrap">${body}</div>${leg?`<div class="legend">${leg}</div>`:''}</div>`;
+function showPane(id,btn){document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+id));
+ document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===btn))}
+// --- animacion FLIP de tablas: las filas se deslizan cuando cambian de posicion ---
+function flipWrap(container,newHTML){
+ if(!container.querySelectorAll){container.innerHTML=newHTML;return}
+ const rows=c=>[...c.querySelectorAll('tbody tr[data-c]')];
+ const pos={};rows(container).forEach(r=>pos[r.dataset.c]=r.getBoundingClientRect?r.getBoundingClientRect().top:0);
+ container.innerHTML=newHTML;
+ rows(container).forEach(r=>{const c=r.dataset.c;if(!(c in pos))return;
+  const nt=r.getBoundingClientRect?r.getBoundingClientRect().top:0,d=nt-pos[c];
+  if(Math.abs(d)>2){r.style.transform='translateY('+d+'px)';r.style.transition='none';
+   const go=()=>{r.style.transition='transform .45s cubic-bezier(.22,.9,.28,1)';r.style.transform='';r.classList.add('mv');setTimeout(()=>r.classList.remove('mv'),900)};
+   typeof requestAnimationFrame==='function'?requestAnimationFrame(go):go()}})}
 function zone(id,teams,title){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
- let h='<table><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr>';
- r.forEach((x,i)=>h+=`<tr class="${i<8?'playoff':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${x.p.GF}:${x.p.GC}</td><td>${dg(x.p.DG)}</td></tr>`);
- document.getElementById(id).innerHTML=panel(title,h+'</table>','<span><span class="dot" style="background:var(--acc)"></span>Clasifica a playoffs (top 8)</span>')}
+ let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr></thead><tbody>';
+ r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i<8?'playoff':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${x.p.GF}:${x.p.GC}</td><td>${dg(x.p.DG)}</td></tr>`);
+ flipWrap(document.getElementById(id),panel(title,h+'</tbody></table>','<span><span class="dot" style="background:var(--acc)"></span>Clasifica a playoffs (top 8)</span>'))}
 const worstProm=()=>ALL.map(t=>{const p=proj(t);return{c:t.c,a:(t.h24+t.h25+t.apPts+p.Pts)/(t.pj+16+p.PJ)}}).sort((x,y)=>x.a-y.a)[0];
 function anual(){const r=ALL.map(t=>{const p=proj(t);return{t,pts:t.apPts+p.Pts,d:t.apGF-t.apGC+p.DG,pj:16+p.PJ,gf:t.apGF+p.GF,gc:t.apGC+p.GC}}).sort((a,b)=>b.pts-a.pts||b.d-a.d);
  const w=worstProm(),di=r[29].t.c===w.c?28:29;
- let h='<table><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr>';
+ let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr></thead><tbody>';
  let c3=0;const cls=r.map(x=>{if(x.t.c==='BEL')return 'camp';c3++;return c3<=3?'lib':c3<=9?'sud':''});
  r.forEach((x,i)=>{const c=i===di?'releg':cls[i];
- h+=`<tr class="${c}"><td>${i+1}</td><td class="eq">${nm(x.t)}${x.t.c==='BEL'?'<span class="tag">Campeón Apertura</span>':''}</td><td><b>${x.pts}</b></td><td>${x.pj}</td><td>${x.gf}:${x.gc}</td><td>${dg(x.d)}</td></tr>`});
- document.getElementById('ANUAL').innerHTML=panel('Tabla anual',h+'</table>','<span><span class="dot" style="background:#f2c200"></span>Libertadores (3 mejores sin título)</span><span><span class="dot" style="background:#5ab2e6"></span>Sudamericana (6 siguientes)</span><span><span class="dot" style="background:#d71920"></span>Descenso por tabla anual</span><span style="flex-basis:100%">Belgrano ya tiene su lugar en la Libertadores como campeón del Apertura y no ocupa un cupo de la anual. Los campeones del Clausura y de la Copa Argentina también clasifican y liberarían su lugar si terminan arriba: eso todavía no está modelado.</span>'+(di===28?`<span style="flex-basis:100%">${r[29].t.n} es último en la anual y en los promedios: desciende por promedios, y el descenso de la anual pasa a ${r[28].t.n}.</span>`:''))}
+ h+=`<tr data-c="${x.t.c}" class="${c}"><td>${i+1}</td><td class="eq">${nm(x.t)}${x.t.c==='BEL'?'<span class="tag">Campeón Apertura</span>':''}</td><td><b>${x.pts}</b></td><td>${x.pj}</td><td>${x.gf}:${x.gc}</td><td>${dg(x.d)}</td></tr>`});
+ flipWrap(document.getElementById('ANUAL'),panel('Tabla anual',h+'</tbody></table>','<span><span class="dot" style="background:var(--gold)"></span>Libertadores (3 mejores sin título)</span><span><span class="dot" style="background:var(--acc2)"></span>Sudamericana (6 siguientes)</span><span><span class="dot" style="background:#ff3b5c"></span>Descenso por tabla anual</span><span style="flex-basis:100%">Belgrano ya tiene su lugar en la Libertadores como campeón del Apertura y no ocupa un cupo de la anual. Los campeones del Clausura y de la Copa Argentina también clasifican y liberarían su lugar si terminan arriba: eso todavía no está modelado.</span>'+(di===28?`<span style="flex-basis:100%">${r[29].t.n} es último en la anual y en los promedios: desciende por promedios, y el descenso de la anual pasa a ${r[28].t.n}.</span>`:'')))}
 function prom(){const r=ALL.map(t=>{const p=proj(t),pt=t.h24+t.h25+t.apPts+p.Pts,pj=t.pj+16+p.PJ;return{t,pt,pj,a:pt/pj}}).sort((a,b)=>b.a-a.a);
- let h='<table><tr><th>#</th><th style="text-align:left">Equipo</th><th>Prom.</th><th>Pts</th><th>PJ</th></tr>';
- r.forEach((x,i)=>h+=`<tr class="${i===29?'releg':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.a.toFixed(3)}</b></td><td>${x.pt}</td><td>${x.pj}</td></tr>`);
- document.getElementById('PROM').innerHTML=panel('Promedios',h+'</table>','<span><span class="dot" style="background:#d71920"></span>Peor promedio = desciende</span>')}
+ let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Prom.</th><th>Pts</th><th>PJ</th></tr></thead><tbody>';
+ r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i===29?'releg':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.a.toFixed(3)}</b></td><td>${x.pt}</td><td>${x.pj}</td></tr>`);
+ flipWrap(document.getElementById('PROM'),panel('Promedios',h+'</tbody></table>','<span><span class="dot" style="background:#ff3b5c"></span>Peor promedio = desciende</span>'))}
 // Resultados reales de las fechas 1 a 10 (ya incluidos en la base de las tablas, solo se muestran)
 const PAST_RAW={1:"BEL-ROS 2-1,SAR-ARG 2-3,DYJ-ALD 1-1,GEM-CCO 1-0,RAC-GLP 2-1,VEL-INS 1-0,HUR-BAN 1-0,PLA-UNI 2-2,ERC-TIG 1-0,NOB-TAL 1-0,RIV-BAR 0-1,LAN-SLO 1-0,ATU-IRI 0-0,EST-IND 0-2,DRI-BOC 3-0",
 2:"SLO-GEM 1-0,BAN-SAR 3-2,ARG-ERC 3-0,ROS-RAC 0-0,BAR-ALD 1-0,DYJ-DRI 2-1,GLP-RIV 1-0,INS-PLA 2-1,IRI-HUR 2-1,TAL-VEL 1-3,IND-NOB 1-0,CCO-ATU 0-2,BOC-EST 1-0,TIG-BEL 0-0,UNI-LAN 2-1",
@@ -276,9 +323,9 @@ function lamElo(dR,mu){const E=1/(1+Math.pow(10,-dR/400));let lo=-3,hi=3;
  const x=(lo+hi)/2;return[Math.max(.15,(mu+x)/2),Math.max(.15,(mu-x)/2)]}
 function setModel(v){MODEL=v;NEEDC={};probs()}
 function eloPanel(){const x=eloRun(),r=ALL.slice().sort((a,b)=>x.R[b.c]-x.R[a.c]);
- let h='<table><tr><th>#</th><th style="text-align:left">Equipo</th><th>Elo</th><th>Cambio</th></tr>';
- r.forEach((t,i)=>{const d=Math.round(x.R[t.c]-x.seed[t.c]);h+=`<tr><td>${i+1}</td><td class="eq">${nm(t)}</td><td><b>${Math.round(x.R[t.c])}</b></td><td>${d>=0?'+':''}${d}</td></tr>`});
- document.getElementById('ELO').innerHTML=panel('Ranking Elo',h+'</table>',`<span style="flex-basis:100%">Elo con K=${EL.K}, ventaja de local +${EL.HFA} y más puntos por goleada, calculado con ${ELO_EXTRA.length} partidos: las fases regulares de la liga 2025 y 2026 y las fases de grupos de Libertadores y Sudamericana 2025 y 2026, más los playoffs de la liga (Apertura 2025, Clausura 2025 y Apertura 2026), la Copa Argentina 2025 y 2026, las eliminatorias de las copas internacionales, las Recopas, el Mundial de Clubes 2025 y los trofeos de la Liga Profesional, más los del Clausura 2026. Las definiciones por penales cuentan como empate (se usa el marcador al final de los 90 o 120 minutos). Rivales fijos: extranjero ${Math.round(x.ref.EXT)}, brasileño ${Math.round(x.ref.BR)}, división inferior ${Math.round(x.ref.LOW)}.</span>`)}
+ let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Elo</th><th>Cambio</th></tr></thead><tbody>';
+ r.forEach((t,i)=>{const d=Math.round(x.R[t.c]-x.seed[t.c]);h+=`<tr data-c="${t.c}"><td>${i+1}</td><td class="eq">${nm(t)}</td><td><b>${Math.round(x.R[t.c])}</b></td><td>${d>=0?'+':''}${d}</td></tr>`});
+ flipWrap(document.getElementById('ELO'),panel('Ranking Elo',h+'</tbody></table>',`<span style="flex-basis:100%">Elo con K=${EL.K}, ventaja de local +${EL.HFA} y más puntos por goleada, calculado con ${ELO_EXTRA.length} partidos: las fases regulares de la liga 2025 y 2026 y las fases de grupos de Libertadores y Sudamericana 2025 y 2026, más los playoffs de la liga (Apertura 2025, Clausura 2025 y Apertura 2026), la Copa Argentina 2025 y 2026, las eliminatorias de las copas internacionales, las Recopas, el Mundial de Clubes 2025 y los trofeos de la Liga Profesional, más los del Clausura 2026. Las definiciones por penales cuentan como empate (se usa el marcador al final de los 90 o 120 minutos). Rivales fijos: extranjero ${Math.round(x.ref.EXT)}, brasileño ${Math.round(x.ref.BR)}, división inferior ${Math.round(x.ref.LOW)}.</span>`))}
 function setup(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});const avg=G/N,K=12,S={},ix={},rem=[],E=MODEL==='elo'?eloRun().R:null;
  ALL.forEach((t,i)=>{ix[t.c]=i;const n=16+P[i].PJ+K;S[t.c]={a:(t.apGF+P[i].GF+K*avg)/n/avg,d:(t.apGC+P[i].GC+K*avg)/n/avg}});
  FX.forEach((m,i)=>{if(!res[i]){const[lh,la]=E?lamElo(E[m[1]]+EL.HFA-E[m[2]],2*avg):[avg*1.1*S[m[1]].a*S[m[2]].d,avg*.9*S[m[2]].a*S[m[1]].d];rem.push([ix[m[1]],ix[m[2]],lh,la])}});return rem}

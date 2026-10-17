@@ -30,6 +30,10 @@ with sync_playwright() as p:
     ok(pg.evaluate("document.querySelectorAll('#fixtureList .match.inter').length")==0 and pg.evaluate("!!document.querySelector('#fixtureList .dh')"),'fecha 6: aviso de fecha interzonal y sin bordes dorados')
     pg.wait_for_timeout(2200)
     ok('Elo' in pg.evaluate("document.querySelector('#PROB .ph').textContent") and pg.evaluate("document.querySelectorAll('#ELO tbody tr').length")>=30,'modelo Elo unico: probabilidades y ranking Elo (30 filas)')
+    pg.evaluate("showPane('NEED',document.querySelectorAll('.tab')[5])");pg.wait_for_timeout(200)
+    ok(pg.evaluate("document.getElementById('pane-NEED').classList.contains('on')"),'pestañas: abrir ¿Cuánto necesita? muestra su panel')
+    pg.evaluate("showPane('PROB',document.querySelectorAll('.tab')[3])");pg.wait_for_timeout(200)
+    pg.evaluate("showPane('NEED',document.querySelectorAll('.tab')[5])");pg.wait_for_timeout(200)
     pg.select_option('#selEq',label='Estudiantes (RC)');pg.wait_for_timeout(2500)
     ok(pg.evaluate("document.querySelectorAll('#needOut td').length")>0 and '>-<' not in pg.evaluate("document.getElementById('needOut').innerHTML"),'cuadro de victorias necesarias sin guiones')
     for w,h in [(1184,909),(1366,768),(1920,1080)]:
