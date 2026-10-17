@@ -104,6 +104,17 @@ table.mini th{padding:5px 6px;text-align:center;border-bottom:1px solid var(--li
 table.mini td{padding:5px 6px;text-align:center;border-bottom:1px solid rgba(28,90,46,.5)}
 table.mini tr.hi td{background:var(--pl)}
 table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
+.gwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.gwrap svg{width:100%;max-width:640px;height:auto;display:block}
+.sline{transition:opacity .2s}
+.sdot{transition:opacity .2s}
+.glegend{display:flex;gap:6px;flex-wrap:wrap}
+.leg{display:inline-flex;align-items:center;gap:6px;background:var(--inp);border:1px solid var(--line);color:var(--text);padding:5px 11px;border-radius:999px;font-size:.74rem;font-weight:600;cursor:pointer;transition:opacity .15s,border-color .15s}
+.leg span{width:14px;height:3px;border-radius:2px;background:var(--lc);box-shadow:0 0 6px var(--lc)}
+.leg.dashed span{background:repeating-linear-gradient(90deg,var(--lc) 0 5px,transparent 5px 9px)}
+.leg:hover{border-color:var(--lc)}
+.leg.off{opacity:.4;text-decoration:line-through}
+.gnote{font-size:.72rem;color:var(--muted);margin-top:10px;line-height:1.5}
 @media(max-width:760px){
 .shell{grid-template-columns:minmax(0,1fr);gap:10px}.col-p{position:static;max-height:none;overflow:visible}
 .tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}.tab{white-space:nowrap;flex:none}
@@ -147,7 +158,7 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
     <div id="pane-PROM" class="pane"><div id="PROM"></div></div>
     <div id="pane-PROB" class="pane"><div class="bar"><span class="note">Simulaciones con el modelo <b>Elo</b>: la fuerza de cada equipo sale de su ranking (pestaña Ranking Elo), que usa todos los partidos oficiales de 2025 y 2026, y se convierte a goles esperados.</span></div><div id="PROB"></div></div>
     <div id="pane-ELO" class="pane"><div id="ELO"></div></div>
-    <div id="pane-NEED" class="pane"><div id="NEED" class="panel"><div class="ph">¿Cuántas victorias necesita tu equipo?</div><div class="pad"><select id="selEq" onchange="renderNeed()" aria-label="Elegir equipo"></select></div><div id="needOut"></div></div></div>
+    <div id="pane-NEED" class="pane"><div id="NEED" class="panel"><div class="ph">¿Cuántos puntos necesita tu equipo?</div><div class="pad"><select id="selEq" onchange="renderNeed()" aria-label="Elegir equipo"></select></div><div id="needOut"></div></div></div>
     <div class="txt note"><h2>Fuentes y datos</h2>
       <p><b>Fixture:</b> Liga Profesional de Fútbol de AFA, "Agenda para la temporada 2026" (ligaprofesional.ar), fechas 11 a 16 del Clausura. Las fechas/horarios pueden moverse, los cruces no.</p>
       <p><b>Base:</b> tablas de la Zona A y B con la fecha 10 completa (los 30 equipos con 10 PJ), según futbolargentino.com y Mendoza Post (21/09/2026). El Apertura (cerrado) y los puntos de 2024 y 2025 para los promedios salen de Wikipedia / AFA. Tabla Anual y Promedios se calculan sumando esos datos fijos a lo que cargues en las fechas 11 a 16. Verificá contra ligaprofesional.ar antes de usarlo para algo importante.</p>
@@ -331,21 +342,46 @@ function setup(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=
  FX.forEach((m,i)=>{if(!res[i]){const[lh,la]=E?lamElo(E[m[1]]+EL.HFA-E[m[2]],2*avg):[avg*1.1*S[m[1]].a*S[m[2]].d,avg*.9*S[m[2]].a*S[m[1]].d];rem.push([ix[m[1]],ix[m[2]],lh,la])}});return rem}
 const tp=(r,t)=>r[0]===t?pwin(r[2],r[3]):pwin(r[3],r[2]);
 function winDist(t){let d=[1];setup().forEach(r=>{if(r[0]!==t&&r[1]!==t)return;const p=tp(r,t),n=new Array(d.length+1).fill(0);d.forEach((v,w)=>{n[w]+=v*(1-p);n[w+1]+=v*p});d=n});return d}
-// M simulaciones del resto del torneo. Con team y k, el equipo gana exactamente k de sus partidos pendientes.
-function simulate(M,team,k){
+// M simulaciones del resto del torneo. Con team y k: gana exactamente k partidos; con team y pts: consigue exactamente pts puntos.
+function simulate(M,team,k,pts){
  const rem=setup(),B=ALL.map(t=>proj(t)),o={};KEYS.forEach(q=>o[q]=new Array(30).fill(0));
  const tm=[],subs=[];let force=null;
  if(team!==undefined){rem.forEach((r,j)=>{if(r[0]===team||r[1]===team)tm.push(j)});
-  const pw=tm.map(j=>tp(rem[j],team));let tot=0;
-  for(let m=0;m<(1<<tm.length);m++){let c=0,w=1;for(let b=0;b<tm.length;b++){if(m>>b&1){c++;w*=pw[b]}else w*=1-pw[b]}if(c===k){tot+=w;subs.push([m,tot])}}
+  if(pts!==undefined){
+   // distribucion exacta de puntos del equipo en sus partidos (3=win,1=draw,0=loss) por convolucion
+   let dist=[1]; // dist[p] = prob de conseguir p puntos
+   const perMatch=[];
+   tm.forEach(j=>{const pW=tp(rem[j],team),pD=pdraw(rem[j][2],rem[j][3]),pL=1-pW-pD;perMatch.push([pL,pD,pW]);
+    const nd=new Array(dist.length+3).fill(0);
+    dist.forEach((v,q)=>{nd[q]+=v*pL;nd[q+1]+=v*pD;nd[q+3]+=v*pW});dist=nd});
+   // subs[m] = [mascara de resultados (0=L,1=D,2=W por partido), prob acumulada] solo las que suman pts
+   let tot=0;const msk=new Array(tm.length),collect=[];
+   const rec=(idx,s,pr)=>{if(s>pts)return;if(idx===tm.length){if(s===pts){tot+=pr;collect.push([msk.slice(),tot])}return}
+    for(let r=0;r<3;r++){msk[idx]=r;rec(idx+1,s+(r===2?3:r),pr*perMatch[idx][r])}};
+   rec(0,0,1);
+   subs.push(...collect);
+  }else{
+   const pw=tm.map(j=>tp(rem[j],team));let tot=0;
+   for(let m=0;m<(1<<tm.length);m++){let c=0,w=1;for(let b=0;b<tm.length;b++){if(m>>b&1){c++;w*=pw[b]}else w*=1-pw[b]}if(c===k){tot+=w;subs.push([m,tot])}}
+  }
   force=new Array(rem.length)}
  const i0=[...Array(15).keys()],i1=i0.map(i=>i+15),all0=[...Array(30).keys()];
  const AP=ALL.map(t=>t.apPts),AD=ALL.map(t=>t.apGF-t.apGC),H0=ALL.map(t=>t.h24+t.h25+t.apPts),J0=ALL.map(t=>t.pj+16);
  for(let s=0;s<M;s++){
-  if(force){const u=Math.random()*subs[subs.length-1][1];let m=subs[subs.length-1][0];for(const x of subs){if(u<=x[1]){m=x[0];break}}tm.forEach((j,b)=>force[j]=(m>>b&1)?1:2)}
+  if(force){
+   if(subs.length===0){return o}
+   const u=Math.random()*subs[subs.length-1][1];let m=subs[subs.length-1][0];for(const x of subs){if(u<=x[1]){m=x[0];break}}
+   tm.forEach((j,b)=>force[j]=pts!==undefined?(3-m[b]):(m>>b&1)?1:2)} // modo pts: m=0 perdio,1 empato,2 gano -> force 3,2,1
   const P=B.map(b=>b.Pts),F=B.map(b=>b.GF),C=B.map(b=>b.GC),J=B.map(b=>b.PJ);
   for(let j=0;j<rem.length;j++){const[h,a,lh,la]=rem[j],f=force&&force[j];let gh,ga,c=0;
-   if(f){const th=h===team;do{gh=pois(lh);ga=pois(la);c++}while(c<400&&(f===1)!==(th?gh>ga:ga>gh))}else{gh=pois(lh);ga=pois(la)}
+   if(f){const th=h===team;
+    // 1=gana, 0=empata, -1=pierde, 2=no gana (modo k). En modo pts f es 1/2/3.
+    let want;if(f===1)want=1;else if(f===2)want=(pts!==undefined)?0:2;else if(f===3)want=-1;else want=2;
+    do{gh=pois(lh);ga=pois(la);c++;
+     const res=th?Math.sign(gh-ga):Math.sign(ga-gh);
+     const ok=want===1?res===1:want===0?res===0:want===-1?res===-1:res!==1;
+     if(ok)break}while(c<400)}
+   else{gh=pois(lh);ga=pois(la)}
    F[h]+=gh;C[h]+=ga;F[a]+=ga;C[a]+=gh;J[h]++;J[a]++;
    if(gh>ga)P[h]+=3;else if(gh<ga)P[a]+=3;else{P[h]++;P[a]++}}
   [i0.slice(),i1.slice()].forEach(ids=>{ids.sort((x,y)=>P[y]-P[x]||(F[y]-C[y])-(F[x]-C[x])||F[y]-F[x]||Math.random()-.5);for(let q=0;q<8;q++)o.po[ids[q]]++});
@@ -363,14 +399,74 @@ function probs(){const o=LAST=simulate(NS);NEEDC={};eloPanel();
 function renderNeed(){if(!LAST)return;const sel=document.getElementById('selEq'),i=+sel.value;
  if(NEEDC[i]){drawNeed(NEEDC[i]);return}
  document.getElementById('needOut').innerHTML='<div class="pad note">Calculando...</div>';
- setTimeout(()=>{if(+sel.value!==i)return;const d=winDist(i);
-  NEEDC[i]=d.map((pe,k)=>{const o=d.length===1?LAST:simulate(NF,i,k),M=d.length===1?NS:NF;return{pe,v:KEYS.map(q=>o[q][i]/M)}});drawNeed(NEEDC[i])},30)}
-function drawNeed(rows){const N=rows.length-1,a=rows.findIndex(r=>r.v[1]>=.5),b=rows.findIndex(r=>r.v[4]+r.v[5]<.1);
- const m1=N===0?'No le quedan partidos sin resultado.':a<0?'Ni ganando todos llega al 50% de clasificar a playoffs.':a===0?'Ya tiene 50% o más de clasificar a playoffs sin ganar ninguno.':`Para llegar al 50% de clasificar a playoffs necesita ganar ${a} de sus ${N} partidos.`;
- const m2=N===0?'':b<0?'Ni ganando todos baja del 10% de riesgo de descenso.':b===0?'Ya está por debajo del 10% de riesgo de descenso (anual y promedios).':`Para bajar del 10% de riesgo de descenso (anual y promedios) necesita ganar ${b} de ${N}.`;
- let h='<table><tr><th>Gana</th><th>Escenario</th><th>Campeón anual</th><th>Playoffs</th><th>Libert.</th><th>Sudam.</th><th>Desc. anual</th><th>Desc. prom.</th></tr>';
- rows.forEach((r,k)=>h+=`<tr><td><b>${k} de ${N}</b></td><td>${(r.pe*100).toFixed(1)}%</td>${KEYS.map((q,j)=>pc(r.v[j],CL[q])).join('')}</tr>`);
- document.getElementById('needOut').innerHTML=`<div class="pad note">${m1}<br>${m2}</div><div class="tblwrap">${h}</table></div><div class="legend"><span style="flex-basis:100%">Cada fila es lo que pasa si el equipo gana exactamente esa cantidad de sus partidos pendientes; el resto de los resultados se simula. "Escenario" = qué tan probable es ganar esa cantidad. No incluye el % de campeón del Clausura.</span></div>`}
+ setTimeout(()=>{if(+sel.value!==i)return;
+  const rem=setup(),tm=rem.filter(r=>r[0]===i||r[1]===i),N=tm.length,maxPts=3*N;
+  if(N===0){NEEDC[i]={rows:[],N:0};drawNeed(NEEDC[i]);return}
+  // filas por nivel de puntos 0..3N: simulaciones con "el equipo consigue exactamente k puntos"
+  const rows=[];
+  for(let k=0;k<=maxPts;k++){
+   const o=simulate(NF,i,undefined,k),M=NF;
+   // probabilidad de conseguir exactamente k puntos (distribucion exacta por convolucion)
+   let dist=[1];
+   tm.forEach(r=>{const pW=tp(r,i),pD=pdraw(r[2],r[3]),pL=1-pW-pD;
+    const nd=new Array(dist.length+3).fill(0);
+    dist.forEach((v,q)=>{nd[q]+=v*pL;nd[q+1]+=v*pD;nd[q+3]+=v*pW});dist=nd});
+   const pe=dist[k]||0;
+   rows.push({pe,v:KEYS.map(q=>o[q][i]/M)})}
+  NEEDC[i]={rows,N};drawNeed(NEEDC[i])},30)}
+function drawNeed(data){
+ const rows=data.rows,N=data.N,maxPts=3*N;const eq=ALL[+document.getElementById('selEq').value];
+ if(N===0){document.getElementById('needOut').innerHTML='<div class="pad note">No le quedan partidos sin resultado: la tabla es final para este equipo.</div>';return}
+ // Y = puntos a conseguir (0..3N), X = % de probabilidad de cada evento
+ const W=560,H=340,P={l:52,r:16,t:14,b:44};
+ const plotW=W-P.l-P.r,plotH=H-P.t-P.b;
+ const x=p=>P.l+p/100*plotW,y=pt=>P.t+(1-pt/maxPts)*plotH;
+ const SERIES=[['po','Playoffs','--acc'],['lib','Libertadores','--gold'],['sud','Sudamericana','--acc2'],['ca','Campeón anual','#ff9df5'],['da','Desc. anual','#ff3b5c'],['dp','Desc. prom.','#ff884d']];
+ // un punto por nivel de puntos k (rows ya esta indexado por k)
+ const curves=SERIES.map(([k,lab,c])=>({k,lab,c,pts:rows.map((r,q)=>[q,cu_val(r,k)]).filter(p=>p[1]>0.0005||p[0]===0)}));
+ function cu_val(r,k){return k==='po'?r.v[1]:k==='lib'?r.v[2]:k==='sud'?r.v[3]:k==='ca'?r.v[0]:k==='da'?r.v[4]:r.v[5]}
+ // path suave: ordenar por prob y pintar de 0 a maxPts con pasos
+ const colors={};SERIES.forEach(([k,col,c])=>{const hard={ '--acc':'#00ff9c','--gold':'#ffd60a','--acc2':'#00d4ff'}[c]||c;
+  colors[k]=(typeof getComputedStyle==='function')?(getComputedStyle(document.documentElement).getPropertyValue(c)||hard):hard});
+ let grid='';for(let p=0;p<=maxPts;p+=Math.max(1,Math.ceil(maxPts/6))){grid+=`<line x1="${x(0)}" y1="${y(p)}" x2="${x(100)}" y2="${y(p)}" stroke="rgba(133,147,161,.14)"/><text x="${P.l-8}" y="${y(p)+4}" fill="var(--muted)" font-size="11" text-anchor="end">${p}</text>`}
+ let xlab='';for(let px=0;px<=100;px+=20){xlab+=`<text x="${x(px)}" y="${H-22}" fill="var(--muted)" font-size="11" text-anchor="middle">${px}%</text><line x1="${x(px)}" y1="${P.t}" x2="${x(px)}" y2="${P.t+plotH}" stroke="rgba(133,147,161,.10)"/>`}
+ const line=cu=>{const d=cu.pts.map((p,i)=>(i?'L':'M')+x(p[1]).toFixed(1)+' '+y(p[0]).toFixed(1)).join(' ');
+  const last=cu.pts[cu.pts.length-1];return `<path class="sline" data-k="${cu.k}" d="${d}" fill="none" stroke="${colors[cu.k]}" stroke-width="2.5" stroke-linecap="round" ${cu.k==='da'||cu.k==='dp'?'stroke-dasharray="6 4"':''}/>`+(last?`<circle cx="${x(last[1])}" cy="${y(last[0])}" r="3" fill="${colors[cu.k]}" data-k="${cu.k}" class="sdot"/>`:'')};
+ const hover=`<line id="cxh" x1="0" y1="${P.t}" x2="0" y2="${P.t+plotH}" stroke="rgba(0,255,156,.35)" stroke-width="1" visibility="hidden"/><circle id="cxo" r="5" fill="none" stroke="var(--acc)" stroke-width="2" visibility="hidden"/><rect id="hitbox" x="${P.l}" y="${P.t}" width="${plotW}" height="${plotH}" fill="transparent"/>`;
+ let legend='';SERIES.forEach(([k,lab,c])=>legend+=`<button class="leg ${k==='ca'?'':k==='da'||k==='dp'?'dashed':''}" data-k="${k}" style="--lc:${colors[k]}"><span></span>${lab}</button>`);
+ let h=`<div class="pad"><div class="gwrap"><svg id="needSvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Probabilidades según puntos a conseguir">${grid+xlab}${hover}${curves.filter(cu=>cu.pts.length>1).map(line).join('')}<text x="${W/2}" y="${H-6}" fill="var(--muted)" font-size="11" text-anchor="middle">Probabilidad de cada resultado</text><text x="14" y="${P.t+plotH/2}" fill="var(--muted)" font-size="11" text-anchor="middle" transform="rotate(-90 14 ${P.t+plotH/2})">Puntos a conseguir</text></svg>
+ <div class="glegend">${legend}</div></div><div class="gnote">Eje Y: puntos a conseguir en sus ${N} partidos pendientes. Eje X: probabilidad de cada resultado (el resto de los partidos se simula con el modelo Elo). Pasá el mouse por el gráfico para ver cuántos puntos necesita para cada probabilidad. Tocá la leyenda para ocultar líneas.</div></div>`;
+ document.getElementById('needOut').innerHTML=h;
+ // hover: crosshair + tooltip con los valores de todas las series en el nivel de puntos mas cercano
+ const svg=document.getElementById('needSvg');
+ if(!svg||!svg.addEventListener){return}
+ svg.addEventListener('mousemove',ev=>{
+  const r=svg.getBoundingClientRect(),sx=W/r.width;
+  const mx=(ev.clientX-r.left)*sx,my=(ev.clientY-r.top)*sx;
+  if(mx<P.l||mx>P.l+plotW){svg.querySelectorAll('.sline').forEach(l=>l.style.opacity='');document.getElementById('cxh').setAttribute('visibility','hidden');document.getElementById('cxo').setAttribute('visibility','hidden');svg.querySelector('.gtip')?.remove();return}
+  const p=(mx-P.l)/plotW*100;
+  document.getElementById('cxh').setAttribute('x1',mx);document.getElementById('cxh').setAttribute('x2',mx);document.getElementById('cxh').setAttribute('visibility','visible');
+  let tip=svg.querySelector('.gtip');if(!tip){tip=document.createElementNS('http://www.w3.org/2000/svg','g');tip.setAttribute('class','gtip');svg.appendChild(tip)}
+  let th=`<text x="${P.l+10}" y="${P.t+16}" fill="var(--text)" font-size="12" font-weight="700">Con ${p.toFixed(0)}% de probabilidad...</text>`;
+  let ty=P.t+34;const seen=new Set();
+  curves.forEach(cu=>{const vis=!document.querySelector(`.leg[data-k="${cu.k}"].off`);if(!vis||cu.pts.length<2)return;
+   const key=Math.round(ty);if(seen.has(key)){ty+=15}seen.add(key);
+   const riesgo=cu.k==='da'||cu.k==='dp';
+   const porK=[...cu.pts].sort((a,b)=>a[0]-b[0]); // por puntos asc
+   let yv=null,alcanza=true;
+   if(riesgo){for(const q of porK){if(q[1]<=p){yv=q[0];break}}if(yv===null){yv=porK[porK.length-1][0];alcanza=false}}
+   else{for(const q of porK){if(q[1]>=p){yv=q[0];break}}if(yv===null){yv=porK[porK.length-1][0];alcanza=false}}
+   const lab=(document.querySelector('.leg[data-k="'+cu.k+'"]')?.textContent||cu.k);
+   const txt=!alcanza?(riesgo?`${lab}: ni con todo baja de ${(100*porK[porK.length-1][1]).toFixed(0)}%`:`${lab}: ni con todo llega (${(100*porK[porK.length-1][1]).toFixed(0)}% máx)`):(riesgo?`${lab}: baja a ese riesgo con ${yv} pts`:`${lab}: ${yv} pts`);
+   const yy=y(yv);
+   th+=`<circle cx="${mx}" cy="${yy}" r="3.5" fill="${colors[cu.k]}"${alcanza?'':' opacity=".35"'}/><text x="${P.l+10}" y="${ty}" fill="${colors[cu.k]}" font-size="11"${alcanza?'':' opacity=".7"'}>${txt}</text>`;
+   ty+=15;
+   if(cu.k==='po'){document.getElementById('cxo').setAttribute('cx',mx);document.getElementById('cxo').setAttribute('cy',yy);document.getElementById('cxo').setAttribute('visibility','visible')}});
+  tip.innerHTML=th});
+ svg.addEventListener('mouseleave',()=>{document.getElementById('cxh').setAttribute('visibility','hidden');document.getElementById('cxo').setAttribute('visibility','hidden');svg.querySelector('.gtip')?.remove()});
+ document.querySelectorAll('#needOut .leg').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('off');
+  const k=b.dataset.k;svg.querySelector(`.sline[data-k="${k}"]`)?.style.setProperty('opacity',b.classList.contains('off')?.12:1);
+  svg.querySelector(`.sdot[data-k="${k}"]`)?.style.setProperty('opacity',b.classList.contains('off')?.12:1)}))}
 function sched(){clearTimeout(simTimer);simTimer=setTimeout(probs,350)}
 function resetAll(){try{localStorage.removeItem(LSK)}catch(e){}initRes();fixture();tables()}
 function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();sched()}
