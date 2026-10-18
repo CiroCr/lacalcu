@@ -105,6 +105,14 @@ table.mini td{padding:5px 6px;text-align:center;border-bottom:1px solid rgba(28,
 table.mini tr.hi td{background:var(--pl)}
 table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .gwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.gwrap2{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:12px;align-items:stretch}
+.gside{background:var(--inp);border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:2px;min-height:180px}
+.gs-hint{color:var(--muted);font-size:.75rem;margin:auto;text-align:center;line-height:1.4}
+.gs-title{color:var(--text);font-size:.85rem;font-weight:800;margin-bottom:8px}
+.gs-row{display:flex;align-items:center;gap:7px;font-size:.74rem;color:var(--muted);padding:3px 0;border-bottom:1px solid rgba(133,147,161,.08)}
+.gs-row b{margin-left:auto;color:var(--text);font-size:.8rem;white-space:nowrap}
+.gs-row.off{opacity:.6}.gs-row.off b{color:var(--muted)}
+.gs-dot{width:8px;height:8px;border-radius:50%;flex:none;box-shadow:0 0 5px currentColor}
 .gwrap svg{width:100%;max-width:640px;height:auto;display:block}
 .sline{transition:opacity .2s}
 .sdot{transition:opacity .2s}
@@ -415,61 +423,75 @@ function renderNeed(){if(!LAST)return;const sel=document.getElementById('selEq')
    rows.push({pe,v:KEYS.map(q=>o[q][i]/M)})}
   NEEDC[i]={rows,N};drawNeed(NEEDC[i])},30)}
 function drawNeed(data){
- const rows=data.rows,N=data.N,maxPts=3*N;
+ const rows=data.rows,N=data.N;
  if(N===0){document.getElementById('needOut').innerHTML='<div class="pad note">No le quedan partidos sin resultado: la tabla es final para este equipo.</div>';return}
- // ejes: X = puntos a conseguir, Y = probabilidad (0-100%)
+ // niveles posibles: con N partidos hay puntajes imposibles (ej: 8 con 3 partidos). El eje X solo muestra los posibles.
+ const ach=[];rows.forEach((r,k)=>{if(r.pe>0)ach.push(k)});
+ const maxIdx=ach.length-1;
  const W=560,H=360,P={l:56,r:18,t:16,b:52};
  const plotW=W-P.l-P.r,plotH=H-P.t-P.b;
- const X=k=>P.l+k/maxPts*plotW,Y=pr=>P.t+(1-pr/100)*plotH;
+ const X=i=>P.l+(maxIdx?i/maxIdx*plotW:plotW/2),Y=pr=>P.t+(1-pr/100)*plotH;
+ const xOf=k=>{const i=ach.indexOf(k);return i<0?null:X(i)};
  const SERIES=[['po','Playoffs','--acc'],['lib','Libertadores','--gold'],['sud','Sudamericana','#cdd5e1'],['ca','Campeón anual','#00d4ff'],['sa','Zafar (desc. anual)','#ff3b5c'],['sp','Zafar (desc. prom.)','#ff884d']];
  const raw=(r,k)=>(k==='po'?r.v[1]:k==='lib'?r.v[2]:k==='sud'?r.v[3]:k==='ca'?r.v[0]:(k==='sa'?1-r.v[4]:1-r.v[5]))*100;
- // puntos sin mesetas: la linea termina donde alcanza su maximo
+ // puntos de cada serie: solo niveles posibles, sin mesetas (la linea termina en su maximo)
  const curves=SERIES.map(([k,lab,c])=>{const pts=[];let last=-1;
-  rows.forEach((r,q)=>{const px=raw(r,k);if(px>last+0.05){pts.push([q,px]);last=px}});
+  rows.forEach((r,q)=>{if(r.pe<=0)return;const px=raw(r,k);if(px>last+0.05){pts.push([q,px]);last=px}});
   return{k,lab,c,pts}});
  const colors={};SERIES.forEach(([k,lab,c])=>{const hard={'--acc':'#00ff9c','--gold':'#ffd60a','--acc2':'#00d4ff'}[c]||c;
   colors[k]=(typeof getComputedStyle==='function')?(getComputedStyle(document.documentElement).getPropertyValue(c)||hard):hard});
- let grid='';const step=maxPts<=14?1:Math.ceil(maxPts/12);
- for(let k=0;k<=maxPts;k+=step){grid+=`<line x1="${X(k)}" y1="${P.t}" x2="${X(k)}" y2="${P.t+plotH}" stroke="rgba(133,147,161,.10)"/><text x="${X(k)}" y="${H-32}" fill="var(--muted)" font-size="11" text-anchor="middle">${k}</text>`}
- for(let pr=0;pr<=100;pr+=20){grid+=`<line x1="${P.l}" y1="${Y(pr)}" x2="${P.l+plotW}" y2="${Y(pr)}" stroke="rgba(133,147,161,.14)"/><text x="${P.l-8}" y="${Y(pr)+4}" fill="var(--muted)" font-size="11" text-anchor="end">${pr}%</text>`}
- const line=cu=>{const d=cu.pts.map((q,i)=>(i?'L':'M')+X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1)).join(' ');
+ // curva cubica monotona (Steffen): suave, pasa EXACTO por cada dato, sin inflar ni retroceder
+ const buildCurve=pp=>{const n=pp.length,xs=pp.map(p=>p[0]),ys=pp.map(p=>p[1]);
+  if(n<2)return{d:'',evalAt:null};
+  const dx=[],m=[];
+  for(let i=0;i<n-1;i++){dx[i]=xs[i+1]-xs[i];m[i]=(ys[i+1]-ys[i])/dx[i]}
+  const t=new Array(n);t[0]=m[0];t[n-1]=m[n-2];
+  for(let i=1;i<n-1;i++){const a=m[i-1],b=m[i];t[i]=a*b<=0?0:Math.min(Math.abs((a+b)/2),3*Math.min(Math.abs(a),Math.abs(b)))*Math.sign(a+b)}
+  let d='M'+xs[0]+' '+ys[0];
+  for(let i=0;i<n-1;i++)d+='C'+(xs[i]+dx[i]/3).toFixed(1)+' '+(ys[i]+t[i]*dx[i]/3).toFixed(1)+' '+(xs[i+1]-dx[i]/3).toFixed(1)+' '+(ys[i+1]-t[i+1]*dx[i]/3).toFixed(1)+' '+xs[i+1]+' '+ys[i+1];
+  return{d,evalAt:(px)=>{if(px<=xs[0])return ys[0];if(px>=xs[n-1])return null;
+   let i=0;while(i<n-2&&xs[i+1]<px)i++;const u=(px-xs[i])/dx[i],u2=u*u,u3=u2*u;
+   return (2*u3-3*u2+1)*ys[i]+(u3-2*u2+u)*dx[i]*t[i]+(-2*u3+3*u2)*ys[i+1]+(u3-u2)*dx[i]*t[i+1]}}};
+ curves.forEach(cu=>{cu.pp=cu.pts.map(p=>[xOf(p[0]),Y(p[1])]);cu.cur=buildCurve(cu.pp)});
+ let grid='';ach.forEach((k,i)=>{grid+='<line x1="'+X(i)+'" y1="'+P.t+'" x2="'+X(i)+'" y2="'+(P.t+plotH)+'" stroke="rgba(133,147,161,.10)"/><text x="'+X(i)+'" y="'+(H-32)+'" fill="var(--muted)" font-size="11" text-anchor="middle">'+k+'</text>'});
+ for(let pr=0;pr<=100;pr+=20){grid+='<line x1="'+P.l+'" y1="'+Y(pr)+'" x2="'+(P.l+plotW)+'" y2="'+Y(pr)+'" stroke="rgba(133,147,161,.14)"/><text x="'+(P.l-8)+'" y="'+(Y(pr)+4)+'" fill="var(--muted)" font-size="11" text-anchor="end">'+pr+'%</text>'}
+ const line=cu=>{if(!cu.cur.d)return '';
   const fin=cu.pts[cu.pts.length-1];
-  return `<path class="sline" data-k="${cu.k}" d="${d}" fill="none" stroke="${colors[cu.k]}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ${cu.k==='sa'||cu.k==='sp'?'stroke-dasharray="6 4"':''}/>`+(fin?`<circle cx="${X(fin[0])}" cy="${Y(fin[1])}" r="3" fill="${colors[cu.k]}" data-k="${cu.k}" class="sdot"/>`:'')};
- const hover=`<line id="cxh" x1="0" y1="${P.t}" x2="0" y2="${P.t+plotH}" stroke="rgba(0,255,156,.35)" stroke-width="1" visibility="hidden"/>`;
- let legend='';SERIES.forEach(([k,lab,c])=>legend+=`<button class="leg ${k==='sa'||k==='sp'?'dashed':''}" data-k="${k}" style="--lc:${colors[k]}"><span></span>${lab}</button>`);
- let h=`<div class="pad"><div class="gwrap"><svg id="needSvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Probabilidad según puntos conseguidos">${grid}${hover}${curves.filter(cu=>cu.pts.length>1).map(line).join('')}<text x="${W/2}" y="${H-8}" fill="var(--muted)" font-size="11" text-anchor="middle">Puntos a conseguir en sus ${N} partidos pendientes</text><text x="14" y="${P.t+plotH/2}" fill="var(--muted)" font-size="11" text-anchor="middle" transform="rotate(-90 14 ${P.t+plotH/2})">Probabilidad (%)</text></svg>
- <div class="glegend">${legend}</div></div><div class="gnote">Eje X: puntos a conseguir. Eje Y: probabilidad de cada resultado (el resto de los partidos se simula con el modelo Elo). Deslizá el cursor sobre el gráfico: el marcador sigue la línea y muestra el valor de cada serie con ese puntaje. Tocá la leyenda para ocultar líneas.</div></div>`;
+  return '<path class="sline" data-k="'+cu.k+'" d="'+cu.cur.d+'" fill="none" stroke="'+colors[cu.k]+'" stroke-width="2.5" stroke-linecap="round"'+(cu.k==='sa'||cu.k==='sp'?' stroke-dasharray="6 4"':'')+'/>'+(fin?'<circle cx="'+xOf(fin[0])+'" cy="'+Y(fin[1])+'" r="3" fill="'+colors[cu.k]+'" data-k="'+cu.k+'" class="sdot"/>':'')};
+ const hover='<line id="cxh" x1="0" y1="'+P.t+'" x2="0" y2="'+(P.t+plotH)+'" stroke="rgba(0,255,156,.35)" stroke-width="1" visibility="hidden"/>';
+ let legend='';SERIES.forEach(([k,lab,c])=>legend+='<button class="leg '+(k==='sa'||k==='sp'?'dashed':'')+'" data-k="'+k+'" style="--lc:'+colors[k]+'"><span></span>'+lab+'</button>');
+ let h='<div class="pad"><div class="gwrap2"><svg id="needSvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Probabilidad según puntos conseguidos">'+grid+hover+curves.filter(cu=>cu.cur.d).map(line).join('')+'<text x="'+(W/2)+'" y="'+(H-8)+'" fill="var(--muted)" font-size="11" text-anchor="middle">Puntos a conseguir en sus '+N+' partidos pendientes</text><text x="14" y="'+(P.t+plotH/2)+'" fill="var(--muted)" font-size="11" text-anchor="middle" transform="rotate(-90 14 '+(P.t+plotH/2)+')">Probabilidad (%)</text></svg><div class="gside" id="gside"><div class="gs-hint">Deslizá el cursor sobre el gráfico</div></div></div><div class="glegend">'+legend+'</div><div class="gnote">Eje X: puntos a conseguir (solo los puntajes posibles con '+N+' partidos). Eje Y: probabilidad de cada resultado. Las curvas pasan exactamente por los valores simulados. Tocá la leyenda para ocultar líneas.</div></div>';
  document.getElementById('needOut').innerHTML=h;
  const svg=document.getElementById('needSvg');
  if(!svg||!svg.addEventListener){return}
- // valor de la serie interpolado sobre el trazo dibujado en el nivel s (null si la linea no llega)
+ const side=document.getElementById('gside');
  const valOnLine=(cu,s)=>{const ps=cu.pts;if(!ps.length)return null;
   if(s<=ps[0][0])return ps[0][1];
-  for(let i=1;i<ps.length;i++){if(s<=ps[i][0]){const[k0,p0]=ps[i-1],[k1,p1]=ps[i];return p0+(p1-p0)*(s-k0)/(k1-k0)}}
+  for(let i=1;i<ps.length;i++){if(s<=ps[i][0]){const k0=ps[i-1][0],p0=ps[i-1][1],k1=ps[i][0],p1=ps[i][1];return p0+(p1-p0)*(s-k0)/(k1-k0)}}
   return null};
  svg.addEventListener('mousemove',ev=>{
   const r=svg.getBoundingClientRect(),sx=W/r.width;
   const mx=(ev.clientX-r.left)*sx;
-  const cxh=document.getElementById('cxh'),tipOld=svg.querySelector('.gtip');
-  if(mx<P.l||mx>P.l+plotW){cxh.setAttribute('visibility','hidden');tipOld?.remove();return}
-  const s=Math.max(0,Math.min(maxPts,Math.round((mx-P.l)/plotW*maxPts))),hx=X(s);
+  const cxh=document.getElementById('cxh');
+  if(mx<P.l||mx>P.l+plotW){cxh.setAttribute('visibility','hidden');return}
+  const i=Math.max(0,Math.min(maxIdx,Math.round((mx-P.l)/plotW*maxIdx))),s=ach[i],hx=X(i);
   cxh.setAttribute('x1',hx);cxh.setAttribute('x2',hx);cxh.setAttribute('visibility','visible');
-  let tip=tipOld;if(!tip){tip=document.createElementNS('http://www.w3.org/2000/svg','g');tip.setAttribute('class','gtip');svg.appendChild(tip)}
-  let th=`<text x="${P.l+10}" y="${P.t+16}" fill="var(--text)" font-size="12" font-weight="700">Con ${s} punto${s===1?'':'s'}...</text>`;
-  let ty=P.t+34;let marks='';
-  curves.forEach(cu=>{const vis=!document.querySelector(`.leg[data-k="${cu.k}"].off`);if(!vis||!cu.pts.length)return;
-   const lab=(document.querySelector('.leg[data-k="'+cu.k+'"]')?.textContent||cu.lab);
-   const v=valOnLine(cu,s);let txt,on=v!==null;
-   if(on)txt=`${lab}: ${v.toFixed(0)}%`;
-   else{const fin=cu.pts[cu.pts.length-1];txt=`${lab}: ${fin[1].toFixed(0)}% asegurado desde ${fin[0]} pts`}
-   const mcx=on?hx:X(cu.pts[cu.pts.length-1][0]),mcy=on?Y(v):Y(cu.pts[cu.pts.length-1][1]);
-   marks+=`<circle cx="${mcx}" cy="${mcy}" r="4.5" fill="${colors[cu.k]}" stroke="#03040a" stroke-width="1.5"${on?'':' opacity=".55"'}/>`;
-   th+=`<text x="${P.l+10}" y="${ty}" fill="${colors[cu.k]}" font-size="11"${on?'':' opacity=".75"'}>${txt}</text>`;ty+=15});
-  tip.innerHTML=marks+th});
- svg.addEventListener('mouseleave',()=>{document.getElementById('cxh').setAttribute('visibility','hidden');svg.querySelector('.gtip')?.remove()});
+  let marks='',txt='<div class="gs-title">Con '+s+' punto'+(s===1?'':'s')+'...</div>';
+  curves.forEach(cu=>{const vis=!document.querySelector('.leg[data-k="'+cu.k+'"].off');if(!vis||!cu.pts.length)return;
+   const v=valOnLine(cu,s);
+   if(v!==null){const py=cu.cur.evalAt?cu.cur.evalAt(hx):null;
+    const cy=(py!==null&&py!==undefined)?py:Y(v);
+    marks+='<circle cx="'+hx+'" cy="'+cy+'" r="4.5" fill="'+colors[cu.k]+'" stroke="#03040a" stroke-width="1.5"/>';
+    txt+='<div class="gs-row"><span class="gs-dot" style="background:'+colors[cu.k]+'"></span>'+cu.lab+'<b>'+v.toFixed(0)+'%</b></div>';return}
+   const fin=cu.pts[cu.pts.length-1];
+   txt+='<div class="gs-row off"><span class="gs-dot" style="background:'+colors[cu.k]+'"></span>'+cu.lab+'<b>'+fin[1].toFixed(0)+'% desde '+fin[0]+' pts</b></div>'});
+  let tip=svg.querySelector('.gtip');if(!tip){tip=document.createElementNS('http://www.w3.org/2000/svg','g');tip.setAttribute('class','gtip');svg.appendChild(tip)}
+  tip.innerHTML=marks;side.innerHTML=txt});
+ svg.addEventListener('mouseleave',()=>{document.getElementById('cxh').setAttribute('visibility','hidden');svg.querySelector('.gtip')?.remove();side.innerHTML='<div class="gs-hint">Deslizá el cursor sobre el gráfico</div>'});
  document.querySelectorAll('#needOut .leg').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('off');
-  const k=b.dataset.k;svg.querySelector(`.sline[data-k="${k}"]`)?.style.setProperty('opacity',b.classList.contains('off')?.12:1);
-  svg.querySelector(`.sdot[data-k="${k}"]`)?.style.setProperty('opacity',b.classList.contains('off')?.12:1)}))}
+  const k=b.dataset.k;svg.querySelector('.sline[data-k="'+k+'"]')?.style.setProperty('opacity',b.classList.contains('off')?.12:1);
+  svg.querySelector('.sdot[data-k="'+k+'"]')?.style.setProperty('opacity',b.classList.contains('off')?.12:1)}))}
+
 function sched(){clearTimeout(simTimer);simTimer=setTimeout(probs,350)}
 function resetAll(){try{localStorage.removeItem(LSK)}catch(e){}initRes();fixture();tables()}
 function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();sched()}
