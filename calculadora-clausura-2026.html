@@ -121,6 +121,9 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .detcap{font-size:.72rem;color:var(--muted);margin-bottom:8px}
 .minitabs{max-width:420px}
 .mtabs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+body.matchview #PART,body.matchview .tabs{display:none}
+body.matchview .shell{grid-template-columns:minmax(0,1fr)}
+body.matchview main{max-width:1100px;margin:0 auto;width:100%}
 .mcol{display:flex;flex-direction:column;gap:12px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
 .mtab .mini td,.mtab .mini th{padding:5px 4px;font-size:.74rem}
@@ -163,6 +166,12 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
+main .pane th,main .pane td{padding-top:4.5px;padding-bottom:4.5px}
+main .pane .legend{padding-top:5px;padding-bottom:5px;font-size:.68rem}
+main .pane .ph{padding-top:7px;padding-bottom:7px}
+.grid2{gap:8px}
+main .pane .panel{margin-bottom:8px}
+main .pane .bar{padding-top:8px;padding-bottom:8px}
 html,body{height:100%;overflow:hidden}
 body{display:flex;flex-direction:column}
 .top{flex:none}
@@ -194,7 +203,7 @@ footer.foot{flex:none;padding:8px 34px 12px}
   </section>
   <main>
     <div class="tabs">
-      <button class="tab" id="tab-zonas" onclick="showPane('zonas',this)">Zonas A + B</button>
+      <button class="tab on" id="tab-zonas" onclick="showPane('zonas',this)">Zonas A y B</button>
       <button class="tab" onclick="showPane('ANUAL',this)">Tabla anual</button>
       <button class="tab" onclick="showPane('PROM',this)">Promedios</button>
       <button class="tab" onclick="showPane('PROB',this)">Probabilidades</button>
@@ -340,7 +349,7 @@ function setF(f){curF=Math.max(1,Math.min(16,f));fixture()}
 function goF(d){setF(curF+d)}
 function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
  const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" id="in-${k}-${i}" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)" onkeydown="keyNav(event,${i},'${k}')">`;
- return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
+ return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="if(event.target.tagName!=='INPUT')openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
 function ctxRows(rows,cod){
  // rows: [{t, ...est}] ordenadas; devuelve tabla con el equipo, el de arriba y el de abajo
  const i=rows.findIndex(x=>x.t.c===cod);
@@ -403,16 +412,17 @@ function openMatch(i){
 function showMatch(i){
  const m=FX[i];
  document.getElementById('pane-MATCH').innerHTML=detBody(m,i);
+ document.body.classList.add('matchview');
  const tb=document.getElementById('tab-MATCH');
  tb.textContent=T[m[1]].n+' vs '+T[m[2]].n;
  showPane('MATCH',tb);
  tb.hidden=false}
-function closeMatch(){history.pushState({},"",location.pathname);document.getElementById('tab-MATCH').textContent='Partido'}
+function closeMatch(){history.pushState({},"",location.pathname);document.body.classList.remove('matchview');document.getElementById('tab-MATCH').textContent='Partido'}
 function toggleDet(i,ev){if(ev&&ev.target.tagName==='INPUT')return;openMatch(i)}
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'&&typeof URLSearchParams==='function'){
  window.addEventListener('popstate',()=>{
   const q=new URLSearchParams(location.search).get('m');
-  if(q!==null&&FX[+q]){showMatch(+q)}else{document.getElementById('tab-MATCH').hidden=true;document.getElementById('tab-MATCH').textContent='Partido';
+  if(q!==null&&FX[+q]){showMatch(+q)}else{document.getElementById('tab-MATCH').hidden=true;document.getElementById('tab-MATCH').textContent='Partido';document.body.classList.remove('matchview');
    if(document.getElementById('pane-MATCH').classList.contains('on')){
     document.getElementById('pane-MATCH').classList.remove('on');
     document.getElementById('tab-zonas').classList.add('on');
@@ -642,7 +652,7 @@ function sched(){clearTimeout(simTimer);simTimer=setTimeout(probs,350)}
 function resetAll(){try{localStorage.removeItem(LSK)}catch(e){}initRes();fixture();tables()}
 function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();sched()}
 document.getElementById('fSel').innerHTML=Array.from({length:16},(_,i)=>`<option value="${i+1}">Fecha ${i+1}</option>`).join('');
-document.getElementById('selEq').innerHTML=ALL.map((t,i)=>`<option value="${i}">${t.n}</option>`).join('');
+document.getElementById('selEq').innerHTML=ALL.slice().sort((a,b)=>a.n.localeCompare(b.n,'es')).map(t=>`<option value="${ALL.indexOf(t)}">${t.n}</option>`).join('');
 fixture();tables();
 
 // al cargar: si la URL trae ?m=, abrir ese partido
