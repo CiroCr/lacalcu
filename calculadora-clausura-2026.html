@@ -24,11 +24,11 @@
 html{scrollbar-width:thin;scrollbar-color:rgba(133,147,161,.3) transparent}
 html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
 body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8%,rgba(0,255,156,.06),transparent 62%),radial-gradient(circle at 20% 0,var(--bg),var(--bg2) 78%) fixed;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
-.top{display:flex;align-items:baseline;gap:14px;padding:12px 14px 8px;flex-wrap:wrap}
+.top{display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:16px 34px 6px;flex-wrap:wrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em}.logo b{color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55)}
 .top span{color:var(--muted);font-size:.85rem}
-.shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;padding:0 16px 30px;align-items:start}
+.shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:18px;padding:10px 34px 34px;align-items:start}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em;cursor:pointer;transition:color .15s,border-color .15s,box-shadow .15s,background .15s}
 .tab:hover{color:var(--text);border-color:rgba(0,255,156,.45)}
@@ -83,7 +83,7 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .bdg{display:inline-flex;flex:none;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font-size:.46rem;font-weight:800;color:#fff;text-shadow:0 0 2px #000,0 0 2px #000;border:1px solid rgba(255,255,255,.35);background:linear-gradient(90deg,var(--c1) 50%,var(--c2) 50%)}
 .txt{padding:14px;background:var(--panel);border-radius:8px;margin-bottom:12px}
 .txt h2{font-size:1rem;margin:14px 0 6px}.txt h2:first-child{margin-top:0}
-.foot{max-width:1500px;margin:0 auto;padding:10px 16px 26px;text-align:center}
+.foot{max-width:1500px;margin:0 auto;padding:10px 34px 30px;text-align:center}
 .footlinks{display:flex;justify-content:center;align-items:center;gap:14px}
 .flink{background:none;border:none;color:var(--muted);font-size:.78rem;font-weight:600;cursor:pointer;padding:4px 2px;transition:color .15s;text-decoration:underline dotted rgba(133,147,161,.5);text-underline-offset:4px}
 .flink:hover{color:var(--acc);text-decoration-color:var(--acc)}
@@ -119,6 +119,11 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .pcell b{font-size:1.15rem}
 .detcap{font-size:.72rem;color:var(--muted);margin-bottom:8px}
 .minitabs{max-width:420px}
+.mtabs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+.mcol{display:flex;flex-direction:column;gap:12px;min-width:0}
+.mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
+.mtab .mini td,.mtab .mini th{padding:5px 4px;font-size:.74rem}
+@media(max-width:760px){.mtabs{grid-template-columns:1fr}}
 .minitabs.two{max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .mt{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);margin:0 0 4px 2px}
 table.mini{width:100%;border-collapse:collapse;font-size:.8rem}
@@ -156,33 +161,25 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
-.shell{align-items:stretch;padding-bottom:14px}
-footer.foot{padding:8px 16px 12px}
-main .pane{min-height:0;padding-right:2px}
-.shell>*{min-height:0}
-main{display:flex;flex-direction:column;min-height:0}
-main .tabs{flex:none}
-main .pane{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
-main .pane.on{display:block}
-main .pane .panel{margin-bottom:10px}
-footer.foot{flex:none}
-#PART{position:sticky;top:10px;height:calc(100vh - 20px);min-height:420px;display:flex;flex-direction:column}
+#PART{position:sticky;top:12px;max-height:calc(100vh - 24px);display:flex;flex-direction:column}
 #PART .bar,#PART .fnav{flex:none;margin-bottom:8px}
 #PART .bar{padding:8px 12px}#PART .bar .note{font-size:.72rem;line-height:1.35}#PART .btn{padding:6px 12px}
 #PART .fnav{padding:3px 6px}
-#fixtureList{flex:1;min-height:0;display:flex}
-#fixtureList .panel{flex:1;display:flex;flex-direction:column;min-height:0;overflow-y:hidden;margin:0}
-#fixtureList .ph{flex:none;padding:5px 14px;font-size:.72rem}#fixtureList .dh{flex:none;padding:1px 14px;font-size:.7rem}
-#fixtureList .match{flex:1 1 0;min-height:20px;max-height:46px}
-#fixtureList .match input{padding:3px 0;font-size:.85rem}
+#fixtureList{flex:1;min-height:0;display:flex;overflow-y:auto;overscroll-behavior:contain}
+#fixtureList .panel{display:flex;flex-direction:column;margin:0}
+#fixtureList .match{min-height:36px}
+#PART .bar .note{font-size:.68rem;line-height:1.3}
+#PART{top:8px;max-height:calc(100vh - 16px)}
+#PART .bar{padding:6px 10px}#PART .bar .btn{padding:4px 10px;font-size:.74rem}
+#PART .fnav{padding:2px 6px;margin-bottom:6px}
+#fixtureList .ph{padding:4px 14px;font-size:.68rem}#fixtureList .dh{padding:1px 14px;font-size:.66rem}
 }
-@media(min-width:761px) and (max-height:759px){#fixtureList .panel{overflow-y:auto}}
 </style>
 </head>
 <body>
+<div class="top"><h1 class="logo">SIMULA<b>DOR</b><span class="sr"> Calculadora del Clausura 2026 de la Liga Profesional</span></h1><span>Clausura 2026, Liga Profesional</span></div>
 <div class="shell">
   <section id="PART" class="col-p">
-    <div class="top"><h1 class="logo">SIMULA<b>DOR</b><span class="sr"> Calculadora del Clausura 2026 de la Liga Profesional</span></h1><span>Clausura 2026, Liga Profesional</span></div>
     <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos). Tocá un partido para ver probabilidades y posiciones.</span>
     <button class="btn" onclick="resetAll()">Borrar resultados</button></div>
     <div class="fnav"><button class="arr" id="fPrev" onclick="goF(-1)" aria-label="Fecha anterior">&#8249;</button><select id="fSel" onchange="setF(+this.value)" aria-label="Elegir fecha"></select><button class="arr" id="fNext" onclick="goF(1)" aria-label="Fecha siguiente">&#8250;</button></div>
@@ -337,6 +334,37 @@ function goF(d){setF(curF+d)}
 function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
  const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)">`;
  return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
+function ctxRows(rows,cod){
+ // rows: [{t, ...est}] ordenadas; devuelve tabla con el equipo, el de arriba y el de abajo
+ const i=rows.findIndex(x=>x.t.c===cod);
+ if(i<0)return'';
+ let a,b;
+ if(i===0){a=1;b=2}else if(i===rows.length-1){a=rows.length-2;b=rows.length-1}else{a=i-1;b=i+1}
+ const idx=[...new Set([a,i,b])].sort((x,y)=>x-y);
+ let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th>';
+ h+=rows[i].hasOwnProperty('pts')?'<th>Pts</th>':rows[i].hasOwnProperty('pt')?'<th>Pts</th>':'';
+ h+=rows[i].hasOwnProperty('pj')?'<th>PJ</th>':'';
+ h+='</tr>';
+ idx.forEach(k=>{const x=rows[k],hi=x.t.c===cod?' class="hi"':'';
+  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nm(x.t)}</td>${x.pts!==undefined?`<td><b>${x.pts}</b></td>`:''}${x.pt!==undefined?`<td><b>${x.pt}</b></td>`:''}${x.pj!==undefined?`<td>${x.pj}</td>`:''}</tr>`});
+ return h+'</table>'}
+function ctxZone(teams,cod){
+ const r=teams.map(t=>({t,pts:proj(t).Pts,pj:proj(t).PJ})).sort((a,b)=>b.pts-a.pts||proj(b.t).DG-proj(a.t).DG||proj(b.t).GF-proj(a.t).GF);
+ return ctxRows(r,cod)}
+function ctxAnual(cod){
+ const r=ALL.map(t=>({t,pts:t.apPts+proj(t).Pts,pj:16+proj(t).PJ})).sort((a,b)=>b.pts-a.pts||(t=>0)(b.t)-(t=>0)(a.t)||proj(b.t).DG+ b.t.apGF-b.t.apGC-(proj(a.t).DG+a.t.apGF-a.t.apGC));
+ return ctxRows(r,cod)}
+function ctxProm(cod){
+ const r=ALL.map(t=>{const p=proj(t);return{t,pt:t.h24+t.h25+t.apPts+p.Pts,pj:t.pj+16+p.PJ,a:(t.h24+t.h25+t.apPts+p.Pts)/(t.pj+16+p.PJ)}}).sort((a,b)=>b.a-a.a);
+ const i=r.findIndex(x=>x.t.c===cod);
+ if(i<0)return'';
+ let a,b;
+ if(i===0){a=1;b=2}else if(i===r.length-1){a=r.length-2;b=r.length-1}else{a=i-1;b=i+1}
+ const idx=[...new Set([a,i,b])].sort((x,y)=>x-y);
+ let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Prom.</th></tr>';
+ idx.forEach(k=>{const x=r[k],hi=x.t.c===cod?' class="hi"':'';
+  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.a.toFixed(3)}</b></td></tr>`});
+ return h+'</table>'}
 function zoneRows(teams,cods){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>DG</th></tr>';
  r.forEach((x,k)=>{const hl=cods.includes(x.t.c)?` class="hi"`:'';h+=`<tr${hl}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${dg(x.p.DG)}</td></tr>`});
@@ -349,8 +377,14 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
  let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="history.back()">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${SCH[hC+'-'+aC]?SCH[hC+'-'+aC][0]+' · ':''}${fin?'Final · '+(SCH[hC+'-'+aC]?SCH[hC+'-'+aC][1]:''):pend(i)}</div></div>`;
  let h=hh+`<div class="pad"><div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
  h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'} según Elo, con ventaja de local. Posiciones al día de hoy.</div>`;
- if(zi(hC)===zi(aC)){h+=`<div class="minitabs">${zoneRows(zi(hC)?TB:TA,[hC,aC])}</div>`}
- else{h+=`<div class="minitabs two"><div><div class="mt">Zona ${zi(hC)?'B':'A'}</div>${zoneRows(zi(hC)?TB:TA,[hC])}</div><div><div class="mt">Zona ${zi(aC)?'B':'A'}</div>${zoneRows(zi(aC)?TB:TA,[aC])}</div></div>`}
+ // 6 mini-tablas: posicion con contexto en zona, anual y promedios para cada equipo
+ const grp=(cod,tz)=>`<div class="mtab"><div class="mt">Zona — ${nm(T[cod])}</div>${ctxZone(tz,cod)}</div>`;
+ const grpA=cod=>`<div class="mtab"><div class="mt">Anual — ${nm(T[cod])}</div>${ctxAnual(cod)}</div>`;
+ const grpP=cod=>`<div class="mtab"><div class="mt">Promedios — ${nm(T[cod])}</div>${ctxProm(cod)}</div>`;
+ h+=`<div class="mtabs">
+  <div class="mcol">${grp(hC,zi(hC)?TB:TA)}${grpA(hC)}${grpP(hC)}</div>
+  <div class="mcol">${grp(aC,zi(aC)?TB:TA)}${grpA(aC)}${grpP(aC)}</div>
+ </div>`;
  return h+'</div>'}
 function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
 function openMatch(i){
@@ -362,14 +396,16 @@ function openMatch(i){
 function showMatch(i){
  const m=FX[i];
  document.getElementById('pane-MATCH').innerHTML=detBody(m,i);
- showPane('MATCH',document.getElementById('tab-MATCH'));
- document.getElementById('tab-MATCH').hidden=false}
-function closeMatch(){history.pushState({},"",location.pathname)}
+ const tb=document.getElementById('tab-MATCH');
+ tb.textContent=T[m[1]].n+' vs '+T[m[2]].n;
+ showPane('MATCH',tb);
+ tb.hidden=false}
+function closeMatch(){history.pushState({},"",location.pathname);document.getElementById('tab-MATCH').textContent='Partido'}
 function toggleDet(i,ev){if(ev&&ev.target.tagName==='INPUT')return;openMatch(i)}
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'&&typeof URLSearchParams==='function'){
  window.addEventListener('popstate',()=>{
   const q=new URLSearchParams(location.search).get('m');
-  if(q!==null&&FX[+q]){showMatch(+q)}else{document.getElementById('tab-MATCH').hidden=true;
+  if(q!==null&&FX[+q]){showMatch(+q)}else{document.getElementById('tab-MATCH').hidden=true;document.getElementById('tab-MATCH').textContent='Partido';
    if(document.getElementById('pane-MATCH').classList.contains('on')){
     document.getElementById('pane-MATCH').classList.remove('on');
     document.getElementById('tab-zonas').classList.add('on');

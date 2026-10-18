@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 URL=(Path(__file__).resolve().parent.parent/'calculadora-clausura-2026.html').as_uri()
-FIT="()=>{const p=document.querySelector('#fixtureList .panel');return p.scrollHeight-p.clientHeight}"
+FIT="()=>{const p=document.querySelector('#fixtureList');return p.scrollHeight-p.clientHeight}"
 fallas=[];errs=[]
 def ok(c,m):
     print(('OK     ' if c else 'FALLA  ')+m)
