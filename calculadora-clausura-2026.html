@@ -24,7 +24,7 @@
 html{scrollbar-width:thin;scrollbar-color:rgba(133,147,161,.3) transparent}
 html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
 body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8%,rgba(0,255,156,.06),transparent 62%),radial-gradient(circle at 20% 0,var(--bg),var(--bg2) 78%) fixed;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
-.top{display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:16px 34px 6px;flex-wrap:wrap}
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:14px 34px 8px;flex-wrap:wrap;background:linear-gradient(rgba(7,9,15,.96) 82%,rgba(7,9,15,.75));backdrop-filter:blur(8px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em}.logo b{color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55)}
 .top span{color:var(--muted);font-size:.85rem}
@@ -33,6 +33,7 @@ body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8
 .tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em;cursor:pointer;transition:color .15s,border-color .15s,box-shadow .15s,background .15s}
 .tab:hover{color:var(--text);border-color:rgba(0,255,156,.45)}
 .tab.on{color:#02120b;background:var(--acc);border-color:var(--acc);box-shadow:0 0 18px rgba(0,255,156,.35)}
+#tab-MATCH{max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none;min-width:120px}
 .pane{display:none}
 .pane.on{display:block;animation:fadeUp .22s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}}
@@ -161,7 +162,7 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
-#PART{position:sticky;top:12px;max-height:calc(100vh - 24px);display:flex;flex-direction:column}
+#PART{position:sticky;top:58px;max-height:calc(100vh - 66px);display:flex;flex-direction:column}
 #PART .bar,#PART .fnav{flex:none;margin-bottom:8px}
 #PART .bar{padding:8px 12px}#PART .bar .note{font-size:.72rem;line-height:1.35}#PART .btn{padding:6px 12px}
 #PART .fnav{padding:3px 6px}
@@ -332,7 +333,7 @@ let curF=LIVEF;
 function setF(f){curF=Math.max(1,Math.min(16,f));fixture()}
 function goF(d){setF(curF+d)}
 function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
- const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)">`;
+ const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" id="in-${k}-${i}" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)" onkeydown="keyNav(event,${i},'${k}')">`;
  return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
 function ctxRows(rows,cod){
  // rows: [{t, ...est}] ordenadas; devuelve tabla con el equipo, el de arriba y el de abajo
@@ -378,9 +379,9 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
  let h=hh+`<div class="pad"><div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
  h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'} según Elo, con ventaja de local. Posiciones al día de hoy.</div>`;
  // 6 mini-tablas: posicion con contexto en zona, anual y promedios para cada equipo
- const grp=(cod,tz)=>`<div class="mtab"><div class="mt">Zona — ${nm(T[cod])}</div>${ctxZone(tz,cod)}</div>`;
- const grpA=cod=>`<div class="mtab"><div class="mt">Anual — ${nm(T[cod])}</div>${ctxAnual(cod)}</div>`;
- const grpP=cod=>`<div class="mtab"><div class="mt">Promedios — ${nm(T[cod])}</div>${ctxProm(cod)}</div>`;
+ const grp=(cod,tz)=>`<div class="mtab"><div class="mt">${zi(cod)?'Zona B':'Zona A'}</div>${ctxZone(tz,cod)}</div>`;
+ const grpA=cod=>`<div class="mtab"><div class="mt">Tabla anual</div>${ctxAnual(cod)}</div>`;
+ const grpP=cod=>`<div class="mtab"><div class="mt">Promedios</div>${ctxProm(cod)}</div>`;
  h+=`<div class="mtabs">
   <div class="mcol">${grp(hC,zi(hC)?TB:TA)}${grpA(hC)}${grpP(hC)}</div>
   <div class="mcol">${grp(aC,zi(aC)?TB:TA)}${grpA(aC)}${grpP(aC)}</div>
@@ -422,7 +423,28 @@ function fixture(){
  document.getElementById('fixtureList').innerHTML=h+'</div>';
  document.getElementById('fSel').value=curF;document.getElementById('fPrev').disabled=curF<=1;document.getElementById('fNext').disabled=curF>=16}
 function sc(i,k,el){let v=el.value.replace(/\D/g,'').slice(0,2);if(v!==''&&+v>15)v='15';if(el.value!==v)el.value=v;const c=part[i]||(part[i]={gh:'',ga:''});c[k]=v;save();res[i]=(c.gh===''||c.ga==='')?null:{gh:+c.gh,ga:+c.ga};
- const s=document.getElementById('st'+i);s.textContent=res[i]?'Final':pend(i);s.classList.toggle('fin',!!res[i]);tables()}
+ const s=document.getElementById('st'+i);s.textContent=res[i]?'Final':pend(i);s.classList.toggle('fin',!!res[i]);tables();adv(i,k,el)}
+let advT=null;
+function adv(i,k,el){ // tras cargar goles: foco al rival (si escribio 1, espera un 2do digito por si es 10-15)
+ clearTimeout(advT);
+ if(!el||!el.value)return;
+ const wait=(el.value.length===1&&el.value==='1')?700:80;
+ advT=setTimeout(()=>{if(document.activeElement!==el)return;
+  const o=document.getElementById('in-'+(k==='gh'?'ga':'gh')+'-'+i);
+  if(o&&!o.readOnly){o.focus();o.select()}},wait)}
+function keyNav(ev,i,k){ // Enter: partido siguiente; flechas: entre partidos y entre local/visita
+ clearTimeout(advT);
+ const list=[...document.querySelectorAll('#fixtureList input:not([readonly])')];
+ const me=document.getElementById('in-'+k+'-'+i);
+ const idx=list.indexOf(me);
+ if(idx<0)return;
+ const go=n=>{const t=list[n];if(t){ev.preventDefault();t.focus();t.select()}};
+ const side=k==='gh'?0:1;
+ if(ev.key==='Enter')go(idx-side+2);
+ else if(ev.key==='ArrowDown')go(idx+2);
+ else if(ev.key==='ArrowUp')go(idx-2);
+ else if(ev.key==='ArrowRight'&&k==='gh')go(idx+1);
+ else if(ev.key==='ArrowLeft'&&k==='ga')go(idx-1)}
 // Probabilidades: simulaciones con goles de Poisson y fuerza de ataque/defensa por equipo
 const NS=10000,NF=2500,KEYS=['ca','po','lib','sud','da','dp'],CL={ca:'242,194,0',po:'76,175,80',lib:'242,194,0',sud:'90,178,230',da:'215,25,32',dp:'215,25,32'};let simTimer=null,LAST=null,NEEDC={};const BI=ALL.findIndex(t=>t.c==='BEL');
 const pois=l=>{const L=Math.exp(-l);let k=0,p=1;do{k++;p*=Math.random()}while(p>L);return k-1};
