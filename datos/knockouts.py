@@ -29,7 +29,7 @@ FILES = {
     'copa-argentina-2025.json': 62,
     'copa-argentina-2026.json': 59,
     'conmebol-2025.json': 33,
-    'conmebol-2026.json': 29,
+    'conmebol-2026.json': 30,
     'otros-torneos.json': 16,
 }
 

@@ -33,7 +33,7 @@ const lines=vm.runInContext('('+function(){
   log(!badT.length,'estado tras la fecha 11 (las fechas 12 en adelante se ignoran): 30 filas coinciden con la tabla publicada '+badT);
   log(true,'resultados oficiales cargados en fechas 11-16: '+FX.filter(m=>m[4]).length+' | pendientes: '+FX.filter(m=>!m[4]).length+' | fecha por defecto: '+curF);
   // --- Elo
-  log(ELO_EXTRA.length===1106,'ELO_EXTRA tiene '+ELO_EXTRA.length+' partidos (esperado 1106: 864 de fase regular y grupos + 242 de playoffs, Copa Argentina, eliminatorias CONMEBOL, Recopas, Mundial y trofeos)');
+  log(ELO_EXTRA.length===1107,'ELO_EXTRA tiene '+ELO_EXTRA.length+' partidos (esperado 1107: 864 de fase regular y grupos + 243 de playoffs, Copa Argentina, eliminatorias CONMEBOL, Recopas, Mundial y trofeos)');
   const e=eloRun(),rk=ALL.slice().sort((a,b)=>e.R[b.c]-e.R[a.c]);
   log(rk.every(t=>isFinite(e.R[t.c])),'Elo: top5 '+rk.slice(0,5).map(t=>t.c+' '+Math.round(e.R[t.c])).join(', ')+' | ultimos '+rk.slice(-3).map(t=>t.c+' '+Math.round(e.R[t.c])).join(', '));
   log(true,'Elo: rivales fijos EXT='+Math.round(e.ref.EXT)+' BR='+Math.round(e.ref.BR)+' LOW='+Math.round(e.ref.LOW));
