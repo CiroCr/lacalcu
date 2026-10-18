@@ -421,14 +421,15 @@ function drawNeed(data){
  const W=560,H=340,P={l:52,r:16,t:14,b:44};
  const plotW=W-P.l-P.r,plotH=H-P.t-P.b;
  const x=p=>P.l+p/100*plotW,y=pt=>P.t+(1-pt/maxPts)*plotH;
- const SERIES=[['po','Playoffs','--acc'],['lib','Libertadores','--gold'],['sud','Sudamericana','--acc2'],['ca','Campeón anual','#ff9df5'],['da','Desc. anual','#ff3b5c'],['dp','Desc. prom.','#ff884d']];
- // un punto por nivel de puntos k (rows ya esta indexado por k)
- const curves=SERIES.map(([k,lab,c])=>({k,lab,c,pts:rows.map((r,q)=>[q,cu_val(r,k)]).filter(p=>p[1]>0.0005||p[0]===0)}));
+ const SERIES=[['po','Playoffs','--acc'],['lib','Libertadores','--gold'],['sud','Sudamericana','#cdd5e1'],['ca','Campeón anual','#00d4ff'],['da','Desc. anual','#ff3b5c'],['dp','Desc. prom.','#ff884d']];
+ // un punto por nivel de puntos k (rows ya esta indexado por k). x en porcentaje (0-100)
+ const curves=SERIES.map(([k,lab,c])=>({k,lab,c,pts:rows.map((r,q)=>[q,cu_val(r,k)*100]).filter(p=>p[1]>0.05||p[0]===0)}));
  function cu_val(r,k){return k==='po'?r.v[1]:k==='lib'?r.v[2]:k==='sud'?r.v[3]:k==='ca'?r.v[0]:k==='da'?r.v[4]:r.v[5]}
  // path suave: ordenar por prob y pintar de 0 a maxPts con pasos
  const colors={};SERIES.forEach(([k,col,c])=>{const hard={ '--acc':'#00ff9c','--gold':'#ffd60a','--acc2':'#00d4ff'}[c]||c;
   colors[k]=(typeof getComputedStyle==='function')?(getComputedStyle(document.documentElement).getPropertyValue(c)||hard):hard});
- let grid='';for(let p=0;p<=maxPts;p+=Math.max(1,Math.ceil(maxPts/6))){grid+=`<line x1="${x(0)}" y1="${y(p)}" x2="${x(100)}" y2="${y(p)}" stroke="rgba(133,147,161,.14)"/><text x="${P.l-8}" y="${y(p)+4}" fill="var(--muted)" font-size="11" text-anchor="end">${p}</text>`}
+ let grid='';const step=maxPts<=14?1:Math.ceil(maxPts/12);
+ for(let p=0;p<=maxPts;p+=step){grid+=`<line x1="${x(0)}" y1="${y(p)}" x2="${x(100)}" y2="${y(p)}" stroke="rgba(133,147,161,.14)"/><text x="${P.l-8}" y="${y(p)+4}" fill="var(--muted)" font-size="11" text-anchor="end">${p}</text>`}
  let xlab='';for(let px=0;px<=100;px+=20){xlab+=`<text x="${x(px)}" y="${H-22}" fill="var(--muted)" font-size="11" text-anchor="middle">${px}%</text><line x1="${x(px)}" y1="${P.t}" x2="${x(px)}" y2="${P.t+plotH}" stroke="rgba(133,147,161,.10)"/>`}
  const line=cu=>{const d=cu.pts.map((p,i)=>(i?'L':'M')+x(p[1]).toFixed(1)+' '+y(p[0]).toFixed(1)).join(' ');
   const last=cu.pts[cu.pts.length-1];return `<path class="sline" data-k="${cu.k}" d="${d}" fill="none" stroke="${colors[cu.k]}" stroke-width="2.5" stroke-linecap="round" ${cu.k==='da'||cu.k==='dp'?'stroke-dasharray="6 4"':''}/>`+(last?`<circle cx="${x(last[1])}" cy="${y(last[0])}" r="3" fill="${colors[cu.k]}" data-k="${cu.k}" class="sdot"/>`:'')};
@@ -456,8 +457,9 @@ function drawNeed(data){
    let yv=null,alcanza=true;
    if(riesgo){for(const q of porK){if(q[1]<=p){yv=q[0];break}}if(yv===null){yv=porK[porK.length-1][0];alcanza=false}}
    else{for(const q of porK){if(q[1]>=p){yv=q[0];break}}if(yv===null){yv=porK[porK.length-1][0];alcanza=false}}
+   // porK[1] ya esta en porcentaje (0-100), igual que p
    const lab=(document.querySelector('.leg[data-k="'+cu.k+'"]')?.textContent||cu.k);
-   const txt=!alcanza?(riesgo?`${lab}: ni con todo baja de ${(100*porK[porK.length-1][1]).toFixed(0)}%`:`${lab}: ni con todo llega (${(100*porK[porK.length-1][1]).toFixed(0)}% máx)`):(riesgo?`${lab}: baja a ese riesgo con ${yv} pts`:`${lab}: ${yv} pts`);
+   const txt=!alcanza?(riesgo?`${lab}: ni con todo baja de ${porK[porK.length-1][1].toFixed(0)}%`:`${lab}: ni con todo llega (${porK[porK.length-1][1].toFixed(0)}% máx)`):(riesgo?`${lab}: baja a ese riesgo con ${yv} pts`:`${lab}: ${yv} pts`);
    const yy=y(yv);
    th+=`<circle cx="${mx}" cy="${yy}" r="3.5" fill="${colors[cu.k]}"${alcanza?'':' opacity=".35"'}/><text x="${P.l+10}" y="${ty}" fill="${colors[cu.k]}" font-size="11"${alcanza?'':' opacity=".7"'}>${txt}</text>`;
    ty+=15;
