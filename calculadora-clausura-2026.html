@@ -123,7 +123,22 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .mtabs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
 body.matchview #PART,body.matchview .tabs{display:none}
 body.matchview .shell{grid-template-columns:minmax(0,1fr)}
-body.matchview main{max-width:1100px;margin:0 auto;width:100%}
+body.matchview main{max-width:1200px;margin:0 auto;width:100%}
+body.matchview .mhead .bdg2{width:72px;height:72px}
+body.matchview .mteam span{font-size:1.05rem}
+body.matchview .mscore b{font-size:2.6rem}
+body.matchview .mtab{padding:12px 14px}
+body.matchview table.mini{font-size:.86rem}
+body.matchview table.mini td{padding:7px 8px}
+body.matchview table.mini th{padding:6px 8px;font-size:.7rem}
+body.matchview .probrow .pcell{padding:12px 8px}
+body.matchview .probrow .pcell b{font-size:1.5rem}
+body.matchview .probrow .pcell .pl{font-size:.8rem}
+.l5{display:inline-block;min-width:34px;padding:2px 6px;border-radius:5px;font-weight:700;font-size:.74rem;text-align:center}
+.l5.v{background:rgba(76,175,80,.18);color:#66bb6a}
+.l5.e{background:rgba(133,147,161,.15);color:#9aa7b4}
+.l5.d{background:rgba(255,59,92,.15);color:#ff5f7e}
+.l5v,.l5a{color:var(--muted);font-size:.68rem}
 .mcol{display:flex;flex-direction:column;gap:12px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
 .mtab .mini td,.mtab .mini th{padding:5px 4px;font-size:.74rem}
@@ -168,9 +183,10 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 @media(min-width:761px){
 main .pane th,main .pane td{padding-top:4.5px;padding-bottom:4.5px}
 main .pane .legend{padding-top:5px;padding-bottom:5px;font-size:.68rem}
+main .pane table.fitted tbody tr{height:var(--fh)}
 main .pane .ph{padding-top:7px;padding-bottom:7px}
-.grid2{gap:8px}
-main .pane .panel{margin-bottom:8px}
+main .pane .grid2{align-items:stretch}
+main .pane .panel{margin-bottom:0}
 main .pane .bar{padding-top:8px;padding-bottom:8px}
 html,body{height:100%;overflow:hidden}
 body{display:flex;flex-direction:column}
@@ -282,7 +298,8 @@ function proj(t){let pj=0,gf=0,gc=0,pts=0;FX.forEach((f,i)=>{const r=res[i];if(!
 const dg=n=>(n>0?"+":"")+n,nm=t=>`<span class="nm">${bdg(t.c)}${t.n}</span>`;
 const panel=(title,body,leg)=>`<div class="panel"><div class="ph">${title}</div><div class="tblwrap">${body}</div>${leg?`<div class="legend">${leg}</div>`:''}</div>`;
 function showPane(id,btn){document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+id));
- document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===btn))}
+ document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===btn));
+ setTimeout(fitTables,30)}
 // --- animacion FLIP de tablas: las filas se deslizan cuando cambian de posicion ---
 function flipWrap(container,newHTML){
  if(!container.querySelectorAll){container.innerHTML=newHTML;return}
@@ -350,37 +367,25 @@ function goF(d){setF(curF+d)}
 function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
  const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" id="in-${k}-${i}" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)" onkeydown="keyNav(event,${i},'${k}')">`;
  return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="if(event.target.tagName!=='INPUT')openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
-function ctxRows(rows,cod){
- // rows: [{t, ...est}] ordenadas; devuelve tabla con el equipo, el de arriba y el de abajo
+function ctxRows(rows,cod,cols){
  const i=rows.findIndex(x=>x.t.c===cod);
  if(i<0)return'';
  let a,b;
  if(i===0){a=1;b=2}else if(i===rows.length-1){a=rows.length-2;b=rows.length-1}else{a=i-1;b=i+1}
  const idx=[...new Set([a,i,b])].sort((x,y)=>x-y);
- let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th>';
- h+=rows[i].hasOwnProperty('pts')?'<th>Pts</th>':rows[i].hasOwnProperty('pt')?'<th>Pts</th>':'';
- h+=rows[i].hasOwnProperty('pj')?'<th>PJ</th>':'';
- h+='</tr>';
+ let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th>'+cols.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr>';
  idx.forEach(k=>{const x=rows[k],hi=x.t.c===cod?' class="hi"':'';
-  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nm(x.t)}</td>${x.pts!==undefined?`<td><b>${x.pts}</b></td>`:''}${x.pt!==undefined?`<td><b>${x.pt}</b></td>`:''}${x.pj!==undefined?`<td>${x.pj}</td>`:''}</tr>`});
+  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nm(x.t)}</td>`+cols.map(c=>`<td>${x[c[0]]!==undefined?(c[2]?c[2](x):x[c[0]]):''}</td>`).join('')+'</tr>'});
  return h+'</table>'}
-function ctxZone(teams,cod){
- const r=teams.map(t=>({t,pts:proj(t).Pts,pj:proj(t).PJ})).sort((a,b)=>b.pts-a.pts||proj(b.t).DG-proj(a.t).DG||proj(b.t).GF-proj(a.t).GF);
- return ctxRows(r,cod)}
+function ctxZone(tz,cod){
+ const r=tz.map(t=>{const p=proj(t);return{t,pts:p.Pts,pj:p.PJ,gf:p.GF,gc:p.GC,dg:p.DG}}).sort((a,b)=>b.pts-a.pts||b.dg-a.dg||b.gf-a.gf);
+ return ctxRows(r,cod,[['pts','Pts',x=>'<b>'+x.pts+'</b>'],['pj','PJ'],['gf','F'],['gc','C'],['dg','DG',x=>(x.dg>0?'+':'')+x.dg]])}
 function ctxAnual(cod){
- const r=ALL.map(t=>({t,pts:t.apPts+proj(t).Pts,pj:16+proj(t).PJ})).sort((a,b)=>b.pts-a.pts||(t=>0)(b.t)-(t=>0)(a.t)||proj(b.t).DG+ b.t.apGF-b.t.apGC-(proj(a.t).DG+a.t.apGF-a.t.apGC));
- return ctxRows(r,cod)}
+ const r=ALL.map(t=>{const p=proj(t);return{t,pts:t.apPts+p.Pts,pj:16+p.PJ,gf:t.apGF+p.GF,gc:t.apGC+p.GC,dg:t.apGF-t.apGC+p.DG}}).sort((a,b)=>b.pts-a.pts||b.dg-a.dg||b.gf-a.gf);
+ return ctxRows(r,cod,[['pts','Pts',x=>'<b>'+x.pts+'</b>'],['pj','PJ'],['gf','F'],['gc','C'],['dg','DG',x=>(x.dg>0?'+':'')+x.dg]])}
 function ctxProm(cod){
  const r=ALL.map(t=>{const p=proj(t);return{t,pt:t.h24+t.h25+t.apPts+p.Pts,pj:t.pj+16+p.PJ,a:(t.h24+t.h25+t.apPts+p.Pts)/(t.pj+16+p.PJ)}}).sort((a,b)=>b.a-a.a);
- const i=r.findIndex(x=>x.t.c===cod);
- if(i<0)return'';
- let a,b;
- if(i===0){a=1;b=2}else if(i===r.length-1){a=r.length-2;b=r.length-1}else{a=i-1;b=i+1}
- const idx=[...new Set([a,i,b])].sort((x,y)=>x-y);
- let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Prom.</th></tr>';
- idx.forEach(k=>{const x=r[k],hi=x.t.c===cod?' class="hi"':'';
-  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.a.toFixed(3)}</b></td></tr>`});
- return h+'</table>'}
+ return ctxRows(r,cod,[['a','Prom.',x=>'<b>'+x.a.toFixed(3)+'</b>'],['pt','Pts'],['pj','PJ']])}
 function zoneRows(teams,cods){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>DG</th></tr>';
  r.forEach((x,k)=>{const hl=cods.includes(x.t.c)?` class="hi"`:'';h+=`<tr${hl}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${dg(x.p.DG)}</td></tr>`});
@@ -397,9 +402,20 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
  const grp=(cod,tz)=>`<div class="mtab"><div class="mt">${zi(cod)?'Zona B':'Zona A'}</div>${ctxZone(tz,cod)}</div>`;
  const grpA=cod=>`<div class="mtab"><div class="mt">Tabla anual</div>${ctxAnual(cod)}</div>`;
  const grpP=cod=>`<div class="mtab"><div class="mt">Promedios</div>${ctxProm(cod)}</div>`;
+ const last5=cod=>{
+  const ps=[...PAST.filter(m=>m[4]&&(m[1]===cod||m[2]===cod)).map(m=>({f:m[0],h:m[1],a:m[2],g:m[4]})),
+   ...FX.map((m,i)=>({m,r:m[4]||res[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:x.r}))];
+  const all=ps.sort((x,y)=>x.f-y.f).slice(-5);
+  if(!all.length)return'';
+  let t='<div class="mtab"><div class="mt">Últimos 5 partidos</div><table class="mini"><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
+  all.forEach(m=>{
+   const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
+   const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
+   t+=`<tr><td>${m.f}</td><td class="eq">${home?'<span class="l5v">vs</span>':'<span class="l5a">@</span>'} ${nm(rival)}</td><td><span class="l5 ${win}">${r}</span></td></tr>`});
+  return t+'</table></div>'};
  h+=`<div class="mtabs">
-  <div class="mcol">${grp(hC,zi(hC)?TB:TA)}${grpA(hC)}${grpP(hC)}</div>
-  <div class="mcol">${grp(aC,zi(aC)?TB:TA)}${grpA(aC)}${grpP(aC)}</div>
+  <div class="mcol">${grp(hC,zi(hC)?TB:TA)}${grpA(hC)}${grpP(hC)}${last5(hC)}</div>
+  <div class="mcol">${grp(aC,zi(aC)?TB:TA)}${grpA(aC)}${grpP(aC)}${last5(aC)}</div>
  </div>`;
  return h+'</div>'}
 function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
@@ -429,6 +445,26 @@ if(typeof window!=='undefined'&&typeof window.addEventListener==='function'&&typ
     document.getElementById('pane-zonas').classList.add('on')}}});
 }
 
+function fitTables(){
+ if(typeof window==='undefined'||window.innerWidth<761)return;
+ const pane=document.querySelector('main .pane.on');if(!pane||!pane.clientHeight)return;
+ const availH=pane.clientHeight;
+ // paneles visibles del pane activo (tablas principales): zonas (2), o tabla unica + su barra/nota
+ const others=[...pane.children].filter(x=>!x.classList.contains('panel')&&!x.querySelector('.panel'));
+ const used=others.reduce((s,x)=>s+x.getBoundingClientRect().height,0);
+ let free=availH-used;
+ const panels=[...pane.querySelectorAll('.panel')].filter(x=>x.offsetParent!==null);
+ if(!panels.length)return;
+ // zonas: 2 tablas lado a lado -> cada una tiene el alto completo; tabla unica: alto completo
+ const eachH=free;
+ panels.forEach(p=>{
+  const tb=p.querySelector('.tblwrap table');if(!tb||!tb.tBodies[0]||!tb.tBodies[0].rows.length)return;
+  const rows=tb.tBodies[0].rows.length;
+  const ph=p.querySelector('.ph'),leg=p.querySelector('.legend');
+  const extra=(ph?ph.getBoundingClientRect().height:0)+(leg?leg.getBoundingClientRect().height:0);
+  const fh=Math.max(36,Math.min(48,(eachH-extra-6)/rows));
+  tb.style.setProperty('--fh',fh.toFixed(1)+'px');
+  tb.classList.add('fitted')})}
 function fixture(){
  const list=curF<=10?PAST.filter(m=>m[0]===curF).map(m=>[m,-1]):FX.map((m,i)=>[m,i]).filter(x=>x[0][0]===curF);
  ALLI=list.every(([m])=>m[3]);
@@ -650,7 +686,8 @@ if(typeof document.addEventListener==='function'){document.addEventListener('cli
 document.addEventListener('keydown',ev=>{if(ev.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>m.hidden=true)})}
 function sched(){clearTimeout(simTimer);simTimer=setTimeout(probs,350)}
 function resetAll(){try{localStorage.removeItem(LSK)}catch(e){}initRes();fixture();tables()}
-function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();sched()}
+function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();fitTables();sched()}
+if(typeof window!=='undefined')window.addEventListener('resize',()=>{clearTimeout(window._fitT);window._fitT=setTimeout(fitTables,150)});
 document.getElementById('fSel').innerHTML=Array.from({length:16},(_,i)=>`<option value="${i+1}">Fecha ${i+1}</option>`).join('');
 document.getElementById('selEq').innerHTML=ALL.slice().sort((a,b)=>a.n.localeCompare(b.n,'es')).map(t=>`<option value="${ALL.indexOf(t)}">${t.n}</option>`).join('');
 fixture();tables();
