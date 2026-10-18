@@ -24,7 +24,7 @@
 html{scrollbar-width:thin;scrollbar-color:rgba(133,147,161,.3) transparent}
 html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
 body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8%,rgba(0,255,156,.06),transparent 62%),radial-gradient(circle at 20% 0,var(--bg),var(--bg2) 78%) fixed;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
-.top{position:sticky;top:0;z-index:30;display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:14px 34px 8px;flex-wrap:wrap;background:linear-gradient(rgba(7,9,15,.96) 82%,rgba(7,9,15,.75));backdrop-filter:blur(8px)}
+.top{display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:14px 34px 8px;flex-wrap:wrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em}.logo b{color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55)}
 .top span{color:var(--muted);font-size:.85rem}
@@ -74,7 +74,7 @@ tbody tr{transition:background .2s,box-shadow .2s}
 tbody tr:hover{background:rgba(255,255,255,.03)}
 td.eq{text-align:left;font-weight:600}.nm{display:inline-flex;align-items:center;gap:9px}
 tr.playoff td{background:var(--pl)}tr.playoff td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
-tr.lib td,tr.camp td{background:var(--lib)}tr.camp td:first-child{box-shadow:inset 3px 0 0 var(--gold)}
+tr.lib td,tr.camp td{background:var(--lib)}tr.lib td:first-child,tr.camp td:first-child{box-shadow:inset 3px 0 0 var(--gold)}
 .tag{font-size:.6rem;font-weight:700;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;margin-left:8px;white-space:nowrap}
 tr.sud td{background:var(--sud)}tr.sud td:first-child{box-shadow:inset 3px 0 0 var(--acc2)}
 tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0 0 #ff3b5c}
@@ -130,6 +130,7 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 table.mini{width:100%;border-collapse:collapse;font-size:.8rem}
 table.mini th{padding:5px 6px;text-align:center;border-bottom:1px solid var(--line);color:var(--muted);font-size:.64rem;text-transform:uppercase}
 table.mini td{padding:5px 6px;text-align:center;border-bottom:1px solid rgba(28,90,46,.5)}
+table.mini td.eq{text-align:left}
 table.mini tr.hi td{background:var(--pl)}
 table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .gwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
@@ -162,17 +163,22 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
-#PART{position:sticky;top:58px;max-height:calc(100vh - 66px);display:flex;flex-direction:column}
+html,body{height:100%;overflow:hidden}
+body{display:flex;flex-direction:column}
+.top{flex:none}
+.shell{flex:1;min-height:0;overflow:hidden;align-items:stretch;padding-bottom:0}
+.shell>*{min-height:0}
+main{display:flex;flex-direction:column;min-height:0}
+main .tabs{flex:none}
+main .pane{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+footer.foot{flex:none;padding:8px 34px 12px}
+#PART{display:flex;flex-direction:column;min-height:0}
 #PART .bar,#PART .fnav{flex:none;margin-bottom:8px}
-#PART .bar{padding:8px 12px}#PART .bar .note{font-size:.72rem;line-height:1.35}#PART .btn{padding:6px 12px}
-#PART .fnav{padding:3px 6px}
-#fixtureList{flex:1;min-height:0;display:flex;overflow-y:auto;overscroll-behavior:contain}
+#PART .bar{padding:6px 10px}#PART .bar .note{font-size:.68rem;line-height:1.3}#PART .bar .btn{padding:4px 10px;font-size:.74rem}
+#PART .fnav{padding:2px 6px;margin-bottom:6px}
+#fixtureList{flex:1;min-height:0;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
 #fixtureList .panel{display:flex;flex-direction:column;margin:0}
 #fixtureList .match{min-height:36px}
-#PART .bar .note{font-size:.68rem;line-height:1.3}
-#PART{top:8px;max-height:calc(100vh - 16px)}
-#PART .bar{padding:6px 10px}#PART .bar .btn{padding:4px 10px;font-size:.74rem}
-#PART .fnav{padding:2px 6px;margin-bottom:6px}
 #fixtureList .ph{padding:4px 14px;font-size:.68rem}#fixtureList .dh{padding:1px 14px;font-size:.66rem}
 }
 </style>
@@ -390,8 +396,8 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
 function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
 function openMatch(i){
  const m=FX[i];
- // bloqueo: solo se abren partidos de la fecha en curso y la anterior
- if(m[0]<LIVEF-1)return;
+ // bloqueo: se abren partidos de la fecha en curso y las dos anteriores
+ if(m[0]<LIVEF-2)return;
  history.pushState({m:i},'','?m='+i);
  showMatch(i)}
 function showMatch(i){
@@ -431,7 +437,7 @@ function adv(i,k,el){ // tras cargar goles: foco al rival (si escribio 1, espera
  const wait=(el.value.length===1&&el.value==='1')?700:80;
  advT=setTimeout(()=>{if(document.activeElement!==el)return;
   const o=document.getElementById('in-'+(k==='gh'?'ga':'gh')+'-'+i);
-  if(o&&!o.readOnly){o.focus();o.select()}},wait)}
+  if(o&&!o.readOnly&&o.value===''){o.focus();o.select()}},wait)}
 function keyNav(ev,i,k){ // Enter: partido siguiente; flechas: entre partidos y entre local/visita
  clearTimeout(advT);
  const list=[...document.querySelectorAll('#fixtureList input:not([readonly])')];
@@ -641,7 +647,7 @@ fixture();tables();
 
 // al cargar: si la URL trae ?m=, abrir ese partido
 (()=>{if(typeof URLSearchParams==='undefined')return;const q=new URLSearchParams(location.search).get('m');
- if(q!==null&&FX[+q]&&FX[+q][0]>=LIVEF-1)showMatch(+q)})();
+ if(q!==null&&FX[+q]&&FX[+q][0]>=LIVEF-2)showMatch(+q)})();
 </script>
 </body>
 </html>
