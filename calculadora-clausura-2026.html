@@ -138,7 +138,8 @@ body.matchview .probrow .pcell .pl{font-size:.8rem}
 .l5.v{background:rgba(76,175,80,.18);color:#66bb6a}
 .l5.e{background:rgba(133,147,161,.15);color:#9aa7b4}
 .l5.d{background:rgba(255,59,92,.15);color:#ff5f7e}
-.l5v,.l5a{color:var(--muted);font-size:.68rem}
+.l5v{color:var(--muted);font-size:.68rem}
+.l5c{color:var(--muted);font-size:.64rem;font-weight:600;opacity:.85}
 .l5leg{font-size:.62rem;color:var(--muted);margin:-2px 0 5px 2px;opacity:.8}
 .mcol{display:flex;flex-direction:column;gap:12px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
@@ -195,6 +196,7 @@ body{display:flex;flex-direction:column}
 main{display:flex;flex-direction:column;min-height:0}
 main .tabs{flex:none}
 main .pane.on{flex:1 1 0;min-height:0;display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+main .pane.on>.panel{flex:0 0 auto}
 #pane-zonas .grid2{flex:1 1 0;align-items:stretch;min-height:0}
 #pane-zonas .grid2>*{display:flex;flex-direction:column;min-height:0}
 #pane-zonas .panel{flex:1;display:flex;flex-direction:column;min-height:0}
@@ -411,11 +413,11 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
    ...FX.map((m,i)=>({m,r:m[4]||res[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:x.r}))];
   const all=ps.sort((x,y)=>x.f-y.f).slice(-5);
   if(!all.length)return'';
-  let t='<div class="mtab"><div class="mt">Últimos 5 partidos</div><div class="l5leg">vs = local &nbsp;·&nbsp; @ = visita</div><table class="mini"><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
+  let t='<div class="mtab"><div class="mt">Últimos 5 partidos</div><div class="l5leg">(L) = de local &nbsp;·&nbsp; (V) = de visita</div><table class="mini"><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
   all.forEach(m=>{
    const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
    const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
-   t+=`<tr><td>${m.f}</td><td class="eq">${home?'<span class="l5v">vs</span>':'<span class="l5a">@</span>'} ${nm(rival)}</td><td><span class="l5 ${win}">${r}</span></td></tr>`});
+   t+=`<tr><td>${m.f}</td><td class="eq"><span class="l5v">vs</span> ${nm(rival)} <span class="l5c">(${home?'L':'V'})</span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
   return t+'</table></div>'};
  h+=`<div class="mtabs">
   <div class="mcol">${grp(hC,zi(hC)?TB:TA)}${grpA(hC)}${grpP(hC)}${last5(hC)}</div>
