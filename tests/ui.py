@@ -27,7 +27,7 @@ with sync_playwright() as p:
     pg.click('text=Borrar resultados');pg.reload();pg.wait_for_timeout(700)
     ok(pg.locator('#fixtureList input:not([readonly])').nth(0).input_value()=='','Borrar resultados limpia lo guardado')
     pg.select_option('#fSel','6');pg.wait_for_timeout(150)
-    ok(pg.evaluate("document.querySelectorAll('#fixtureList .match.inter').length")==0 and pg.evaluate("!!document.querySelector('#fixtureList .dh')"),'fecha 6: aviso de fecha interzonal y sin bordes dorados')
+    ok(pg.evaluate("document.querySelectorAll('#fixtureList .match.inter').length")==0,'fecha 6: sin bordes dorados (aviso interzonal eliminado)')
     pg.wait_for_timeout(2200)
     ok('Elo' in pg.evaluate("document.querySelector('#PROB .ph').textContent") and pg.evaluate("document.querySelectorAll('#ELO tbody tr').length")>=30,'modelo Elo unico: probabilidades y ranking Elo (30 filas)')
     pg.evaluate("showPane('NEED',document.querySelectorAll('.tab')[5])");pg.wait_for_timeout(200)

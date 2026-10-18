@@ -24,7 +24,7 @@
 html{scrollbar-width:thin;scrollbar-color:rgba(133,147,161,.3) transparent}
 html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
 body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8%,rgba(0,255,156,.06),transparent 62%),radial-gradient(circle at 20% 0,var(--bg),var(--bg2) 78%) fixed;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
-.top{position:sticky;top:0;z-index:20;display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:12px 16px 8px;background:linear-gradient(var(--bg) 78%,transparent);backdrop-filter:blur(6px)}
+.top{display:flex;align-items:baseline;gap:14px;padding:12px 14px 8px;flex-wrap:wrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em}.logo b{color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55)}
 .top span{color:var(--muted);font-size:.85rem}
@@ -127,6 +127,10 @@ table.mini td{padding:5px 6px;text-align:center;border-bottom:1px solid rgba(28,
 table.mini tr.hi td{background:var(--pl)}
 table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .gwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+@keyframes drawline{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+#needSvg .sline{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:drawline 1.1s cubic-bezier(.25,.7,.3,1) forwards}
+#needSvg .sdot{opacity:0;animation:fadeDot .3s ease forwards}
+@keyframes fadeDot{to{opacity:1}}
 .gwrap2{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:12px;align-items:stretch}
 .gside{background:var(--inp);border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:2px;min-height:180px}
 .gs-hint{color:var(--muted);font-size:.75rem;margin:auto;text-align:center;line-height:1.4}
@@ -152,12 +156,9 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
-html,body{height:100%;overflow:hidden}
-body{display:flex;flex-direction:column}
-.top{flex:none}
-.shell{flex:1;min-height:0;grid-template-rows:minmax(0,1fr);overflow:hidden;align-items:stretch;padding-bottom:0}
-footer.foot{flex:none;padding:8px 16px 12px}
-main .pane{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+.shell{align-items:stretch;padding-bottom:14px}
+footer.foot{padding:8px 16px 12px}
+main .pane{min-height:0;padding-right:2px}
 .shell>*{min-height:0}
 main{display:flex;flex-direction:column;min-height:0}
 main .tabs{flex:none}
@@ -165,7 +166,7 @@ main .pane{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-righ
 main .pane.on{display:block}
 main .pane .panel{margin-bottom:10px}
 footer.foot{flex:none}
-#PART{position:sticky;top:60px;height:calc(100vh - 122px);min-height:420px;display:flex;flex-direction:column}
+#PART{position:sticky;top:10px;height:calc(100vh - 20px);min-height:420px;display:flex;flex-direction:column}
 #PART .bar,#PART .fnav{flex:none;margin-bottom:8px}
 #PART .bar{padding:8px 12px}#PART .bar .note{font-size:.72rem;line-height:1.35}#PART .btn{padding:6px 12px}
 #PART .fnav{padding:3px 6px}
@@ -179,9 +180,9 @@ footer.foot{flex:none}
 </style>
 </head>
 <body>
-<div class="top"><h1 class="logo">SIMULA<b>DOR</b><span class="sr"> Calculadora del Clausura 2026 de la Liga Profesional</span></h1><span>Clausura 2026, Liga Profesional</span></div>
 <div class="shell">
   <section id="PART" class="col-p">
+    <div class="top"><h1 class="logo">SIMULA<b>DOR</b><span class="sr"> Calculadora del Clausura 2026 de la Liga Profesional</span></h1><span>Clausura 2026, Liga Profesional</span></div>
     <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos). Tocá un partido para ver probabilidades y posiciones.</span>
     <button class="btn" onclick="resetAll()">Borrar resultados</button></div>
     <div class="fnav"><button class="arr" id="fPrev" onclick="goF(-1)" aria-label="Fecha anterior">&#8249;</button><select id="fSel" onchange="setF(+this.value)" aria-label="Elegir fecha"></select><button class="arr" id="fNext" onclick="goF(1)" aria-label="Fecha siguiente">&#8250;</button></div>
@@ -329,12 +330,13 @@ function save(){try{const o={};FX.forEach((m,i)=>{if(!m[4]&&part[i]&&(part[i].gh
 function load(){try{const o=JSON.parse(localStorage.getItem(LSK)||'{}');FX.forEach((m,i)=>{const v=o[pk(m)];if(!m[4]&&Array.isArray(v)){const g=[v[0],v[1]].map(x=>/^\d{1,2}$/.test(x)?String(Math.min(15,+x)):'');part[i]={gh:g[0],ga:g[1]};res[i]=(g[0]===''||g[1]==='')?null:{gh:+g[0],ga:+g[1]}}})}catch(e){}}
 load();
 let ALLI=false;
-let curF=(()=>{for(let f=11;f<=16;f++)if(FX.some(m=>m[0]===f&&!m[4]&&!POSTP[pk(m)]))return f;return 16})();
+const LIVEF=(()=>{for(let f=11;f<=16;f++)if(FX.some(m=>m[0]===f&&!m[4]&&!POSTP[pk(m)]))return f;return 16})();
+let curF=LIVEF;
 function setF(f){curF=Math.max(1,Math.min(16,f));fixture()}
 function goF(d){setF(curF+d)}
 function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
  const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)">`;
- return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="toggleDet(${i},event)" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
+ return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
 function zoneRows(teams,cods){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>DG</th></tr>';
  r.forEach((x,k)=>{const hl=cods.includes(x.t.c)?` class="hi"`:'';h+=`<tr${hl}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${dg(x.p.DG)}</td></tr>`});
@@ -344,30 +346,40 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
  const E=(fin?eloRun(m[0]):eloRun()).R,dR=E[hC]+EL.HFA-E[aC],[lh,la]=lamElo(dR,2*avgG()),pH=pwin(lh,la),pD=pdraw(lh,la),pA=1-pH-pD;
  const pct=x=>(100*x).toFixed(0)+'%';
  const cell=(t,p,f)=>`<div class="pcell${f?' fav':''}"><span class="pl">${t}</span><b>${pct(p)}</b></div>`;
- let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="closeMatch()">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${SCH[hC+'-'+aC]?SCH[hC+'-'+aC][0]+' · ':''}${fin?'Final · '+(SCH[hC+'-'+aC]?SCH[hC+'-'+aC][1]:''):pend(i)}</div></div>`;
+ let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="history.back()">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${SCH[hC+'-'+aC]?SCH[hC+'-'+aC][0]+' · ':''}${fin?'Final · '+(SCH[hC+'-'+aC]?SCH[hC+'-'+aC][1]:''):pend(i)}</div></div>`;
  let h=hh+`<div class="pad"><div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
  h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'} según Elo, con ventaja de local. Posiciones al día de hoy.</div>`;
  if(zi(hC)===zi(aC)){h+=`<div class="minitabs">${zoneRows(zi(hC)?TB:TA,[hC,aC])}</div>`}
  else{h+=`<div class="minitabs two"><div><div class="mt">Zona ${zi(hC)?'B':'A'}</div>${zoneRows(zi(hC)?TB:TA,[hC])}</div><div><div class="mt">Zona ${zi(aC)?'B':'A'}</div>${zoneRows(zi(aC)?TB:TA,[aC])}</div></div>`}
  return h+'</div>'}
 function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
-function openMatch(i){const m=FX[i];
- const tabs=document.querySelectorAll('.tab');
- showPane('MATCH',document.getElementById('tab-MATCH'));
- document.getElementById('tab-MATCH').hidden=false;
+function openMatch(i){
+ const m=FX[i];
+ // bloqueo: solo se abren partidos de la fecha en curso y la anterior
+ if(m[0]<LIVEF-1)return;
+ history.pushState({m:i},'','?m='+i);
+ showMatch(i)}
+function showMatch(i){
+ const m=FX[i];
  document.getElementById('pane-MATCH').innerHTML=detBody(m,i);
-}
-function closeMatch(){document.getElementById('tab-MATCH').hidden=true;
- if(!document.getElementById('pane-MATCH').classList.contains('on'))return;
- document.getElementById('pane-MATCH').classList.remove('on');
- document.getElementById('tab-zonas').classList.add('on');
- document.getElementById('pane-zonas').classList.add('on')}
+ showPane('MATCH',document.getElementById('tab-MATCH'));
+ document.getElementById('tab-MATCH').hidden=false}
+function closeMatch(){history.pushState({},"",location.pathname)}
 function toggleDet(i,ev){if(ev&&ev.target.tagName==='INPUT')return;openMatch(i)}
+if(typeof window!=='undefined'&&typeof window.addEventListener==='function'&&typeof URLSearchParams==='function'){
+ window.addEventListener('popstate',()=>{
+  const q=new URLSearchParams(location.search).get('m');
+  if(q!==null&&FX[+q]){showMatch(+q)}else{document.getElementById('tab-MATCH').hidden=true;
+   if(document.getElementById('pane-MATCH').classList.contains('on')){
+    document.getElementById('pane-MATCH').classList.remove('on');
+    document.getElementById('tab-zonas').classList.add('on');
+    document.getElementById('pane-zonas').classList.add('on')}}});
+}
 
 function fixture(){
  const list=curF<=10?PAST.filter(m=>m[0]===curF).map(m=>[m,-1]):FX.map((m,i)=>[m,i]).filter(x=>x[0][0]===curF);
  ALLI=list.every(([m])=>m[3]);
- let h=`<div class="panel"><div class="ph">Fecha ${curF}</div>`+(ALLI?'<div class="dh">Fecha interzonal: todos los partidos son entre equipos de distintas zonas</div>':'');
+ let h=`<div class="panel"><div class="ph">Fecha ${curF}</div>`;
  const days=[...new Set(list.map(([m])=>(SCH[pk(m)]||[])[0]).filter(Boolean))].sort((x,y)=>dnum(x)-dnum(y));
  if(days.length){days.forEach(d=>{h+=`<div class="dh">${d}</div>`+list.filter(([m])=>(SCH[pk(m)]||[])[0]===d).sort(([x],[y])=>tk(x)-tk(y)).map(([m,i])=>mrow(m,i)).join('')});h+=list.filter(([m])=>!SCH[pk(m)]).map(([m,i])=>mrow(m,i)).join('')}
  else h+=list.map(([m,i])=>mrow(m,i)).join('');
@@ -528,6 +540,7 @@ function drawNeed(data){
  let h='<div class="pad">'+(hayCurvas?'':'<div class="note" style="margin-bottom:10px">Para este equipo no queda nada en juego con los partidos pendientes: sus objetivos ya están asegurados o son imposibles. Pasá el cursor para ver los valores.</div>')+'<div class="gwrap2"><svg id="needSvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Probabilidad según puntos conseguidos">'+grid+hover+curves.filter(cu=>cu.cur.d).map(line).join('')+'<text x="'+(W/2)+'" y="'+(H-8)+'" fill="var(--muted)" font-size="11" text-anchor="middle">Puntos a conseguir en sus '+N+' partidos pendientes</text><text x="14" y="'+(P.t+plotH/2)+'" fill="var(--muted)" font-size="11" text-anchor="middle" transform="rotate(-90 14 '+(P.t+plotH/2)+')">Probabilidad (%)</text></svg><div class="gside" id="gside"><div class="gs-hint">Deslizá el cursor sobre el gráfico</div></div></div><div class="glegend">'+legend+'</div><div class="gnote">Eje X: puntos a conseguir (solo los puntajes posibles con '+N+' partidos). Eje Y: probabilidad de cada resultado. Las curvas pasan exactamente por los valores simulados. Tocá la leyenda para ocultar líneas.</div></div>';
  document.getElementById('needOut').innerHTML=h;
  const svg=document.getElementById('needSvg');
+ if(svg&&typeof svg.querySelectorAll==='function'){svg.querySelectorAll('.sline').forEach(pl=>{try{pl.style.setProperty('--len',Math.ceil(pl.getTotalLength())+2)}catch(e){pl.style.setProperty('--len','2000')}})}else if(svg&&svg.querySelectorAll===undefined){['po','lib','sud','ca','sa','sp'].forEach(k=>{try{const pl=svg.querySelector&&svg.querySelector('.sline[data-k="'+k+'"]');if(pl)pl.style.setProperty('--len','2000')}catch(e){}})}
  if(!svg||!svg.addEventListener){return}
  const side=document.getElementById('gside');
  const valOnLine=(cu,s)=>{const ps=cu.pts;if(!ps.length)return null;
@@ -567,6 +580,10 @@ function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();sch
 document.getElementById('fSel').innerHTML=Array.from({length:16},(_,i)=>`<option value="${i+1}">Fecha ${i+1}</option>`).join('');
 document.getElementById('selEq').innerHTML=ALL.map((t,i)=>`<option value="${i}">${t.n}</option>`).join('');
 fixture();tables();
+
+// al cargar: si la URL trae ?m=, abrir ese partido
+(()=>{if(typeof URLSearchParams==='undefined')return;const q=new URLSearchParams(location.search).get('m');
+ if(q!==null&&FX[+q]&&FX[+q][0]>=LIVEF-1)showMatch(+q)})();
 </script>
 </body>
 </html>
