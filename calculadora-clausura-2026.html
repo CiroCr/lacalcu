@@ -139,6 +139,7 @@ body.matchview .probrow .pcell .pl{font-size:.8rem}
 .l5.e{background:rgba(133,147,161,.15);color:#9aa7b4}
 .l5.d{background:rgba(255,59,92,.15);color:#ff5f7e}
 .l5v,.l5a{color:var(--muted);font-size:.68rem}
+.l5leg{font-size:.62rem;color:var(--muted);margin:-2px 0 5px 2px;opacity:.8}
 .mcol{display:flex;flex-direction:column;gap:12px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
 .mtab .mini td,.mtab .mini th{padding:5px 4px;font-size:.74rem}
@@ -183,9 +184,7 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 @media(min-width:761px){
 main .pane th,main .pane td{padding-top:4.5px;padding-bottom:4.5px}
 main .pane .legend{padding-top:5px;padding-bottom:5px;font-size:.68rem}
-main .pane table.fitted tbody tr{height:var(--fh)}
 main .pane .ph{padding-top:7px;padding-bottom:7px}
-main .pane .grid2{align-items:stretch}
 main .pane .panel{margin-bottom:0}
 main .pane .bar{padding-top:8px;padding-bottom:8px}
 html,body{height:100%;overflow:hidden}
@@ -195,7 +194,12 @@ body{display:flex;flex-direction:column}
 .shell>*{min-height:0}
 main{display:flex;flex-direction:column;min-height:0}
 main .tabs{flex:none}
-main .pane{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+main .pane.on{flex:1 1 0;min-height:0;display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+#pane-zonas .grid2{flex:1 1 0;align-items:stretch;min-height:0}
+#pane-zonas .grid2>*{display:flex;flex-direction:column;min-height:0}
+#pane-zonas .panel{flex:1;display:flex;flex-direction:column;min-height:0}
+#pane-zonas .tblwrap{flex:1 1 0;min-height:0}
+#pane-zonas .tblwrap table{height:100%}
 footer.foot{flex:none;padding:8px 34px 12px}
 #PART{display:flex;flex-direction:column;min-height:0}
 #PART .bar,#PART .fnav{flex:none;margin-bottom:8px}
@@ -407,7 +411,7 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
    ...FX.map((m,i)=>({m,r:m[4]||res[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:x.r}))];
   const all=ps.sort((x,y)=>x.f-y.f).slice(-5);
   if(!all.length)return'';
-  let t='<div class="mtab"><div class="mt">Últimos 5 partidos</div><table class="mini"><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
+  let t='<div class="mtab"><div class="mt">Últimos 5 partidos</div><div class="l5leg">vs = local &nbsp;·&nbsp; @ = visita</div><table class="mini"><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
   all.forEach(m=>{
    const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
    const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
