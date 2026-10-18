@@ -34,7 +34,7 @@ with sync_playwright() as p:
     ok(pg.evaluate("document.getElementById('pane-NEED').classList.contains('on')"),'pestañas: abrir ¿Cuánto necesita? muestra su panel')
     pg.evaluate("showPane('PROB',document.querySelectorAll('.tab')[3])");pg.wait_for_timeout(200)
     pg.evaluate("showPane('NEED',document.querySelectorAll('.tab')[5])");pg.wait_for_timeout(200)
-    pg.select_option('#selEq',label='Estudiantes (RC)');pg.wait_for_timeout(3500)
+    pg.select_option('#selEq',label='Estudiantes (RC)');pg.wait_for_timeout(6000)
     ok(pg.evaluate("document.querySelectorAll('#needSvg .sline').length")>0 and pg.evaluate("document.getElementById('needOut').textContent.includes('Puntos a conseguir')"),'gráfico de puntos necesarios: SVG con líneas y ejes')
     for w,h in [(1184,909),(1366,768),(1920,1080)]:
         q=b.new_page(viewport={'width':w,'height':h});q.goto(URL);q.wait_for_timeout(700)
