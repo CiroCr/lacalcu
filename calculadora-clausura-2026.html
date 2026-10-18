@@ -24,7 +24,7 @@
 html{scrollbar-width:thin;scrollbar-color:rgba(133,147,161,.3) transparent}
 html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
 body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8%,rgba(0,255,156,.06),transparent 62%),radial-gradient(circle at 20% 0,var(--bg),var(--bg2) 78%) fixed;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
-.top{display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:16px 16px 6px}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:12px 16px 8px;background:linear-gradient(var(--bg) 78%,transparent);backdrop-filter:blur(6px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em}.logo b{color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55)}
 .top span{color:var(--muted);font-size:.85rem}
@@ -83,7 +83,20 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .bdg{display:inline-flex;flex:none;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font-size:.46rem;font-weight:800;color:#fff;text-shadow:0 0 2px #000,0 0 2px #000;border:1px solid rgba(255,255,255,.35);background:linear-gradient(90deg,var(--c1) 50%,var(--c2) 50%)}
 .txt{padding:14px;background:var(--panel);border-radius:8px;margin-bottom:12px}
 .txt h2{font-size:1rem;margin:14px 0 6px}.txt h2:first-child{margin-top:0}
-.foot{max-width:1100px;margin:0 auto;padding:0 14px 30px;text-align:center}
+.foot{max-width:1500px;margin:0 auto;padding:10px 16px 26px;text-align:center}
+.footlinks{display:flex;justify-content:center;align-items:center;gap:14px}
+.flink{background:none;border:none;color:var(--muted);font-size:.78rem;font-weight:600;cursor:pointer;padding:4px 2px;transition:color .15s;text-decoration:underline dotted rgba(133,147,161,.5);text-underline-offset:4px}
+.flink:hover{color:var(--acc);text-decoration-color:var(--acc)}
+.fsep{width:1px;height:14px;background:var(--line)}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.66);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:5vh 16px 16px;overflow-y:auto}
+.modal[hidden]{display:none}
+.mbox{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 28px;max-width:760px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.6);animation:fadeUp .22s ease}
+.mbox h2{font-size:1.05rem;margin:18px 0 8px;color:var(--acc)}
+.mbox h2:first-of-type{margin-top:0}
+.mbox p{font-size:.82rem;color:var(--muted);line-height:1.65;margin:8px 0}
+.mbox p b{color:var(--text)}
+.mx{position:absolute;top:12px;right:12px;background:var(--inp);border:1px solid var(--line);color:var(--muted);width:32px;height:32px;border-radius:8px;font-size:.9rem;cursor:pointer;transition:color .15s,border-color .15s}
+.mx:hover{color:var(--rel);border-color:var(--rel)}
 .det{padding:10px 12px;background:rgba(0,0,0,.22);border-bottom:1px solid var(--line)}
 .match[onclick]{cursor:pointer}
 .match[onclick]:hover{background:rgba(255,255,255,.05)}
@@ -91,6 +104,15 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .chev{display:flex;align-items:center;justify-content:center;width:26px;color:var(--muted);font-size:.75rem;transition:transform .15s;flex:none}
 .match[aria-expanded="true"] .chev{transform:rotate(180deg);color:var(--acc)}
 .probrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.mh{padding:14px 16px 10px;background:var(--head)}
+.mhead{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:10px}
+.mteam{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;font-size:.92rem;text-align:center;min-width:120px}
+.mteam img,.mteam .bdg{width:52px;height:52px}
+.mscore{display:flex;align-items:center;gap:10px;font-size:1.6rem}
+.mscore b{font-size:2.2rem;min-width:44px;text-align:center}
+.mscore span{color:var(--muted);font-size:.8rem;text-transform:uppercase}
+.msub{text-align:center;color:var(--muted);font-size:.78rem;margin-top:8px}
+.mhead .bdg2{width:52px;height:52px}
 .pcell{background:var(--inp);border:1px solid var(--line);border-radius:7px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:3px}
 .pcell.fav{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .pcell .pl{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -105,12 +127,12 @@ table.mini td{padding:5px 6px;text-align:center;border-bottom:1px solid rgba(28,
 table.mini tr.hi td{background:var(--pl)}
 table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .gwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
-.gwrap2{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:12px;align-items:stretch}
+.gwrap2{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:12px;align-items:stretch}
 .gside{background:var(--inp);border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:2px;min-height:180px}
 .gs-hint{color:var(--muted);font-size:.75rem;margin:auto;text-align:center;line-height:1.4}
 .gs-title{color:var(--text);font-size:.85rem;font-weight:800;margin-bottom:8px}
-.gs-row{display:flex;align-items:center;gap:7px;font-size:.74rem;color:var(--muted);padding:3px 0;border-bottom:1px solid rgba(133,147,161,.08)}
-.gs-row b{margin-left:auto;color:var(--text);font-size:.8rem;white-space:nowrap}
+.gs-row{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--muted);padding:4px 0;border-bottom:1px solid rgba(133,147,161,.08);line-height:1.25}
+.gs-row{flex-wrap:wrap}.gs-row b{margin-left:auto;color:var(--text);font-size:.8rem;white-space:normal;text-align:right;flex-basis:auto;max-width:110px}
 .gs-row.off{opacity:.6}.gs-row.off b{color:var(--muted)}
 .gs-dot{width:8px;height:8px;border-radius:50%;flex:none;box-shadow:0 0 5px currentColor}
 .gwrap svg{width:100%;max-width:640px;height:auto;display:block}
@@ -130,6 +152,19 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
 @media(min-width:761px){
+html,body{height:100%;overflow:hidden}
+body{display:flex;flex-direction:column}
+.top{flex:none}
+.shell{flex:1;min-height:0;grid-template-rows:minmax(0,1fr);overflow:hidden;align-items:stretch;padding-bottom:0}
+footer.foot{flex:none;padding:8px 16px 12px}
+main .pane{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+.shell>*{min-height:0}
+main{display:flex;flex-direction:column;min-height:0}
+main .tabs{flex:none}
+main .pane{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+main .pane.on{display:block}
+main .pane .panel{margin-bottom:10px}
+footer.foot{flex:none}
 #PART{position:sticky;top:60px;height:calc(100vh - 122px);min-height:420px;display:flex;flex-direction:column}
 #PART .bar,#PART .fnav{flex:none;margin-bottom:8px}
 #PART .bar{padding:8px 12px}#PART .bar .note{font-size:.72rem;line-height:1.35}#PART .btn{padding:6px 12px}
@@ -160,31 +195,51 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
       <button class="tab" onclick="showPane('PROB',this)">Probabilidades</button>
       <button class="tab" onclick="showPane('ELO',this)">Ranking Elo</button>
       <button class="tab" onclick="showPane('NEED',this)">¿Cuánto necesita?</button>
+      <button class="tab" id="tab-MATCH" onclick="showPane('MATCH',this)" hidden>Partido</button>
     </div>
     <div id="pane-zonas" class="pane on"><div class="grid2"><div id="A"></div><div id="B"></div></div></div>
     <div id="pane-ANUAL" class="pane"><div id="ANUAL"></div></div>
     <div id="pane-PROM" class="pane"><div id="PROM"></div></div>
     <div id="pane-PROB" class="pane"><div class="bar"><span class="note">Simulaciones con el modelo <b>Elo</b>: la fuerza de cada equipo sale de su ranking (pestaña Ranking Elo), que usa todos los partidos oficiales de 2025 y 2026, y se convierte a goles esperados.</span></div><div id="PROB"></div></div>
     <div id="pane-ELO" class="pane"><div id="ELO"></div></div>
+    <div id="pane-MATCH" class="pane"></div>
     <div id="pane-NEED" class="pane"><div id="NEED" class="panel"><div class="ph">¿Cuántos puntos necesita tu equipo?</div><div class="pad"><select id="selEq" onchange="renderNeed()" aria-label="Elegir equipo"></select></div><div id="needOut"></div></div></div>
-    <div class="txt note"><h2>Fuentes y datos</h2>
-      <p><b>Fixture:</b> Liga Profesional de Fútbol de AFA, "Agenda para la temporada 2026" (ligaprofesional.ar), fechas 11 a 16 del Clausura. Las fechas/horarios pueden moverse, los cruces no.</p>
-      <p><b>Base:</b> tablas de la Zona A y B con la fecha 10 completa (los 30 equipos con 10 PJ), según futbolargentino.com y Mendoza Post (21/09/2026). El Apertura (cerrado) y los puntos de 2024 y 2025 para los promedios salen de Wikipedia / AFA. Tabla Anual y Promedios se calculan sumando esos datos fijos a lo que cargues en las fechas 11 a 16. Verificá contra ligaprofesional.ar antes de usarlo para algo importante.</p>
-      <p><b>Formato:</b> 2 zonas de 15, 16 fechas (14 de zona + 2 interzonales), clasifican los 8 primeros de cada zona. Anual = Apertura (campeón Belgrano) + Clausura: Libertadores los 3 mejores sin cupo previo, Sudamericana los 6 siguientes, desciende el último (sin contar al que baje por promedios). Promedios = puntos 2024+2025+2026 sobre partidos jugados; desciende el peor.</p>
-      <p><b>Resultados:</b> fechas 1 a 12 completa y el pendiente de la 11 según futbolargentino.com, ligaprofesional.ar y medios, con los partidos jugados hasta el 14/10/2026. Se controlaron contra las tablas: cada equipo suma exactamente los PJ, puntos y goles de la base. 23 resultados de las fechas 1 a 3 que no figuraban en esa fuente se calcularon cruzando esos totales (la solución es única). Los resultados de la fecha 11 y siguientes se cargan a mano a medida que se juegan.</p>
-      <p><b>Escudos:</b> son insignias dibujadas con los colores de cada club, no los logos oficiales.</p></div>
-    <div class="txt note">
-      <h2>Cómo funciona la calculadora del Clausura 2026</h2>
-      <p>En la columna <b>Partidos</b> (a la izquierda; arriba en el celular) se ven las 16 fechas: las flechas cambian de fecha y arranca en la próxima. En las fechas 11 a 16 escribí los goles de los partidos pendientes y las tablas se reordenan en vivo. Con las <b>pestañas</b> de la derecha cambiás entre las zonas, la Tabla Anual, los Promedios, las Probabilidades, el Ranking Elo y ¿Cuánto necesita tu equipo?. Tocá cualquier partido para ver sus probabilidades y las posiciones de los dos equipos. Los 8 primeros de cada zona clasifican a los octavos de final.</p>
-      <h2>Preguntas frecuentes</h2>
-      <p><b>¿Cómo se define el descenso en 2026?</b> Descienden dos equipos: el último de la Tabla Anual (puntos del Apertura más el Clausura) y el de peor promedio (puntos de 2024, 2025 y 2026 divididos por los partidos jugados en Primera). Si el mismo equipo es último en las dos tablas, desciende por promedios y el segundo descenso es para el anteúltimo de la anual.</p>
-      <p><b>¿Quién clasifica a la Copa Libertadores y a la Sudamericana?</b> Son seis plazas a la Libertadores: los campeones del Apertura (Belgrano), del Clausura y de la Copa Argentina, más los tres mejores de la Tabla Anual que no clasificaron por título. A la Sudamericana van los seis siguientes de la anual, también sin contar a quienes ya tienen lugar. El 1° de la anual es el Campeón de Liga.</p>
-      <p><b>¿Cómo se desempata?</b> Puntos, diferencia de gol y goles a favor. En esta herramienta no se aplican los criterios siguientes (resultado entre sí, fair play).</p>
-      <p><b>¿Los datos son oficiales?</b> Es una herramienta independiente, sin relación con la AFA ni la Liga Profesional. Resultados cargados hasta el 14/10/2026; verificá en ligaprofesional.ar.</p>
-    </div>
   </main>
 </div>
-<div class="foot note">Herramienta independiente, no afiliada a la AFA ni a la Liga Profesional. Los escudos son insignias ilustrativas.</div>
+<footer class="foot">
+  <div class="footlinks">
+    <button class="flink" onclick="openModal('mInfo')">¿Cómo funciona?</button>
+    <span class="fsep"></span>
+    <button class="flink" onclick="openModal('mTerm')">Términos y condiciones</button>
+    <span class="fsep"></span>
+    <button class="flink" onclick="openModal('mLegal')">Legal</button>
+  </div>
+  <div class="note" style="margin-top:6px">Herramienta independiente, no afiliada a la AFA ni a la Liga Profesional. Los escudos pertenecen a sus clubes (Wikipedia/Wikimedia).</div>
+</footer>
+<div class="modal" id="mInfo" hidden><div class="mbox"><button class="mx" onclick="closeModal('mInfo')" aria-label="Cerrar">&#10005;</button>
+  <h2>Cómo funciona la calculadora del Clausura 2026</h2>
+  <p>En la columna <b>Partidos</b> (a la izquierda; arriba en el celular) se ven las 16 fechas: las flechas cambian de fecha y arranca en la próxima. En las fechas 11 a 16 escribí los goles de los partidos pendientes y las tablas se reordenan en vivo. Con las <b>pestañas</b> de la derecha cambiás entre las zonas, la Tabla Anual, los Promedios, las Probabilidades, el Ranking Elo y ¿Cuánto necesita tu equipo?. Tocá cualquier partido para verlo en su propia pestaña, con sus probabilidades y las posiciones de los dos equipos. Los 8 primeros de cada zona clasifican a los octavos de final.</p>
+  <p>Las <b>probabilidades</b> salen de 10.000 simulaciones del resto del torneo: los goles de cada partido se sortean con la fuerza de cada equipo según su <b>Elo</b> (K=20, ventaja de local +70), que usa los 1106 partidos oficiales de 2025 y 2026: ligas, copas internacionales, Copa Argentina, playoffs, Recopas, Mundial de Clubes y trofeos. Las definiciones por penales cuentan como empate.</p>
+  <h2>Fuentes y datos</h2>
+  <p><b>Fixture:</b> Liga Profesional de Fútbol de AFA, "Agenda para la temporada 2026" (ligaprofesional.ar), fechas 11 a 16 del Clausura. Las fechas/horarios pueden moverse, los cruces no.</p>
+  <p><b>Base:</b> tablas de la Zona A y B con la fecha 10 completa (los 30 equipos con 10 PJ), según futbolargentino.com y Mendoza Post (21/09/2026), verificadas contra bolavip. El Apertura (cerrado) y los puntos de 2024 y 2025 para los promedios salen de Wikipedia / AFA. Tabla Anual y Promedios se calculan sumando esos datos fijos a lo que cargues en las fechas 11 a 16. Verificá contra ligaprofesional.ar antes de usarlo para algo importante.</p>
+  <p><b>Formato:</b> 2 zonas de 15, 16 fechas (14 de zona + 2 interzonales), clasifican los 8 primeros de cada zona. Anual = Apertura (campeón Belgrano) + Clausura: Libertadores los 3 mejores sin cupo previo, Sudamericana los 6 siguientes, desciende el último (sin contar al que baje por promedios). Promedios = puntos 2024+2025+2026 sobre partidos jugados; desciende el peor.</p>
+  <p><b>Resultados:</b> fechas 1 a 12 completa y el pendiente de la 11 según futbolargentino.com, ligaprofesional.ar y medios, con los partidos jugados hasta el 14/10/2026. Se controlaron contra las tablas: cada equipo suma exactamente los PJ, puntos y goles de la base. 23 resultados de las fechas 1 a 3 que no figuraban en esa fuente se calcularon cruzando esos totales (la solución es única). Los resultados de la fecha 13 en adelante se cargan a mano a medida que se juegan.</p>
+  <p><b>Escudos:</b> imágenes de los escudos oficiales de cada club, tomadas de Wikipedia/Wikimedia Commons con sus licencias; son marcas registradas de cada club y se usan aquí solo a modo identificatorio.</p>
+  <h2>Preguntas frecuentes</h2>
+  <p><b>¿Cómo se define el descenso en 2026?</b> Descienden dos equipos: el último de la Tabla Anual (puntos del Apertura más el Clausura) y el de peor promedio (puntos de 2024, 2025 y 2026 divididos por los partidos jugados en Primera). Si el mismo equipo es último en las dos tablas, desciende por promedios y el segundo descenso es para el anteúltimo de la anual.</p>
+  <p><b>¿Quién clasifica a la Copa Libertadores y a la Sudamericana?</b> Son seis plazas a la Libertadores: los campeones del Apertura (Belgrano), del Clausura y de la Copa Argentina, más los tres mejores de la Tabla Anual que no clasificaron por título. A la Sudamericana van los seis siguientes de la anual, también sin contar a quienes ya tienen lugar. El 1° de la anual es el Campeón de Liga.</p>
+  <p><b>¿Cómo se desempata?</b> Puntos, diferencia de gol y goles a favor. En esta herramienta no se aplican los criterios siguientes (resultado entre sí, fair play).</p>
+  <p><b>¿Los datos son oficiales?</b> Es una herramienta independiente, sin relación con la AFA ni la Liga Profesional. Resultados cargados hasta el 14/10/2026; verificá en ligaprofesional.ar.</p>
+</div></div>
+<div class="modal" id="mTerm" hidden><div class="mbox"><button class="mx" onclick="closeModal('mTerm')" aria-label="Cerrar">&#10005;</button>
+  <h2>Términos y condiciones</h2>
+  <p class="note">Próximamente: aquí irán los términos de uso de la herramienta.</p>
+</div></div>
+<div class="modal" id="mLegal" hidden><div class="mbox"><button class="mx" onclick="closeModal('mLegal')" aria-label="Cerrar">&#10005;</button>
+  <h2>Legal</h2>
+  <p class="note">Próximamente: aquí irán las aclaraciones legales (marcas registradas, responsabilidad por los datos, privacidad).</p>
+</div></div>
 <script>
 // [codigo, nombre, apPts, apGF, apGC, clPJ, clPts, clGF, clGC, h24, h25, pjHist]
 const ZA=[["VEL","Vélez Sarsfield",28,18,12,10,20,15,9,76,40,73],["DYJ","Defensa y Justicia",19,18,21,10,18,13,11,58,38,73],["GEM","Gimnasia y Esgrima (M)",19,14,22,10,17,14,9,0,0,0],["INS","Instituto",21,17,17,10,22,13,7,53,34,73],["BOC","Boca Juniors",30,22,9,10,17,14,11,67,62,73],["UNI","Unión",21,24,20,10,13,17,16,60,39,73],["NOB","Newell's Old Boys",15,15,27,10,16,11,8,49,33,73],["IND","Independiente",24,24,20,10,17,10,8,63,47,73],["EST","Estudiantes (LP)",31,19,7,10,10,10,11,63,42,73],["LAN","Lanús",24,18,15,10,16,13,9,59,50,73],["SLO","San Lorenzo",22,14,14,10,11,4,8,45,51,73],["DRI","Deportivo Riestra",11,5,12,10,10,8,10,48,52,73],["PLA","Platense",16,10,15,10,9,9,15,57,35,73],["TAL","Talleres (C)",26,17,13,10,8,11,17,72,34,73],["CCO","Central Córdoba (SdE)",16,11,21,10,8,7,13,42,42,73]];
@@ -277,29 +332,36 @@ function setF(f){curF=Math.max(1,Math.min(16,f));fixture()}
 function goF(d){setF(curF+d)}
 function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
  const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)">`;
- return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="toggleDet(${i},event)" role="button" tabindex="0" aria-expanded="false" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9662;</div>':''}</div>${i>=0?`<div class="det" id="det${i}" hidden></div>`:''}`}
+ return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="toggleDet(${i},event)" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
 function zoneRows(teams,cods){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>DG</th></tr>';
  r.forEach((x,k)=>{const hl=cods.includes(x.t.c)?` class="hi"`:'';h+=`<tr${hl}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${dg(x.p.DG)}</td></tr>`});
  return h+'</table>'}
-function detBody(m){const hC=m[1],aC=m[2],i=FX.indexOf(m),fin=i>=0&&(m[4]||res[i]!==null);
+function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;const fin=!!(m[4]||res[i]!==null);
  // para partidos ya jugados: Elo antes de esa fecha (probabilidad previa); para pendientes: Elo actual
  const E=(fin?eloRun(m[0]):eloRun()).R,dR=E[hC]+EL.HFA-E[aC],[lh,la]=lamElo(dR,2*avgG()),pH=pwin(lh,la),pD=pdraw(lh,la),pA=1-pH-pD;
  const pct=x=>(100*x).toFixed(0)+'%';
  const cell=(t,p,f)=>`<div class="pcell${f?' fav':''}"><span class="pl">${t}</span><b>${pct(p)}</b></div>`;
- let h=`<div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
- h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'} según Elo, con ventaja de local · Posiciones al día de hoy</div>`;
+ let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="closeMatch()">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${fin?'Final':pend(i)} ${fin?'':(SCH[hC+'-'+aC]?'· '+SCH[hC+'-'+aC][0]+' '+SCH[hC+'-'+aC][1]:'')}</div></div>`;
+ let h=hh+`<div class="pad"><div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
+ h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'} según Elo, con ventaja de local. Posiciones al día de hoy.</div>`;
  if(zi(hC)===zi(aC)){h+=`<div class="minitabs">${zoneRows(zi(hC)?TB:TA,[hC,aC])}</div>`}
  else{h+=`<div class="minitabs two"><div><div class="mt">Zona ${zi(hC)?'B':'A'}</div>${zoneRows(zi(hC)?TB:TA,[hC])}</div><div><div class="mt">Zona ${zi(aC)?'B':'A'}</div>${zoneRows(zi(aC)?TB:TA,[aC])}</div></div>`}
- return h}
+ return h+'</div>'}
 function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
-function toggleDet(i,ev){if(ev&&ev.target.tagName==='INPUT')return;
- const det=document.getElementById('det'+i),mx=document.getElementById('mx'+i);
- if(!det)return;const open=!det.hidden;
- document.querySelectorAll('.det:not([hidden])').forEach(d=>{d.hidden=true});
- document.querySelectorAll('.match[aria-expanded="true"]').forEach(m=>m.setAttribute('aria-expanded','false'));
- if(open){return}
- det.innerHTML=detBody(FX[i]);det.hidden=false;mx.setAttribute('aria-expanded','true')}
+function openMatch(i){const m=FX[i];
+ const tabs=document.querySelectorAll('.tab');
+ showPane('MATCH',document.getElementById('tab-MATCH'));
+ document.getElementById('tab-MATCH').hidden=false;
+ document.getElementById('pane-MATCH').innerHTML=detBody(m,i);
+}
+function closeMatch(){document.getElementById('tab-MATCH').hidden=true;
+ if(!document.getElementById('pane-MATCH').classList.contains('on'))return;
+ document.getElementById('pane-MATCH').classList.remove('on');
+ document.getElementById('tab-zonas').classList.add('on');
+ document.getElementById('pane-zonas').classList.add('on')}
+function toggleDet(i,ev){if(ev&&ev.target.tagName==='INPUT')return;openMatch(i)}
+
 function fixture(){
  const list=curF<=10?PAST.filter(m=>m[0]===curF).map(m=>[m,-1]):FX.map((m,i)=>[m,i]).filter(x=>x[0][0]===curF);
  ALLI=list.every(([m])=>m[3]);
@@ -493,6 +555,10 @@ function drawNeed(data){
   const k=b.dataset.k;svg.querySelector('.sline[data-k="'+k+'"]')?.style.setProperty('opacity',b.classList.contains('off')?.12:1);
   svg.querySelector('.sdot[data-k="'+k+'"]')?.style.setProperty('opacity',b.classList.contains('off')?.12:1)}))}
 
+function openModal(id){const m=document.getElementById(id);if(m)m.hidden=false}
+function closeModal(id){const m=document.getElementById(id);if(m)m.hidden=true}
+if(typeof document.addEventListener==='function'){document.addEventListener('click',ev=>{const m=ev.target.closest?ev.target.closest('.modal'):null;if(m&&ev.target===m)m.hidden=true});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>m.hidden=true)})}
 function sched(){clearTimeout(simTimer);simTimer=setTimeout(probs,350)}
 function resetAll(){try{localStorage.removeItem(LSK)}catch(e){}initRes();fixture();tables()}
 function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();sched()}
