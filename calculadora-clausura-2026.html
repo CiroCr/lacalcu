@@ -31,10 +31,9 @@ body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em;color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .logo .sub{color:var(--text);font-size:1.55rem;font-weight:900;letter-spacing:.06em;text-shadow:none}
 .logo .yr{color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.03em;text-shadow:none}
-.logo .arg{display:inline-flex;align-items:baseline}
+.logo .arg{display:inline-flex;align-items:center;margin-left:.35em}
 .logo .arg svg.argflag{display:block;height:33px;width:150px;overflow:visible;flex:none}
 .logo .sub{display:inline-flex;align-items:center}
-.logo .arg{align-items:center}
 
 .top span{color:var(--muted);font-size:.85rem}
 .shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:18px;padding:10px 34px 34px;align-items:start}
@@ -135,14 +134,14 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 body.matchview #PART,body.matchview .tabs{display:none}
 body.matchview .shell{grid-template-columns:minmax(0,1fr);max-width:1500px}
 body.matchview main{max-width:none;margin:0;width:100%}
-body.matchview .mhead .bdg2{width:72px;height:72px}
+body.matchview .mhead .bdg2{width:64px;height:64px}
 body.matchview .mteam span{font-size:1.25rem}
-body.matchview .mscore b{font-size:2.8rem;min-width:64px}
+body.matchview .mscore b{font-size:2.4rem;min-width:56px}
 body.matchview .mscore span{font-size:.9rem}
 body.matchview .mh{padding:10px 16px 8px}
 body.matchview .mhead{gap:24px;margin-top:10px}
 body.matchview .msub{font-size:.8rem;margin-top:6px}
-body.matchview .probrow .pcell b{font-size:1.6rem}
+body.matchview .probrow .pcell b{font-size:1.45rem}
 body.matchview .probrow .pcell{padding:10px 8px}
 body.matchview .probrow .pcell .pl{font-size:.82rem}
 
@@ -235,7 +234,7 @@ body{display:flex;flex-direction:column}
 .shell>*{min-height:0}
 main{display:flex;flex-direction:column;min-height:0}
 main .tabs{flex:none}
-main .pane.on{flex:1 1 0;min-height:0;display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+main .pane.on{flex:1 1 0;min-height:0;display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding-right:2px;padding-bottom:12px}
 body.matchview main .pane.on>.panel{flex:1 1 0;display:flex;flex-direction:column;min-height:0}
 body.matchview .mtabs{flex:1 1 0;min-height:0;align-items:stretch;align-content:stretch}
 body.matchview .mcol{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;min-height:0}
@@ -262,7 +261,7 @@ footer.foot{flex:none;padding:8px 34px 12px}
 </style>
 </head>
 <body>
-<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol <span class="arg"><svg class="argflag" viewBox="0 0 152 30" preserveAspectRatio="none" role="img" aria-label="ARGENTINO"><defs><linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5FA8DD"/><stop offset=".34" stop-color="#5FA8DD"/><stop offset=".34" stop-color="#FFFFFF"/><stop offset=".66" stop-color="#FFFFFF"/><stop offset=".66" stop-color="#5FA8DD"/><stop offset="1" stop-color="#5FA8DD"/></linearGradient></defs><text x="76" y="24" text-anchor="middle" font-size="22" font-weight="900" font-family="Roboto,Arial,sans-serif" fill="url(#fl)" letter-spacing="1">ARGENTINO</text><circle cx="76" cy="14" r="3.4" fill="#F6B40E" stroke="#85340A" stroke-width=".6"/></svg></span></span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
+<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol <span class="arg"><svg class="argflag" viewBox="0 0 152 30" preserveAspectRatio="none" role="img" aria-label="ARGENTINO"><defs><linearGradient id="fl" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="26"><stop offset="0" stop-color="#5FA8DD"/><stop offset=".27" stop-color="#5FA8DD"/><stop offset=".27" stop-color="#FFFFFF"/><stop offset=".61" stop-color="#FFFFFF"/><stop offset=".61" stop-color="#5FA8DD"/><stop offset="1" stop-color="#5FA8DD"/></linearGradient></defs><text x="76" y="25" text-anchor="middle" font-size="22" font-weight="900" font-family="Roboto,Arial,sans-serif" fill="url(#fl)" letter-spacing="1">ARGENTINO</text><circle cx="76" cy="15.2" r="3.4" fill="#F6B40E" stroke="#85340A" stroke-width=".6"/></svg></span></span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
 <div class="shell">
   <section id="PART" class="col-p">
     <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos). Tocá un partido para ver probabilidades y posiciones.</span>
