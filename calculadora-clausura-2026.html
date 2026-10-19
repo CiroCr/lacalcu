@@ -31,7 +31,7 @@ body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em;color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .logo .sub{color:var(--text);font-size:1.55rem;font-weight:900;letter-spacing:.06em;text-shadow:none}
 .logo .yr{color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.03em;text-shadow:none}
-.logo .arg{background-image:linear-gradient(180deg,#74ACDF 0 31%,#FFFFFF 31% 69%,#74ACDF 69% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;position:relative;font-weight:900}
+.logo .arg{font-size:inherit;font-weight:900;background-image:linear-gradient(180deg,#74ACDF 0 31%,#FFFFFF 31% 69%,#74ACDF 69% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;position:relative}
 .logo .arg::after{content:'';position:absolute;left:50%;top:50%;width:.32em;height:.32em;transform:translate(-50%,-46%);border-radius:50%;background:radial-gradient(circle,#F6B40E 0 38%,#85340A 38% 52%,#F6B40E 52% 62%,transparent 62%);box-shadow:0 0 0 .045em #F6B40E;-webkit-mask:radial-gradient(circle,#000 99%,transparent 100%)}.logo .arg::after{opacity:.92}
 .top span{color:var(--muted);font-size:.85rem}
 .shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:18px;padding:10px 34px 34px;align-items:start}
@@ -152,6 +152,8 @@ body.matchview table.mini .nm{gap:5px}
 body.matchview table.mini{font-size:.8rem;table-layout:fixed}
 body.matchview .mtab.u5 table.mini{width:100%}
 body.matchview td.u5r{font-size:.78rem}
+body.matchview td.u5r .bdg2{width:20px;height:20px;flex:none}
+body.matchview td.u5r .u5n{display:inline-flex;align-items:center;gap:4px;min-width:0;overflow:hidden}
 body.matchview .mtab.ctxr, body.matchview td.ctxr{font-size:.78rem}
 body.matchview table.mini .nm{gap:5px;min-width:0}
 body.matchview td.ctxr .nm span:last-child{overflow:hidden;text-overflow:ellipsis}
@@ -231,6 +233,11 @@ body{display:flex;flex-direction:column}
 main{display:flex;flex-direction:column;min-height:0}
 main .tabs{flex:none}
 main .pane.on{flex:1 1 0;min-height:0;display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+body.matchview main .pane.on>.panel{flex:1 1 0;display:flex;flex-direction:column;min-height:0}
+body.matchview .mtabs{flex:1 1 0;min-height:0;align-items:stretch}
+body.matchview .mcol{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;min-height:0}
+body.matchview .mrow2{flex:1 1 0;min-height:0;align-items:stretch}
+body.matchview .mtab{display:flex;flex-direction:column;justify-content:center}
 main .pane.on>.panel{flex:0 0 auto}
 #pane-zonas .grid2{flex:1 1 0;align-items:stretch;min-height:0}
 #pane-zonas .grid2>*{display:flex;flex-direction:column;min-height:0}
@@ -463,13 +470,13 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
  const last5=cod=>{
   const ps=[...PAST.filter(m=>m[4]&&(m[1]===cod||m[2]===cod)).map(m=>({f:m[0],h:m[1],a:m[2],g:m[4]})),
    ...FX.map((m,i)=>({m,r:m[4]||res[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:x.r}))];
-  const all=ps.sort((x,y)=>x.f-y.f).slice(-5);
+  const all=ps.sort((x,y)=>x.f-y.f).slice(-5).reverse();
   if(!all.length)return'';
   let t='<div class="mtab u5"><div class="mt">Últimos 5 <span class="l5leg">(L) local · (V) visita</span></div><table class="mini"><colgroup><col class="c-f"><col class="c-r"><col class="c-s"></colgroup><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
   all.forEach(m=>{
    const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
    const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
-   t+=`<tr><td>${m.f}</td><td class="eq u5r"><span class="l5v">vs</span> ${NMC[rival.c]||rival.n} <span class="l5c">(${home?'L':'V'})</span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
+   t+=`<tr><td>${m.f}</td><td class="eq u5r">${bdg(rival.c)}<span class="u5n"><span class="l5v">vs</span> ${NMC[rival.c]||rival.n} <span class="l5c">(${home?'L':'V'})</span></span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
   return t+'</table></div>'};
  h+=`<div class="mtabs">
   <div class="mcol">
