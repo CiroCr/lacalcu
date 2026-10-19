@@ -29,8 +29,10 @@ body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8
 .top{display:flex;align-items:baseline;gap:14px;max-width:1500px;margin:0 auto;padding:14px 34px 8px;flex-wrap:wrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em;color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.logo .sub{color:var(--text);font-size:1.15rem;font-weight:800;letter-spacing:.01em;text-shadow:none}
+.logo .sub{color:var(--text);font-size:1.55rem;font-weight:900;letter-spacing:.06em;text-shadow:none}
 .logo .yr{color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.03em;text-shadow:none}
+.logo .arg{background-image:linear-gradient(180deg,#74ACDF 0 31%,#FFFFFF 31% 69%,#74ACDF 69% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;position:relative;font-weight:900}
+.logo .arg::after{content:'';position:absolute;left:50%;top:50%;width:.32em;height:.32em;transform:translate(-50%,-46%);border-radius:50%;background:radial-gradient(circle,#F6B40E 0 38%,#85340A 38% 52%,#F6B40E 52% 62%,transparent 62%);box-shadow:0 0 0 .045em #F6B40E;-webkit-mask:radial-gradient(circle,#000 99%,transparent 100%)}.logo .arg::after{opacity:.92}
 .top span{color:var(--muted);font-size:.85rem}
 .shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:18px;padding:10px 34px 34px;align-items:start}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
@@ -130,21 +132,23 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 body.matchview #PART,body.matchview .tabs{display:none}
 body.matchview .shell{grid-template-columns:minmax(0,1fr);max-width:1500px}
 body.matchview main{max-width:none;margin:0;width:100%}
-body.matchview .mhead .bdg2{width:52px;height:52px}
+body.matchview .mhead .bdg2{width:46px;height:46px}
 body.matchview .mteam span{font-size:.95rem}
-body.matchview .mscore b{font-size:2rem}
-body.matchview .mh{padding:6px 14px 4px}
-body.matchview .mhead{gap:12px;margin-top:6px}
-body.matchview .msub{margin-top:4px}
-body.matchview .mtab{padding:8px 10px}
-body.matchview table.mini{font-size:.84rem}
-body.matchview table.mini td{padding:4px 6px}
-body.matchview table.mini th{padding:4px 6px;font-size:.66rem}
-body.matchview .probrow .pcell{padding:8px}
+body.matchview .mscore b{font-size:1.6rem}
+body.matchview .mh{padding:2px 14px 1px}
+body.matchview .mhead{gap:10px;margin-top:4px}
+body.matchview .msub{margin-top:2px;font-size:.72rem}
+body.matchview .mtab{padding:6px 8px;overflow:hidden}
+body.matchview table.mini td.eq{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:15ch}
+body.matchview table.mini{font-size:.8rem}
+body.matchview table.mini td{padding:2.5px 5px}
+body.matchview table.mini th{padding:2.5px 5px;font-size:.64rem}
+body.matchview .mt{margin-bottom:2px}
+body.matchview .probrow .pcell{padding:6px}
 body.matchview .probrow .pcell b{font-size:1.3rem}
 body.matchview .probrow .pcell .pl{font-size:.76rem}
 body.matchview .probrow{margin-bottom:6px}
-body.matchview .pad{padding:10px 14px}
+body.matchview .pad{padding:8px 14px}
 body.matchview .detcap{margin-bottom:6px}
 body.matchview .mcol{gap:8px}
 body.matchview .mrow2{gap:8px}
@@ -154,7 +158,7 @@ body.matchview .mrow2{gap:8px}
 .l5.d{background:rgba(255,59,92,.15);color:#ff5f7e}
 .l5v{color:var(--muted);font-size:.68rem}
 .l5c{color:var(--muted);font-size:.64rem;font-weight:600;opacity:.85}
-.l5leg{font-size:.62rem;color:var(--muted);margin:-2px 0 5px 2px;opacity:.8}
+.l5leg{font-size:.6rem;color:var(--muted);margin:-4px 0 3px 2px;opacity:.8}
 .mcol{display:flex;flex-direction:column;gap:10px;min-width:0}
 .mrow2{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
@@ -230,7 +234,7 @@ footer.foot{flex:none;padding:8px 34px 12px}
 </style>
 </head>
 <body>
-<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol argentino</span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
+<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol <span class="arg">ARGENTINO</span></span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
 <div class="shell">
   <section id="PART" class="col-p">
     <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos). Tocá un partido para ver probabilidades y posiciones.</span>
@@ -401,9 +405,12 @@ function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh
 function ctxRows(rows,cod,cols){
  const i=rows.findIndex(x=>x.t.c===cod);
  if(i<0)return'';
- let a,b;
- if(i===0){a=1;b=2}else if(i===rows.length-1){a=rows.length-2;b=rows.length-1}else{a=i-1;b=i+1}
- const idx=[...new Set([a,i,b])].sort((x,y)=>x-y);
+ // 5 filas: 2 de arriba y 2 de abajo; en los bordes se desplaza la ventana
+ const n=rows.length;let a,b;
+ if(i===0){a=0;b=4}else if(i===1){a=0;b=4}
+ else if(i===n-1){a=n-5;b=n-1}else if(i===n-2){a=n-5;b=n-1}
+ else{a=i-2;b=i+2}
+ const idx=[];for(let k=Math.max(0,a);k<=Math.min(n-1,b);k++)idx.push(k);
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th>'+cols.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr>';
  idx.forEach(k=>{const x=rows[k],hi=x.t.c===cod?' class="hi"':'';
   h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nm(x.t)}</td>`+cols.map(c=>`<td>${x[c[0]]!==undefined?(c[2]?c[2](x):x[c[0]]):''}</td>`).join('')+'</tr>'});
