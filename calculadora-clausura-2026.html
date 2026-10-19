@@ -31,8 +31,8 @@ body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em;color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .logo .sub{color:var(--text);font-size:1.55rem;font-weight:900;letter-spacing:.06em;text-shadow:none}
 .logo .yr{color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.03em;text-shadow:none}
-.logo .arg{font-size:inherit;font-weight:900;background-image:linear-gradient(180deg,#74ACDF 0 31%,#FFFFFF 31% 69%,#74ACDF 69% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;position:relative}
-.logo .arg::after{content:'';position:absolute;left:50%;top:50%;width:.32em;height:.32em;transform:translate(-50%,-46%);border-radius:50%;background:radial-gradient(circle,#F6B40E 0 38%,#85340A 38% 52%,#F6B40E 52% 62%,transparent 62%);box-shadow:0 0 0 .045em #F6B40E;-webkit-mask:radial-gradient(circle,#000 99%,transparent 100%)}.logo .arg::after{opacity:.92}
+.logo .arg{font-size:inherit;font-weight:900;background-image:linear-gradient(180deg,#74ACDF 0 18%,#FFFFFF 36% 64%,#74ACDF 82% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;position:relative}
+.logo .arg::after{content:'';position:absolute;left:50%;top:46%;width:.3em;height:.3em;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#F6B40E 0 38%,#85340A 38% 52%,#F6B40E 52% 62%,transparent 62%);box-shadow:0 0 0 .045em #F6B40E;-webkit-mask:radial-gradient(circle,#000 99%,transparent 100%)}.logo .arg::after{opacity:.92}
 .top span{color:var(--muted);font-size:.85rem}
 .shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:18px;padding:10px 34px 34px;align-items:start}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
@@ -145,7 +145,7 @@ body.matchview .probrow .pcell .pl{font-size:.82rem}
 
 body.matchview .mhead{gap:14px;margin-top:8px}
 body.matchview .msub{margin-top:2px;font-size:.72rem}
-body.matchview .mtab{padding:6px 8px;overflow:hidden}
+body.matchview .mtab{padding:6px 8px}
 body.matchview table.mini td.eq{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:16ch}
 body.matchview table.mini .bdg2{width:18px;height:18px}
 body.matchview table.mini .nm{gap:5px}
@@ -237,7 +237,7 @@ body.matchview main .pane.on>.panel{flex:1 1 0;display:flex;flex-direction:colum
 body.matchview .mtabs{flex:1 1 0;min-height:0;align-items:stretch}
 body.matchview .mcol{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;min-height:0}
 body.matchview .mrow2{flex:1 1 0;min-height:0;align-items:stretch}
-body.matchview .mtab{display:flex;flex-direction:column;justify-content:center}
+body.matchview .mtab{display:block;overflow:visible}
 main .pane.on>.panel{flex:0 0 auto}
 #pane-zonas .grid2{flex:1 1 0;align-items:stretch;min-height:0}
 #pane-zonas .grid2>*{display:flex;flex-direction:column;min-height:0}
