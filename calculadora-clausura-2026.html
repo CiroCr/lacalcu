@@ -491,6 +491,7 @@ function fitTables(){
 const ESPN2COD={'9739':'ALD','3':'ARG','9785':'ATU','235':'BAN','10060':'BAR','4':'BEL','5':'BOC','11989':'CCO','8950':'DYJ','17702':'DRI','8':'EST','19685':'ERC','11972':'GEM','9':'GLP','10':'HUR','11':'IND','9744':'IRI','2975':'INS','12':'LAN','14':'NOB','7764':'PLA','15':'RAC','16':'RIV','17':'ROS','18':'SLO','10158':'SAR','19':'TAL','7767':'TIG','20':'UNI','21':'VEL'};
 function liveMark(){
  if(typeof fetch==='undefined')return;
+ if(location.protocol==='file:'){return} // desde file:// el CORS de ESPN bloquea; el vivo funciona servido (Pages/local)
  fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/scoreboard').then(r=>r.json()).then(d=>{
   const evs=d.events||[];
   evs.forEach(ev=>{
