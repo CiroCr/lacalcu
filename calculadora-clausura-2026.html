@@ -71,6 +71,10 @@ option{background:#0f1320;color:var(--text)}
 .st{align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);font-size:.66rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,.25)}
 .st.fin{color:var(--acc)}
 .st.live{color:#ffd60a;animation:livePulse 1.6s ease infinite}
+.lv{display:inline-block;min-width:34px;padding:1px 6px;border-radius:5px;font-size:.66rem;font-weight:800;letter-spacing:.02em;vertical-align:1px;margin-left:4px}
+.lv-w{background:rgba(76,175,80,.25);color:#7ee787}
+.lv-d{background:rgba(255,214,10,.16);color:#ffd60a}
+.lv-l{background:rgba(255,59,92,.18);color:#ff5f7e}
 @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.55}}
 .side{display:flex;align-items:center;gap:8px;min-width:0;font-weight:600}.side .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .side.h{justify-content:flex-end;flex-direction:row-reverse;text-align:right}
@@ -377,9 +381,16 @@ function flipWrap(container,newHTML){
   if(Math.abs(d)>2){r.style.transform='translateY('+d+'px)';r.style.transition='none';
    const go=()=>{r.style.transition='transform .45s cubic-bezier(.22,.9,.28,1)';r.style.transform='';r.classList.add('mv');setTimeout(()=>r.classList.remove('mv'),900)};
    typeof requestAnimationFrame==='function'?requestAnimationFrame(go):go()}})}
+function liveSpan(cod){
+ const li=Object.keys(LIVEIN).find(k=>FX[+k][1]===cod||FX[+k][2]===cod);
+ if(li===undefined)return'';
+ const m=FX[+li],v=LIVEIN[+li],home=m[1]===cod;
+ const gf=home?v.gh:v.ga,gc=home?v.ga:v.gh;
+ const cls=gf>gc?'lv-w':gf===gc?'lv-d':'lv-l';
+ return ` <span class="lv ${cls}">${gf}-${gc}</span>`}
 function zone(id,teams,title){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
  let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr></thead><tbody>';
- r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i<8?'playoff':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${x.p.GF}:${x.p.GC}</td><td>${dg(x.p.DG)}</td></tr>`);
+ r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i<8?'playoff':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}${liveSpan(x.t.c)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${x.p.GF}:${x.p.GC}</td><td>${dg(x.p.DG)}</td></tr>`);
  flipWrap(document.getElementById(id),panel(title,h+'</tbody></table>','<span><span class="dot" style="background:var(--acc)"></span>Clasifica a playoffs (top 8)</span>'))}
 const worstProm=()=>ALL.map(t=>{const p=proj(t);return{c:t.c,a:(t.h24+t.h25+t.apPts+p.Pts)/(t.pj+16+p.PJ)}}).sort((x,y)=>x.a-y.a)[0];
 function anual(){const r=ALL.map(t=>{const p=proj(t);return{t,pts:t.apPts+p.Pts,d:t.apGF-t.apGC+p.DG,pj:16+p.PJ,gf:t.apGF+p.GF,gc:t.apGC+p.GC}}).sort((a,b)=>b.pts-a.pts||b.d-a.d);
@@ -387,11 +398,11 @@ function anual(){const r=ALL.map(t=>{const p=proj(t);return{t,pts:t.apPts+p.Pts,
  let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr></thead><tbody>';
  let c3=0;const cls=r.map(x=>{if(x.t.c==='BEL')return 'camp';c3++;return c3<=3?'lib':c3<=9?'sud':''});
  r.forEach((x,i)=>{const c=i===di?'releg':cls[i];
- h+=`<tr data-c="${x.t.c}" class="${c}"><td>${i+1}</td><td class="eq">${nm(x.t)}${x.t.c==='BEL'?'<span class="tag">Campeón Apertura</span>':''}</td><td><b>${x.pts}</b></td><td>${x.pj}</td><td>${x.gf}:${x.gc}</td><td>${dg(x.d)}</td></tr>`});
+ h+=`<tr data-c="${x.t.c}" class="${c}"><td>${i+1}</td><td class="eq">${nm(x.t)}${liveSpan(x.t.c)}${x.t.c==='BEL'?'<span class="tag">Campeón Apertura</span>':''}</td><td><b>${x.pts}</b></td><td>${x.pj}</td><td>${x.gf}:${x.gc}</td><td>${dg(x.d)}</td></tr>`});
  flipWrap(document.getElementById('ANUAL'),panel('Tabla anual',h+'</tbody></table>','<span><span class="dot" style="background:var(--gold)"></span>Libertadores (3 mejores sin título)</span><span><span class="dot" style="background:var(--acc2)"></span>Sudamericana (6 siguientes)</span><span><span class="dot" style="background:#ff3b5c"></span>Descenso por tabla anual</span><span style="flex-basis:100%">Belgrano ya tiene su lugar en la Libertadores como campeón del Apertura y no ocupa un cupo de la anual. Los campeones del Clausura y de la Copa Argentina también clasifican y liberarían su lugar si terminan arriba: eso todavía no está modelado.</span>'+(di===28?`<span style="flex-basis:100%">${r[29].t.n} es último en la anual y en los promedios: desciende por promedios, y el descenso de la anual pasa a ${r[28].t.n}.</span>`:'')))}
 function prom(){const r=ALL.map(t=>{const p=proj(t),pt=t.h24+t.h25+t.apPts+p.Pts,pj=t.pj+16+p.PJ;return{t,pt,pj,a:pt/pj}}).sort((a,b)=>b.a-a.a);
  let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Prom.</th><th>Pts</th><th>PJ</th></tr></thead><tbody>';
- r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i===29?'releg':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.a.toFixed(3)}</b></td><td>${x.pt}</td><td>${x.pj}</td></tr>`);
+ r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i===29?'releg':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}${liveSpan(x.t.c)}</td><td><b>${x.a.toFixed(3)}</b></td><td>${x.pt}</td><td>${x.pj}</td></tr>`);
  flipWrap(document.getElementById('PROM'),panel('Promedios',h+'</tbody></table>','<span><span class="dot" style="background:#ff3b5c"></span>Peor promedio = desciende</span>'))}
 // Resultados reales de las fechas 1 a 10 (ya incluidos en la base de las tablas, solo se muestran)
 const PAST_RAW={1:"BEL-ROS 2-1,SAR-ARG 2-3,DYJ-ALD 1-1,GEM-CCO 1-0,RAC-GLP 2-1,VEL-INS 1-0,HUR-BAN 1-0,PLA-UNI 2-2,ERC-TIG 1-0,NOB-TAL 1-0,RIV-BAR 0-1,LAN-SLO 1-0,ATU-IRI 0-0,EST-IND 0-2,DRI-BOC 3-0",
@@ -545,6 +556,7 @@ function fitTables(){
   tb.classList.add('fitted')})}
 // ===== EN VIVO (ESPN publico, sin key): marcador en curso actualizado cada 60s =====
 const ESPN2COD={'9739':'ALD','3':'ARG','9785':'ATU','235':'BAN','10060':'BAR','4':'BEL','5':'BOC','11989':'CCO','8950':'DYJ','17702':'DRI','8':'EST','19685':'ERC','11972':'GEM','9':'GLP','10':'HUR','11':'IND','9744':'IRI','2975':'INS','12':'LAN','14':'NOB','7764':'PLA','15':'RAC','16':'RIV','17':'ROS','18':'SLO','10158':'SAR','19':'TAL','7767':'TIG','20':'UNI','21':'VEL'};
+const LIVEIN={};
 function liveMark(){
  if(typeof fetch==='undefined')return;
  if(location.protocol==='file:'){return} // desde file:// el CORS de ESPN bloquea; el vivo funciona servido (Pages/local)
@@ -561,15 +573,22 @@ function liveMark(){
    const stEl=document.getElementById('st'+i);
    if(!stEl)return;
    if(st==='in'){
-    stEl.textContent=(c.status.type.detail||'')+' '+gh+'-'+ga;
+    const det=(c.status.type.detail||'').replace('HT','ET');
+    stEl.textContent=det;
     stEl.classList.add('live');
+    LIVEIN[i]={gh:gh||0,ga:ga||0,min:det};
     const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
-    if(inGh&&!inGh.readOnly&&gh!=null){inGh.value=gh}
-    if(inGa&&!inGa.readOnly&&ga!=null){inGa.value=ga}
+    if(inGh){inGh.value=gh!=null?gh:'';inGh.readOnly=true}
+    if(inGa){inGa.value=ga!=null?ga:'';inGa.readOnly=true}
+    tables();
    }else if(st==='post'){
-    if(res[i]==null&&gh!=null&&ga!=null){
+    if(LIVEIN[i]&&res[i]==null&&gh!=null&&ga!=null){
      part[i]={gh:String(gh),ga:String(ga)};res[i]={gh,ga};save();
      const s=document.getElementById('st'+i);if(s){s.textContent='Final';s.classList.add('fin');s.classList.remove('live')}
+     delete LIVEIN[i];
+     const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
+     if(inGh)inGh.readOnly=false;
+     if(inGa)inGa.readOnly=false;
      tables();
     }
    }
@@ -798,7 +817,9 @@ function closeModal(id){const m=document.getElementById(id);if(m)m.hidden=true}
 if(typeof document.addEventListener==='function'){document.addEventListener('click',ev=>{const m=ev.target.closest?ev.target.closest('.modal'):null;if(m&&ev.target===m)m.hidden=true});
 document.addEventListener('keydown',ev=>{if(ev.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>m.hidden=true)})}
 function sched(){clearTimeout(simTimer);simTimer=setTimeout(probs,350)}
-function resetAll(){try{localStorage.removeItem(LSK)}catch(e){}initRes();fixture();tables()}
+function resetAll(){try{localStorage.removeItem(LSK)}catch(e){}initRes();
+ Object.keys(LIVEIN).forEach(k=>{const i=+k;part[i]={gh:String(LIVEIN[k].gh),ga:String(LIVEIN[k].ga)};res[i]={gh:LIVEIN[k].gh,ga:LIVEIN[k].ga}});
+ fixture();tables()}
 function tables(){zone('A',TA,'Zona A');zone('B',TB,'Zona B');anual();prom();fitTables();sched()}
 if(typeof window!=='undefined')window.addEventListener('resize',()=>{clearTimeout(window._fitT);window._fitT=setTimeout(fitTables,150)});
 document.getElementById('fSel').innerHTML=Array.from({length:16},(_,i)=>`<option value="${i+1}">Fecha ${i+1}</option>`).join('');
