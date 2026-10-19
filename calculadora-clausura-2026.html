@@ -128,18 +128,26 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .minitabs{max-width:420px}
 .mtabs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
 body.matchview #PART,body.matchview .tabs{display:none}
-body.matchview .shell{grid-template-columns:minmax(0,1fr)}
-body.matchview main{max-width:1200px;margin:0 auto;width:100%}
-body.matchview .mhead .bdg2{width:72px;height:72px}
-body.matchview .mteam span{font-size:1.05rem}
-body.matchview .mscore b{font-size:2.6rem}
-body.matchview .mtab{padding:12px 14px}
-body.matchview table.mini{font-size:.86rem}
-body.matchview table.mini td{padding:7px 8px}
-body.matchview table.mini th{padding:6px 8px;font-size:.7rem}
-body.matchview .probrow .pcell{padding:12px 8px}
-body.matchview .probrow .pcell b{font-size:1.5rem}
-body.matchview .probrow .pcell .pl{font-size:.8rem}
+body.matchview .shell{grid-template-columns:minmax(0,1fr);max-width:1500px}
+body.matchview main{max-width:none;margin:0;width:100%}
+body.matchview .mhead .bdg2{width:52px;height:52px}
+body.matchview .mteam span{font-size:.95rem}
+body.matchview .mscore b{font-size:2rem}
+body.matchview .mh{padding:6px 14px 4px}
+body.matchview .mhead{gap:12px;margin-top:6px}
+body.matchview .msub{margin-top:4px}
+body.matchview .mtab{padding:8px 10px}
+body.matchview table.mini{font-size:.84rem}
+body.matchview table.mini td{padding:4px 6px}
+body.matchview table.mini th{padding:4px 6px;font-size:.66rem}
+body.matchview .probrow .pcell{padding:8px}
+body.matchview .probrow .pcell b{font-size:1.3rem}
+body.matchview .probrow .pcell .pl{font-size:.76rem}
+body.matchview .probrow{margin-bottom:6px}
+body.matchview .pad{padding:10px 14px}
+body.matchview .detcap{margin-bottom:6px}
+body.matchview .mcol{gap:8px}
+body.matchview .mrow2{gap:8px}
 .l5{display:inline-block;min-width:34px;padding:2px 6px;border-radius:5px;font-weight:700;font-size:.74rem;text-align:center}
 .l5.v{background:rgba(76,175,80,.18);color:#66bb6a}
 .l5.e{background:rgba(133,147,161,.15);color:#9aa7b4}
@@ -147,7 +155,8 @@ body.matchview .probrow .pcell .pl{font-size:.8rem}
 .l5v{color:var(--muted);font-size:.68rem}
 .l5c{color:var(--muted);font-size:.64rem;font-weight:600;opacity:.85}
 .l5leg{font-size:.62rem;color:var(--muted);margin:-2px 0 5px 2px;opacity:.8}
-.mcol{display:flex;flex-direction:column;gap:12px;min-width:0}
+.mcol{display:flex;flex-direction:column;gap:10px;min-width:0}
+.mrow2{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
 .mtab .mini td,.mtab .mini th{padding:5px 4px;font-size:.74rem}
 @media(max-width:760px){.mtabs{grid-template-columns:1fr}}
@@ -436,8 +445,14 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
    t+=`<tr><td>${m.f}</td><td class="eq"><span class="l5v">vs</span> ${nm(rival)} <span class="l5c">(${home?'L':'V'})</span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
   return t+'</table></div>'};
  h+=`<div class="mtabs">
-  <div class="mcol">${grp(hC,zi(hC)?TB:TA)}${grpA(hC)}${grpP(hC)}${last5(hC)}</div>
-  <div class="mcol">${grp(aC,zi(aC)?TB:TA)}${grpA(aC)}${grpP(aC)}${last5(aC)}</div>
+  <div class="mcol">
+   <div class="mrow2">${last5(hC)}${grp(hC,zi(hC)?TB:TA)}</div>
+   <div class="mrow2">${grpA(hC)}${grpP(hC)}</div>
+  </div>
+  <div class="mcol">
+   <div class="mrow2">${last5(aC)}${grp(aC,zi(aC)?TB:TA)}</div>
+   <div class="mrow2">${grpA(aC)}${grpP(aC)}</div>
+  </div>
  </div>`;
  return h+'</div>'}
 function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
