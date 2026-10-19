@@ -13,7 +13,7 @@
 <meta property="og:description" content="Simulá el Clausura 2026: cargá los resultados pendientes y mirá zonas, anual, promedios y probabilidades.">
 <meta property="og:url" content="https://TU-DOMINIO.com/">
 <meta name="theme-color" content="#07090f">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; font-src 'self'; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src https://site.api.espn.com; font-src 'self'; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none';">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"La calcu del fútbol argentino","applicationCategory":"SportsApplication","operatingSystem":"Web","inLanguage":"es-AR","offers":{"@type":"Offer","price":"0","priceCurrency":"ARS"}}</script>
 <!-- Google AdSense: pegá acá tu código cuando te aprueben la cuenta -->
 <style>
@@ -66,6 +66,8 @@ option{background:#0f1320;color:var(--text)}
 .match.inter{box-shadow:inset 3px 0 0 var(--gold)}
 .st{align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);font-size:.66rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,.25)}
 .st.fin{color:var(--acc)}
+.st.live{color:#ffd60a;animation:livePulse 1.6s ease infinite}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.55}}
 .side{display:flex;align-items:center;gap:8px;min-width:0;font-weight:600}.side .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .side.h{justify-content:flex-end;flex-direction:row-reverse;text-align:right}
 .match input{width:36px;padding:7px 0;border-radius:6px;border:1px solid var(--line);background:var(--inp);color:var(--text);text-align:center;font-size:.95rem;font-weight:700;transition:border-color .15s,box-shadow .15s}
@@ -303,7 +305,7 @@ const bdg=c=>CREST[c]?`<img class="bdg2" src="${CREST[c]}" alt="Escudo de ${T[c]
 // Fixture oficial LPF fechas 11-16 (* = interzonal)
 const RAW={11:"TAL-BEL 0-1,IND-INS 1-4,BOC-UNI 3-0,DYJ-SLO 3-0,DRI-CCO 1-1,EST-GEM 3-0,NOB-LAN 0-0,VEL-PLA 2-2,ERC-RAC 1-2,SAR-RIV 1-1,HUR-ALD 1-0,ATU-BAR 2-3,IRI-GLP 1-1,BAN-ROS 1-1,ARG-TIG 2-1",
 12:"PLA-ARG 1-1,LAN-VEL 2-0,GEM-NOB 1-0,CCO-EST 2-2,SLO-DRI 1-0,UNI-DYJ 0-2,INS-BOC 2-2,TAL-IND 0-0,TIG-BAN 1-2,ROS-IRI 5-0,GLP-ATU 1-1,BAR-HUR 2-0,ALD-SAR 1-3,RIV-ERC 1-0,RAC-BEL 0-2",
-13:"RAC-IND 1-1,BOC-TAL 2-1,DYJ-INS 0-1,DRI-UNI,EST-SLO 1-2,NOB-CCO,VEL-GEM 1-0,PLA-LAN 0-1,BEL-RIV,ERC-ALD 2-1,SAR-BAR,HUR-GLP 1-2,ATU-ROS 2-3,IRI-TIG 2-2,BAN-ARG 0-1",
+13:"RAC-IND 1-1,BOC-TAL 2-1,DYJ-INS 0-1,DRI-UNI,EST-SLO 1-2,NOB-CCO,VEL-GEM 1-0,PLA-LAN 0-1,BEL-RIV 0-3,ERC-ALD 2-1,SAR-BAR,HUR-GLP 1-2,ATU-ROS 2-3,IRI-TIG 2-2,BAN-ARG 0-1",
 14:"BAN-LAN,GEM-PLA,CCO-VEL,SLO-NOB,UNI-EST,INS-DRI,TAL-DYJ,IND-BOC,ARG-IRI,TIG-ATU,ROS-HUR,GLP-SAR,BAR-ERC,ALD-BEL,RIV-RAC",
 15:"BOC-RIV,DYJ-IND,DRI-TAL,EST-INS,NOB-UNI,VEL-SLO,PLA-CCO,LAN-GEM,RAC-ALD,BEL-BAR,ERC-GLP,SAR-ROS,HUR-TIG,ATU-ARG,IRI-BAN",
 16:"GEM-IRI,CCO-LAN,SLO-PLA,UNI-VEL,INS-NOB,TAL-EST,IND-DRI,BOC-DYJ,BAN-ATU,ARG-HUR,TIG-SAR,ROS-ERC,GLP-BEL,BAR-RAC,ALD-RIV"};
@@ -485,6 +487,40 @@ function fitTables(){
   const fh=Math.max(36,Math.min(48,(eachH-extra-6)/rows));
   tb.style.setProperty('--fh',fh.toFixed(1)+'px');
   tb.classList.add('fitted')})}
+// ===== EN VIVO (ESPN publico, sin key): marcador en curso actualizado cada 60s =====
+const ESPN2COD={'9739':'ALD','3':'ARG','9785':'ATU','235':'BAN','10060':'BAR','4':'BEL','5':'BOC','11989':'CCO','8950':'DYJ','17702':'DRI','8':'EST','19685':'ERC','11972':'GEM','9':'GLP','10':'HUR','11':'IND','9744':'IRI','2975':'INS','12':'LAN','14':'NOB','7764':'PLA','15':'RAC','16':'RIV','17':'ROS','18':'SLO','10158':'SAR','19':'TAL','7767':'TIG','20':'UNI','21':'VEL'};
+function liveMark(){
+ if(typeof fetch==='undefined')return;
+ fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/scoreboard').then(r=>r.json()).then(d=>{
+  const evs=d.events||[];
+  evs.forEach(ev=>{
+   const c=ev.competitions[0],st=c.status.type.state;
+   const hC=c.competitors.find(x=>x.homeAway==='home')||{},aC=c.competitors.find(x=>x.homeAway==='away')||{};
+   const hc=ESPN2COD[String(hC.team&&hC.team.id)],ac=ESPN2COD[String(aC.team&&aC.team.id)];
+   if(!hc||!ac)return;
+   const i=FX.findIndex(m=>m[1]===hc&&m[2]===ac);
+   if(i<0)return;
+   const gh=hC.score!=null?+hC.score:null,ga=aC.score!=null?+aC.score:null;
+   const stEl=document.getElementById('st'+i);
+   if(!stEl)return;
+   if(st==='in'){
+    stEl.textContent=(c.status.type.detail||'')+' '+gh+'-'+ga;
+    stEl.classList.add('live');
+    const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
+    if(inGh&&!inGh.readOnly&&gh!=null){inGh.value=gh}
+    if(inGa&&!inGa.readOnly&&ga!=null){inGa.value=ga}
+   }else if(st==='post'){
+    if(res[i]==null&&gh!=null&&ga!=null){
+     part[i]={gh:String(gh),ga:String(ga)};res[i]={gh,ga};save();
+     const s=document.getElementById('st'+i);if(s){s.textContent='Final';s.classList.add('fin');s.classList.remove('live')}
+     tables();
+    }
+   }
+  });
+ }).catch(e=>{if(typeof console!=='undefined')console.warn('live:',e)});
+ setTimeout(liveMark,60000)}
+if(typeof window!=='undefined'&&typeof document!=='undefined'){
+ setTimeout(liveMark,1500)}
 function fixture(){
  const list=curF<=10?PAST.filter(m=>m[0]===curF).map(m=>[m,-1]):FX.map((m,i)=>[m,i]).filter(x=>x[0][0]===curF);
  ALLI=list.every(([m])=>m[3]);
