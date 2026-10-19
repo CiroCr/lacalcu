@@ -31,7 +31,7 @@ body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em;color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .logo .sub{color:var(--text);font-size:1.55rem;font-weight:900;letter-spacing:.06em;text-shadow:none}
 .logo .yr{color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.03em;text-shadow:none}
-.logo .arg{display:inline-flex;align-items:center;margin-left:.35em}
+.logo .arg{display:inline-flex;align-items:center;margin-left:.78em}
 .logo .arg svg.argflag{display:block;height:33px;width:150px;overflow:visible;flex:none}
 .logo .sub{display:inline-flex;align-items:center}
 
@@ -235,13 +235,14 @@ body{display:flex;flex-direction:column}
 main{display:flex;flex-direction:column;min-height:0}
 main .tabs{flex:none}
 main .pane.on{flex:1 1 0;min-height:0;display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding-right:2px;padding-bottom:12px}
-body.matchview main .pane.on>.panel{flex:1 1 0;display:flex;flex-direction:column;min-height:0}
+body.matchview main .pane.on>.panel{flex:1 1 0;display:flex;flex-direction:column;min-height:0;overflow-y:auto}
 body.matchview .mtabs{flex:1 1 0;min-height:0;align-items:stretch;align-content:stretch}
 body.matchview .mcol{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;min-height:0}
 body.matchview .mrow2{flex:1 1 0;min-height:0;align-items:stretch}
+body.matchview .mrow2:last-child{flex:0 0 auto}
 body.matchview .mrow2>.mtab{height:100%}
 body.matchview .mtab{display:block;overflow:visible}
-body.matchview .mtab table.mini{height:100%}
+body.matchview .mtab table.mini{height:auto}
 main .pane.on>.panel{flex:0 0 auto}
 #pane-zonas .grid2{flex:1 1 0;align-items:stretch;min-height:0}
 #pane-zonas .grid2>*{display:flex;flex-direction:column;min-height:0}
