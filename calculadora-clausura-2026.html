@@ -132,18 +132,33 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 body.matchview #PART,body.matchview .tabs{display:none}
 body.matchview .shell{grid-template-columns:minmax(0,1fr);max-width:1500px}
 body.matchview main{max-width:none;margin:0;width:100%}
-body.matchview .mhead .bdg2{width:64px;height:64px}
-body.matchview .mteam span{font-size:1.1rem}
-body.matchview .mscore b{font-size:2rem}
-body.matchview .mh{padding:8px 14px 6px}
+body.matchview .mhead .bdg2{width:72px;height:72px}
+body.matchview .mteam span{font-size:1.25rem}
+body.matchview .mscore b{font-size:2.8rem;min-width:64px}
+body.matchview .mscore span{font-size:.9rem}
+body.matchview .mh{padding:10px 16px 8px}
+body.matchview .mhead{gap:24px;margin-top:10px}
+body.matchview .msub{font-size:.8rem;margin-top:6px}
+body.matchview .probrow .pcell b{font-size:1.6rem}
+body.matchview .probrow .pcell{padding:10px 8px}
+body.matchview .probrow .pcell .pl{font-size:.82rem}
 
 body.matchview .mhead{gap:14px;margin-top:8px}
 body.matchview .msub{margin-top:2px;font-size:.72rem}
 body.matchview .mtab{padding:6px 8px;overflow:hidden}
-body.matchview table.mini td.eq{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:15ch}
-body.matchview table.mini{font-size:.8rem}
-body.matchview table.mini td{padding:2.5px 5px}
-body.matchview table.mini th{padding:2.5px 5px;font-size:.64rem}
+body.matchview table.mini td.eq{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:16ch}
+body.matchview table.mini .bdg2{width:18px;height:18px}
+body.matchview table.mini .nm{gap:5px}
+body.matchview table.mini{font-size:.8rem;table-layout:fixed}
+body.matchview .mtab.u5 table.mini{width:100%}
+body.matchview td.u5r{font-size:.78rem}
+body.matchview .mtab.ctxr, body.matchview td.ctxr{font-size:.78rem}
+body.matchview table.mini .nm{gap:5px;min-width:0}
+body.matchview td.ctxr .nm span:last-child{overflow:hidden;text-overflow:ellipsis}
+body.matchview table.mini td{padding:2.5px 5px;height:29px}
+body.matchview table.mini th{padding:2.5px 5px;height:22px;font-size:.64rem}
+body.matchview .mtab .mini tbody td{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+body.matchview .mtab.u5 col.c-f{width:9%}body.matchview .mtab.u5 col.c-r{width:60%}body.matchview .mtab.u5 col.c-s{width:31%}
 body.matchview .mt{margin-bottom:2px}
 body.matchview .probrow .pcell{padding:6px}
 body.matchview .probrow .pcell b{font-size:1.3rem}
@@ -159,7 +174,7 @@ body.matchview .mrow2{gap:8px}
 .l5.d{background:rgba(255,59,92,.15);color:#ff5f7e}
 .l5v{color:var(--muted);font-size:.68rem}
 .l5c{color:var(--muted);font-size:.64rem;font-weight:600;opacity:.85}
-.l5leg{font-size:.6rem;color:var(--muted);margin:-4px 0 3px 2px;opacity:.8}
+.l5leg{font-size:.6rem;color:var(--muted);opacity:.75;font-weight:400;margin-left:6px}
 .mcol{display:flex;flex-direction:column;gap:10px;min-width:0}
 .mrow2{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
@@ -235,7 +250,7 @@ footer.foot{flex:none;padding:8px 34px 12px}
 </style>
 </head>
 <body>
-<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol <span class="arg">argentino</span></span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
+<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol <span class="arg">ARGENTINO</span></span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
 <div class="shell">
   <section id="PART" class="col-p">
     <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos). Tocá un partido para ver probabilidades y posiciones.</span>
@@ -414,16 +429,18 @@ function ctxRows(rows,cod,cols){
  else if(i===n-1){a=n-5;b=n-1}else if(i===n-2){a=n-5;b=n-1}
  else{a=i-2;b=i+2}
  const idx=[];for(let k=Math.max(0,a);k<=Math.min(n-1,b);k++)idx.push(k);
- let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th>'+cols.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr>';
+ const nCols=cols.length;
+ const wRest=Math.max(10,Math.floor((100-12-52)/nCols));
+ let h='<table class="mini"><colgroup><col style="width:12%"><col style="width:52%">'+cols.map(()=>'<col style="width:'+wRest+'%">').join('')+'</colgroup><tr><th>#</th><th style="text-align:left">Equipo</th>'+cols.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr>';
  idx.forEach(k=>{const x=rows[k],hi=x.t.c===cod?' class="hi"':'';
-  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nmS(x.t)}</td>`+cols.map(c=>`<td>${x[c[0]]!==undefined?(c[2]?c[2](x):x[c[0]]):''}</td>`).join('')+'</tr>'});
+  h+=`<tr${hi}><td>${k+1}</td><td class="eq ctxr">${nmS(x.t)}</td>`+cols.map(c=>`<td>${x[c[0]]!==undefined?(c[2]?c[2](x):x[c[0]]):''}</td>`).join('')+'</tr>'});
  return h+'</table>'}
 function ctxZone(tz,cod){
  const r=tz.map(t=>{const p=proj(t);return{t,pts:p.Pts,pj:p.PJ,gf:p.GF,gc:p.GC,dg:p.DG}}).sort((a,b)=>b.pts-a.pts||b.dg-a.dg||b.gf-a.gf);
- return ctxRows(r,cod,[['pts','Pts',x=>'<b>'+x.pts+'</b>'],['pj','PJ'],['gf','F'],['gc','C'],['dg','DG',x=>(x.dg>0?'+':'')+x.dg]])}
+ return ctxRows(r,cod,[['pts','Pts',x=>'<b>'+x.pts+'</b>'],['pj','PJ'],['dg','DG',x=>(x.dg>0?'+':'')+x.dg]])}
 function ctxAnual(cod){
  const r=ALL.map(t=>{const p=proj(t);return{t,pts:t.apPts+p.Pts,pj:16+p.PJ,gf:t.apGF+p.GF,gc:t.apGC+p.GC,dg:t.apGF-t.apGC+p.DG}}).sort((a,b)=>b.pts-a.pts||b.dg-a.dg||b.gf-a.gf);
- return ctxRows(r,cod,[['pts','Pts',x=>'<b>'+x.pts+'</b>'],['pj','PJ'],['gf','F'],['gc','C'],['dg','DG',x=>(x.dg>0?'+':'')+x.dg]])}
+ return ctxRows(r,cod,[['pts','Pts',x=>'<b>'+x.pts+'</b>'],['pj','PJ'],['dg','DG',x=>(x.dg>0?'+':'')+x.dg]])}
 function ctxProm(cod){
  const r=ALL.map(t=>{const p=proj(t);return{t,pt:t.h24+t.h25+t.apPts+p.Pts,pj:t.pj+16+p.PJ,a:(t.h24+t.h25+t.apPts+p.Pts)/(t.pj+16+p.PJ)}}).sort((a,b)=>b.a-a.a);
  return ctxRows(r,cod,[['a','Prom.',x=>'<b>'+x.a.toFixed(3)+'</b>'],['pt','Pts'],['pj','PJ']])}
@@ -448,11 +465,11 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
    ...FX.map((m,i)=>({m,r:m[4]||res[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:x.r}))];
   const all=ps.sort((x,y)=>x.f-y.f).slice(-5);
   if(!all.length)return'';
-  let t='<div class="mtab"><div class="mt">Últimos 5 partidos</div><div class="l5leg">(L) = de local &nbsp;·&nbsp; (V) = de visita</div><table class="mini"><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
+  let t='<div class="mtab u5"><div class="mt">Últimos 5 <span class="l5leg">(L) local · (V) visita</span></div><table class="mini"><colgroup><col class="c-f"><col class="c-r"><col class="c-s"></colgroup><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
   all.forEach(m=>{
    const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
    const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
-   t+=`<tr><td>${m.f}</td><td class="eq"><span class="l5v">vs</span> ${nmS(rival)} <span class="l5c">(${home?'L':'V'})</span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
+   t+=`<tr><td>${m.f}</td><td class="eq u5r"><span class="l5v">vs</span> ${NMC[rival.c]||rival.n} <span class="l5c">(${home?'L':'V'})</span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
   return t+'</table></div>'};
  h+=`<div class="mtabs">
   <div class="mcol">
