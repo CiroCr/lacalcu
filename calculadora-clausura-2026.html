@@ -132,11 +132,12 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 body.matchview #PART,body.matchview .tabs{display:none}
 body.matchview .shell{grid-template-columns:minmax(0,1fr);max-width:1500px}
 body.matchview main{max-width:none;margin:0;width:100%}
-body.matchview .mhead .bdg2{width:46px;height:46px}
-body.matchview .mteam span{font-size:.95rem}
-body.matchview .mscore b{font-size:1.6rem}
-body.matchview .mh{padding:2px 14px 1px}
-body.matchview .mhead{gap:10px;margin-top:4px}
+body.matchview .mhead .bdg2{width:64px;height:64px}
+body.matchview .mteam span{font-size:1.1rem}
+body.matchview .mscore b{font-size:2rem}
+body.matchview .mh{padding:8px 14px 6px}
+
+body.matchview .mhead{gap:14px;margin-top:8px}
 body.matchview .msub{margin-top:2px;font-size:.72rem}
 body.matchview .mtab{padding:6px 8px;overflow:hidden}
 body.matchview table.mini td.eq{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:15ch}
@@ -234,7 +235,7 @@ footer.foot{flex:none;padding:8px 34px 12px}
 </style>
 </head>
 <body>
-<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol <span class="arg">ARGENTINO</span></span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
+<div class="top"><h1 class="logo">LA CALCU <span class="sub">del fútbol <span class="arg">argentino</span></span> <span class="yr">· Clausura 2026</span><span class="sr"> La calcu del fútbol argentino — Clausura 2026 de la Liga Profesional</span></h1></div>
 <div class="shell">
   <section id="PART" class="col-p">
     <div class="bar"><span class="note">Oficiales bloqueados. Cargá goles en los pendientes para simular (se guardan en tu navegador). Dorado = interzonal (fecha 6: todos). Tocá un partido para ver probabilidades y posiciones.</span>
@@ -331,6 +332,8 @@ function proj(t){let pj=0,gf=0,gc=0,pts=0;FX.forEach((f,i)=>{const r=res[i];if(!
  else if(f[2]===t.c){pj++;gf+=r.ga;gc+=r.gh;pts+=r.ga>r.gh?3:r.gh===r.ga?1:0}});
  return{PJ:t.clPJ+pj,GF:t.clGF+gf,GC:t.clGC+gc,DG:t.clGF+gf-t.clGC-gc,Pts:t.clPts+pts}}
 const dg=n=>(n>0?"+":"")+n,nm=t=>`<span class="nm">${bdg(t.c)}${t.n}</span>`;
+const NMC={GLP:'Gimnasia',GEM:'Gimnasia Mza',ERC:'Estudiantes RC',EST:'Estudiantes',CCO:'C. Córdoba',TAL:'Talleres',DRI:'Riestra',SAR:'Sarmiento',IRI:'I. Rivadavia',ATU:'Atl. Tucumán',BAR:'Barracas',UNI:'Unión',NOB:"Newell's",IND:'Independiente',ARG:'Argentinos',ROS:'Rosario Central',VEL:'Vélez',DYJ:'Defensa',INS:'Instituto',PLA:'Platense',LAN:'Lanús',SLO:'San Lorenzo',BOC:'Boca',RIV:'River',RAC:'Racing',BEL:'Belgrano',HUR:'Huracán',BAN:'Banfield',TIG:'Tigre',ALD:'Aldosivi'};
+const nmS=t=>`<span class="nm">${bdg(t.c)}${NMC[t.c]||t.n}</span>`;
 const panel=(title,body,leg)=>`<div class="panel"><div class="ph">${title}</div><div class="tblwrap">${body}</div>${leg?`<div class="legend">${leg}</div>`:''}</div>`;
 function showPane(id,btn){document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+id));
  document.querySelectorAll('.tab').forEach(t=>{t.classList.toggle('on',t===btn);if(t.hasAttribute('role'))t.setAttribute('aria-selected',t===btn?'true':'false')});
@@ -413,7 +416,7 @@ function ctxRows(rows,cod,cols){
  const idx=[];for(let k=Math.max(0,a);k<=Math.min(n-1,b);k++)idx.push(k);
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th>'+cols.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr>';
  idx.forEach(k=>{const x=rows[k],hi=x.t.c===cod?' class="hi"':'';
-  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nm(x.t)}</td>`+cols.map(c=>`<td>${x[c[0]]!==undefined?(c[2]?c[2](x):x[c[0]]):''}</td>`).join('')+'</tr>'});
+  h+=`<tr${hi}><td>${k+1}</td><td class="eq">${nmS(x.t)}</td>`+cols.map(c=>`<td>${x[c[0]]!==undefined?(c[2]?c[2](x):x[c[0]]):''}</td>`).join('')+'</tr>'});
  return h+'</table>'}
 function ctxZone(tz,cod){
  const r=tz.map(t=>{const p=proj(t);return{t,pts:p.Pts,pj:p.PJ,gf:p.GF,gc:p.GC,dg:p.DG}}).sort((a,b)=>b.pts-a.pts||b.dg-a.dg||b.gf-a.gf);
@@ -449,7 +452,7 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
   all.forEach(m=>{
    const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
    const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
-   t+=`<tr><td>${m.f}</td><td class="eq"><span class="l5v">vs</span> ${nm(rival)} <span class="l5c">(${home?'L':'V'})</span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
+   t+=`<tr><td>${m.f}</td><td class="eq"><span class="l5v">vs</span> ${nmS(rival)} <span class="l5c">(${home?'L':'V'})</span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
   return t+'</table></div>'};
  h+=`<div class="mtabs">
   <div class="mcol">
