@@ -31,8 +31,8 @@ body{margin:0;color:var(--text);background:radial-gradient(900px 420px at 50% -8
 .logo{margin:0;font-size:1.55rem;font-weight:900;letter-spacing:.06em;color:var(--acc);text-shadow:0 0 16px rgba(0,255,156,.55);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .logo .sub{color:var(--text);font-size:1.55rem;font-weight:900;letter-spacing:.06em;text-shadow:none}
 .logo .yr{color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.03em;text-shadow:none}
-.logo .arg{font-size:inherit;font-weight:900;background-image:linear-gradient(180deg,#74ACDF 0 18%,#FFFFFF 36% 64%,#74ACDF 82% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;position:relative}
-.logo .arg::after{content:'';position:absolute;left:50%;top:46%;width:.3em;height:.3em;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#F6B40E 0 38%,#85340A 38% 52%,#F6B40E 52% 62%,transparent 62%);box-shadow:0 0 0 .045em #F6B40E;-webkit-mask:radial-gradient(circle,#000 99%,transparent 100%)}.logo .arg::after{opacity:.92}
+.logo .arg{font-size:inherit;font-weight:900;background-image:linear-gradient(180deg,#5FA8DD 0 16%,#FFFFFF 34% 66%,#5FA8DD 84% 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;position:relative}
+.logo .arg::after{content:'';position:absolute;left:50%;top:46%;width:.26em;height:.26em;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#F6B40E 0 34%,#85340A 36% 50%,#F6B40E 52% 60%,transparent 62%);box-shadow:0 0 0 .05em #F6B40E;opacity:.95}
 .top span{color:var(--muted);font-size:.85rem}
 .shell{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:18px;padding:10px 34px 34px;align-items:start}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
@@ -166,7 +166,7 @@ body.matchview .probrow .pcell{padding:6px}
 body.matchview .probrow .pcell b{font-size:1.3rem}
 body.matchview .probrow .pcell .pl{font-size:.76rem}
 body.matchview .probrow{margin-bottom:6px}
-body.matchview .pad{padding:8px 14px}
+body.matchview .pad{padding:8px 14px;display:flex;flex-direction:column;flex:1 1 0;min-height:0;gap:8px}
 body.matchview .detcap{margin-bottom:6px}
 body.matchview .mcol{gap:8px}
 body.matchview .mrow2{gap:8px}
@@ -234,10 +234,12 @@ main{display:flex;flex-direction:column;min-height:0}
 main .tabs{flex:none}
 main .pane.on{flex:1 1 0;min-height:0;display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
 body.matchview main .pane.on>.panel{flex:1 1 0;display:flex;flex-direction:column;min-height:0}
-body.matchview .mtabs{flex:1 1 0;min-height:0;align-items:stretch}
+body.matchview .mtabs{flex:1 1 0;min-height:0;align-items:stretch;align-content:stretch}
 body.matchview .mcol{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;min-height:0}
 body.matchview .mrow2{flex:1 1 0;min-height:0;align-items:stretch}
+body.matchview .mrow2>.mtab{height:100%}
 body.matchview .mtab{display:block;overflow:visible}
+body.matchview .mtab table.mini{height:100%}
 main .pane.on>.panel{flex:0 0 auto}
 #pane-zonas .grid2{flex:1 1 0;align-items:stretch;min-height:0}
 #pane-zonas .grid2>*{display:flex;flex-direction:column;min-height:0}
@@ -437,8 +439,9 @@ function ctxRows(rows,cod,cols){
  else{a=i-2;b=i+2}
  const idx=[];for(let k=Math.max(0,a);k<=Math.min(n-1,b);k++)idx.push(k);
  const nCols=cols.length;
- const wRest=Math.max(10,Math.floor((100-12-52)/nCols));
- let h='<table class="mini"><colgroup><col style="width:12%"><col style="width:52%">'+cols.map(()=>'<col style="width:'+wRest+'%">').join('')+'</colgroup><tr><th>#</th><th style="text-align:left">Equipo</th>'+cols.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr>';
+ const eqW=nCols>3?46:52;
+ const wRest=Math.max(10,Math.floor((100-12-eqW)/nCols));
+ let h='<table class="mini"><colgroup><col style="width:12%"><col style="width:'+eqW+'%">'+cols.map(()=>'<col style="width:'+wRest+'%">').join('')+'</colgroup><tr><th>#</th><th style="text-align:left">Equipo</th>'+cols.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr>';
  idx.forEach(k=>{const x=rows[k],hi=x.t.c===cod?' class="hi"':'';
   h+=`<tr${hi}><td>${k+1}</td><td class="eq ctxr">${nmS(x.t)}</td>`+cols.map(c=>`<td>${x[c[0]]!==undefined?(c[2]?c[2](x):x[c[0]]):''}</td>`).join('')+'</tr>'});
  return h+'</table>'}
@@ -450,7 +453,7 @@ function ctxAnual(cod){
  return ctxRows(r,cod,[['pts','Pts',x=>'<b>'+x.pts+'</b>'],['pj','PJ'],['dg','DG',x=>(x.dg>0?'+':'')+x.dg]])}
 function ctxProm(cod){
  const r=ALL.map(t=>{const p=proj(t);return{t,pt:t.h24+t.h25+t.apPts+p.Pts,pj:t.pj+16+p.PJ,a:(t.h24+t.h25+t.apPts+p.Pts)/(t.pj+16+p.PJ)}}).sort((a,b)=>b.a-a.a);
- return ctxRows(r,cod,[['a','Prom.',x=>'<b>'+x.a.toFixed(3)+'</b>'],['pt','Pts'],['pj','PJ']])}
+ return ctxRows(r,cod,[['a','Prom.',x=>'<b>'+x.a.toFixed(2)+'</b>'],['pt','Pts'],['pj','PJ']])}
 function zoneRows(teams,cods){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>DG</th></tr>';
  r.forEach((x,k)=>{const hl=cods.includes(x.t.c)?` class="hi"`:'';h+=`<tr${hl}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${dg(x.p.DG)}</td></tr>`});
