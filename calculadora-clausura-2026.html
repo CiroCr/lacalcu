@@ -13,7 +13,7 @@
 <meta property="og:description" content="Simulá el Clausura 2026: cargá los resultados pendientes y mirá zonas, anual, promedios y probabilidades.">
 <meta property="og:url" content="https://TU-DOMINIO.com/">
 <meta name="theme-color" content="#07090f">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src https://site.api.espn.com; font-src 'self'; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https://site.api.espn.com; font-src 'self'; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none';">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"La calcu del fútbol argentino","applicationCategory":"SportsApplication","operatingSystem":"Web","inLanguage":"es-AR","offers":{"@type":"Offer","price":"0","priceCurrency":"ARS"}}</script>
 <!-- Google AdSense: pegá acá tu código cuando te aprueben la cuenta -->
 <style>
@@ -352,7 +352,7 @@ const bdg=c=>CREST[c]?`<img class="bdg2" src="${CREST[c]}" alt="Escudo de ${T[c]
 // Fixture oficial LPF fechas 11-16 (* = interzonal)
 const RAW={11:"TAL-BEL 0-1,IND-INS 1-4,BOC-UNI 3-0,DYJ-SLO 3-0,DRI-CCO 1-1,EST-GEM 3-0,NOB-LAN 0-0,VEL-PLA 2-2,ERC-RAC 1-2,SAR-RIV 1-1,HUR-ALD 1-0,ATU-BAR 2-3,IRI-GLP 1-1,BAN-ROS 1-1,ARG-TIG 2-1",
 12:"PLA-ARG 1-1,LAN-VEL 2-0,GEM-NOB 1-0,CCO-EST 2-2,SLO-DRI 1-0,UNI-DYJ 0-2,INS-BOC 2-2,TAL-IND 0-0,TIG-BAN 1-2,ROS-IRI 5-0,GLP-ATU 1-1,BAR-HUR 2-0,ALD-SAR 1-3,RIV-ERC 1-0,RAC-BEL 0-2",
-13:"RAC-IND 1-1,BOC-TAL 2-1,DYJ-INS 0-1,DRI-UNI,EST-SLO 1-2,NOB-CCO,VEL-GEM 1-0,PLA-LAN 0-1,BEL-RIV 0-3,ERC-ALD 2-1,SAR-BAR,HUR-GLP 1-2,ATU-ROS 2-3,IRI-TIG 2-2,BAN-ARG 0-1",
+13:"RAC-IND 1-1,BOC-TAL 2-1,DYJ-INS 0-1,DRI-UNI 1-1,EST-SLO 1-2,NOB-CCO 2-1,VEL-GEM 1-0,PLA-LAN 0-1,BEL-RIV 0-3,ERC-ALD 2-1,SAR-BAR 1-1,HUR-GLP 1-2,ATU-ROS 2-3,IRI-TIG 2-2,BAN-ARG 0-1",
 14:"BAN-LAN,GEM-PLA,CCO-VEL,SLO-NOB,UNI-EST,INS-DRI,TAL-DYJ,IND-BOC,ARG-IRI,TIG-ATU,ROS-HUR,GLP-SAR,BAR-ERC,ALD-BEL,RIV-RAC",
 15:"BOC-RIV,DYJ-IND,DRI-TAL,EST-INS,NOB-UNI,VEL-SLO,PLA-CCO,LAN-GEM,RAC-ALD,BEL-BAR,ERC-GLP,SAR-ROS,HUR-TIG,ATU-ARG,IRI-BAN",
 16:"GEM-IRI,CCO-LAN,SLO-PLA,UNI-VEL,INS-NOB,TAL-EST,IND-DRI,BOC-DYJ,BAN-ATU,ARG-HUR,TIG-SAR,ROS-ERC,GLP-BEL,BAR-RAC,ALD-RIV"};
@@ -560,8 +560,18 @@ const ESPN2COD={'9739':'ALD','3':'ARG','9785':'ATU','235':'BAN','10060':'BAR','4
 const LIVEIN={};
 function liveMark(){
  if(typeof fetch==='undefined')return;
- if(location.protocol==='file:'){return} // desde file:// el CORS de ESPN bloquea; el vivo funciona servido (Pages/local)
- fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/scoreboard').then(r=>r.json()).then(d=>{
+ // ?demo=1: fetch a demo-live.json servido por la demo local (sin ESPN) — para probar el EN VIVO
+ const DEMO=/[?&]demo=1/.test(location.search);
+ if(!DEMO&&location.protocol==='file:'){return} // desde file:// el CORS de ESPN bloquea; el vivo funciona servido (Pages/local)
+ let url;
+ if(DEMO){url='demo-live.json?cb='+Date.now()}
+ else{
+  // rango ayer->pasado manana: cubre partidos que terminan cerca de la medianoche
+  // y los que quedaron 'in' en un fetch anterior pero ya finalizaron
+  const hoy=new Date(),df=n=>n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();
+  const rango=[df(new Date(hoy.getTime()-864e5)),df(hoy),df(new Date(hoy.getTime()+864e5)),df(new Date(hoy.getTime()+2*864e5))].join('-');
+  url='https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/scoreboard?dates='+rango+'&limit=100'}
+ fetch(url).then(r=>r.json()).then(d=>{
   const evs=d.events||[];
   evs.forEach(ev=>{
    const c=ev.competitions[0],st=c.status.type.state;
@@ -571,15 +581,13 @@ function liveMark(){
    const i=FX.findIndex(m=>m[1]===hc&&m[2]===ac);
    if(i<0)return;
    const gh=hC.score!=null?+hC.score:null,ga=aC.score!=null?+aC.score:null;
-   const stEl=document.getElementById('st'+i);
-   if(!stEl)return;
    if(st==='in'){
     const det=(c.status.type.detail||'').replace('HT','ET');
-    stEl.textContent=det;
-    stEl.classList.add('live');
     LIVEIN[i]={gh:gh||0,ga:ga||0,min:det};
     part[i]={gh:String(gh!=null?gh:0),ga:String(ga!=null?ga:0)}; // provisional: cuenta en tablas, no se persiste
     res[i]={gh:gh||0,ga:ga||0};
+    const stEl=document.getElementById('st'+i);
+    if(stEl){stEl.textContent=det;stEl.classList.add('live')}
     const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
     if(inGh){inGh.value=gh!=null?gh:'';inGh.readOnly=true}
     if(inGa){inGa.value=ga!=null?ga:'';inGa.readOnly=true}
@@ -587,11 +595,12 @@ function liveMark(){
    }else if(st==='post'){
     if((LIVEIN[i]||res[i]==null)&&gh!=null&&ga!=null){
      part[i]={gh:String(gh),ga:String(ga)};res[i]={gh,ga};save();
-     const s=document.getElementById('st'+i);if(s){s.textContent='Final';s.classList.add('fin');s.classList.remove('live')}
      delete LIVEIN[i];
+     const s=document.getElementById('st'+i);
+     if(s){s.textContent='Final';s.classList.add('fin');s.classList.remove('live')}
      const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
-     if(inGh)inGh.readOnly=false;
-     if(inGa)inGa.readOnly=false;
+     if(inGh){inGh.readOnly=false}
+     if(inGa){inGa.readOnly=false}
      tables();
     }
    }

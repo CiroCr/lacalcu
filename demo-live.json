@@ -1,0 +1,16 @@
+{
+  "events": [
+    {
+      "name": "Tigre at Atlético Tucumán",
+      "competitions": [
+        {
+          "competitors": [
+            {"homeAway": "home", "team": {"id": "7767", "displayName": "Tigre"}, "score": "2"},
+            {"homeAway": "away", "team": {"id": "9785", "displayName": "Atlético Tucumán"}, "score": "1"}
+          ],
+          "status": {"type": {"state": "in", "detail": "67'"}}
+        }
+      ]
+    }
+  ]
+}
