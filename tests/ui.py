@@ -14,7 +14,7 @@ with sync_playwright() as p:
     pg=b.new_page(viewport={'width':1184,'height':909})
     pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('console',lambda m:errs.append(m.text) if m.type=='error' else None)
     pg.goto(URL);pg.wait_for_timeout(1500)
-    ok(pg.input_value('#fSel')=='13','fecha por defecto = proxima fecha con partidos sin jugar (13)')
+    ok(pg.input_value('#fSel')==pg.evaluate('String(LIVEF)'),'fecha por defecto = LIVEF (proxima fecha con partidos sin jugar)')
     ok(pg.evaluate("document.querySelectorAll('input:not([aria-label])').length")==0,'todas las cajas de goles tienen etiqueta accesible')
     ins=pg.locator('#fixtureList input:not([readonly])')
     ins.nth(0).fill('99');ok(ins.nth(0).input_value()=='15','99 se corrige a 15')
