@@ -1,16 +1,8 @@
 # PLAN — La calcu del fútbol argentino (Clausura 2026)
 
-Estado al 19/10/2026 noche. HANDOFF.md = reglas base. Este archivo = estado + pendientes. Abajo, reglas de data vigentes.
+Estado al 20/10/2026 noche. HANDOFF.md = reglas base. Este archivo = estado + pendientes. Abajo, reglas de data vigentes.
 
-## TAREA PENDIENTE (quedó a mitad) — LIVE v3: 5 pedidos del usuario
-El usuario pidió 5 cosas sobre el LIVE (commit 5d477f6 tiene la mitad hecha: LIVEIN, badges .lv en tablas, ET, readonly, resetAll mantiene vivo). FALTAN:
-1. **La casilla del minuto no debe parpadear** — `.st.live{animation:livePulse}` (línea ~73): sacar la animación solo de la celda de estado (el punto "live" de la leyenda puede seguir). El usuario pidió que el número NO parpadee.
-2. **Badge .lv a la misma altura que el nombre** — `.lv{vertical-align:1px}` está 10-12px más abajo (ver imágenes: cuelga como subíndice, abajo del nombre). El td.eq usa `white-space:nowrap` con badge después del span; probar `vertical-align:middle` o alinear el flex interno del .nm. Lo mismo en la imagen 2 con `.tag` de "Campeón Apertura" (mismo desalineado).
-3. **Partido en vivo visible en la pestaña de partido (detBody)** — el vivo no aparece en: marcador del header (muestra '-' porque `fin` es false), últimos 5 (solo cuenta m[4]||res[i]), tablas ctx (usar liveSpan), probrow. Agregar: si LIVEIN[i], tratarlo como resultado provisional. En últimos 5: incluir el vivo como fila extra y recortar a 5 (slice(-5) ya lo hace, verificar orden).
-4. **BUG resetAll con vivo**: al tocar "Borrar resultados" los partidos en vivo se marcan "Final" y mueven tablas. Causa raíz: resetAll llama initRes() que pisa res[] desde m[4], PERO liveMark corre cada 60s: al siguiente fetch, si el partido pasó a 'post', el branch `LIVEIN[i]&&res[i]==null` no se cumple (res fue reseteado a null, LIVEIN quedó), entonces... REVISAR: el flujo correcto es (a) resetAll borra localStorage y restaura el vivo desde LIVEIN; (b) PERO si el partido terminó entre fetch y reset, queda "Final" hardcodeado con marcador viejo. La lógica pedida: los puntos del vivo cuentan YA en las tablas (como si fuera final) y se actualizan solos si cambia el marcador.
-5. **Los puntos del vivo se reparten en las tablas automáticamente** — hoy res[i] solo se setea con el input manual o al 'post'. Hacer: cuando LIVEIN[i] existe, res[i]={gh,ga} provisional (sin save() al localStorage, sin marcar 'Final'), tables() recalcula y si el marcador cambia, se actualiza. Al pasar a 'post', save() definitivo.
-
-## TAREA SIGUIENTE (cuando termine LIVE v3): adaptación de resoluciones
+## TAREA SIGUIENTE: adaptación de resoluciones
 **Que se vea bien en cualquier dispositivo.**
 - Probar: móvil 360-414px, tablet 768-834px, laptop 1280-1440px, monitor 1920px+, pantallas de poca altura (1366x768).
 - Base existente: `@media(max-width:760px)` (una columna, tabs scrolleables) y `@media(min-width:761px)` (app fija, dos columnas). Fixture y tablas de zonas ya usan flex nativo.
