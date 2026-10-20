@@ -1,27 +1,34 @@
 # PLAN — La calcu del fútbol argentino (Clausura 2026)
 
-Estado al 18/10/2026 noche. HANDOFF.md = reglas base. Este archivo = estado + pendientes. Abajo, reglas de data vigentes.
+Estado al 19/10/2026 noche. HANDOFF.md = reglas base. Este archivo = estado + pendientes. Abajo, reglas de data vigentes.
 
-## TAREA DE MAÑANA (19/10) — pedido del usuario al cerrar el día
-**Adaptación de resoluciones: que se vea bien en cualquier dispositivo.**
+## TAREA PENDIENTE (quedó a mitad) — LIVE v3: 5 pedidos del usuario
+El usuario pidió 5 cosas sobre el LIVE (commit 5d477f6 tiene la mitad hecha: LIVEIN, badges .lv en tablas, ET, readonly, resetAll mantiene vivo). FALTAN:
+1. **La casilla del minuto no debe parpadear** — `.st.live{animation:livePulse}` (línea ~73): sacar la animación solo de la celda de estado (el punto "live" de la leyenda puede seguir). El usuario pidió que el número NO parpadee.
+2. **Badge .lv a la misma altura que el nombre** — `.lv{vertical-align:1px}` está 10-12px más abajo (ver imágenes: cuelga como subíndice, abajo del nombre). El td.eq usa `white-space:nowrap` con badge después del span; probar `vertical-align:middle` o alinear el flex interno del .nm. Lo mismo en la imagen 2 con `.tag` de "Campeón Apertura" (mismo desalineado).
+3. **Partido en vivo visible en la pestaña de partido (detBody)** — el vivo no aparece en: marcador del header (muestra '-' porque `fin` es false), últimos 5 (solo cuenta m[4]||res[i]), tablas ctx (usar liveSpan), probrow. Agregar: si LIVEIN[i], tratarlo como resultado provisional. En últimos 5: incluir el vivo como fila extra y recortar a 5 (slice(-5) ya lo hace, verificar orden).
+4. **BUG resetAll con vivo**: al tocar "Borrar resultados" los partidos en vivo se marcan "Final" y mueven tablas. Causa raíz: resetAll llama initRes() que pisa res[] desde m[4], PERO liveMark corre cada 60s: al siguiente fetch, si el partido pasó a 'post', el branch `LIVEIN[i]&&res[i]==null` no se cumple (res fue reseteado a null, LIVEIN quedó), entonces... REVISAR: el flujo correcto es (a) resetAll borra localStorage y restaura el vivo desde LIVEIN; (b) PERO si el partido terminó entre fetch y reset, queda "Final" hardcodeado con marcador viejo. La lógica pedida: los puntos del vivo cuentan YA en las tablas (como si fuera final) y se actualizan solos si cambia el marcador.
+5. **Los puntos del vivo se reparten en las tablas automáticamente** — hoy res[i] solo se setea con el input manual o al 'post'. Hacer: cuando LIVEIN[i] existe, res[i]={gh,ga} provisional (sin save() al localStorage, sin marcar 'Final'), tables() recalcula y si el marcador cambia, se actualiza. Al pasar a 'post', save() definitivo.
+
+## TAREA SIGUIENTE (cuando termine LIVE v3): adaptación de resoluciones
+**Que se vea bien en cualquier dispositivo.**
 - Probar: móvil 360-414px, tablet 768-834px, laptop 1280-1440px, monitor 1920px+, pantallas de poca altura (1366x768).
 - Base existente: `@media(max-width:760px)` (una columna, tabs scrolleables) y `@media(min-width:761px)` (app fija, dos columnas). Fixture y tablas de zonas ya usan flex nativo.
 - Puntos sospechosos: (1) app fija en pantallas horizontales cortas (1366x768); (2) las 8 tablas del panel de partido en móvil (grid 1 col, larguísimas); (3) gráfico "¿Cuánto necesita?" + panel lateral en pantallas angostas; (4) inputs de goles táctiles (touch target mínimo 44px); (5) matchview (partido como página) en vertical.
 - ui.py ya prueba 390px sin desborde + 3 viewports desktop; agregar tablet si se toca algo.
 
-## ESTADO DEL PROYECTO (18/10 noche)
-- Nombre: **La calcu del fútbol argentino** — title, og, JSON-LD, favicon, logo "LA CALCU" verde con subtítulo grande.
-- Resultados: fechas 1-12 completas + fecha 13 con 11/15 (faltan NOB-CCO, SAR-BAR 19:00 y DRI-UNI 21:15 del lunes 19/10).
-- **Módulo EN VIVO** (nuevo): scoreboard público de ESPN cada 60s, sin key. En curso = celda amarilla pulsante con minuto y marcador + goles en inputs; terminado = se carga solo y recalcula tablas. SOLO funciona servido (http/Pages); en file:// el CORS de ESPN bloquea origen null (guard puesto). CSP: connect-src https://site.api.espn.com (OJO: con esquema https:// — sin esquema el meta-CSP bloquea el fetch).
+## ESTADO DEL PROYECTO (19/10 noche)
+- Nombre: **La calcu del fútbol argentino** — title, og, JSON-LD, favicon, logo "LA CALCU" verde con ARGENTINO SVG calibrado (franjas 6/6/5px, sol centrado, glow celeste, gap 11px).
+- Resultados: fechas 1-13 completas (NOB-CCO 1-0, SAR-BAR 1-1 y DRI-UNI entraron solos vía LIVE al terminar, lunes 19/10 21:15).
+- **Módulo EN VIVO v2** (commit 5d477f6): ESPN cada 60s; LIVEIN guarda {gh,ga,min}; celda = solo "ET" (uso argentino); inputs readOnly; badges .lv en zonas/anual/promedios (verde/amarillo/rojo estilo promiedos); resetAll restaura el vivo desde LIVEIN; auto-carga al 'post' solo si venía en vivo. Tests 16+16 OK.
 - Partidos de fechas viejas: bloqueo LIVEF-2 (al terminar la 13, la 11 queda fuera sola).
 - Layout desktop: app fija sin page-scroll; tablas de zonas estiradas al alto exacto de la columna de partidos (dif 0, flex nativo); anual/prom/prob/elo scrollean su panel; fixture con filas flex (nada cortado).
 - Teclado: gol -> foco al rival (solo si vacío; 700ms tras escribir "1"); Enter -> siguiente; flechas -> navegar.
 - Accesibilidad: 180 alt de escudos, roles ARIA tabs/tabpanels, aria-label en inputs, contraste verificado.
 - Legal/seguridad: Términos y Legal completos (modales); CSP estricta; 0 secretos (verificado git history); 0 recursos externos salvo el fetch ESPN.
-- Git: todo commiteado (último 4b7574a). Repo LOCAL, sin push.
+- Git: todo commiteado (último 5d477f6). Repo LOCAL, sin push.
 
 ## PENDIENTES DE DATA
-- **Lunes 19/10 (fecha 13)**: NOB-CCO, SAR-BAR (19:00), DRI-UNI (21:15) -> cargar al RAW o entran solos vía LIVE si la página está servida.
 - EST-FLA vuelta semifinal Libertadores: **jueves 22/10 Maracaná** -> investigacion/conmebol-2026.json + python datos/build.py --write + contador en tests/verificar.js (hoy 1107).
 - Copa Argentina 2026: semis ATU-PLA 28/10 y BAN-BOC 14/11, final 2/12 -> ídem.
 - Supercopa Argentina 2025: EST-IRI 11/11/2026 -> otros-torneos.json.
