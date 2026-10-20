@@ -70,8 +70,8 @@ option{background:#0f1320;color:var(--text)}
 .match.inter{box-shadow:inset 3px 0 0 var(--gold)}
 .st{align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);font-size:.66rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,.25)}
 .st.fin{color:var(--acc)}
-.st.live{color:#ffd60a;animation:livePulse 1.6s ease infinite}
-.lv{display:inline-block;min-width:34px;padding:1px 6px;border-radius:5px;font-size:.66rem;font-weight:800;letter-spacing:.02em;vertical-align:1px;margin-left:4px}
+.st.live{color:#ffd60a}
+.lv{display:inline-block;min-width:34px;padding:1px 6px;border-radius:5px;font-size:.66rem;font-weight:800;letter-spacing:.02em}
 .lv-w{background:rgba(76,175,80,.25);color:#7ee787}
 .lv-d{background:rgba(255,214,10,.16);color:#ffd60a}
 .lv-l{background:rgba(255,59,92,.18);color:#ff5f7e}
@@ -89,7 +89,7 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 td.eq{text-align:left;font-weight:600}.nm{display:inline-flex;align-items:center;gap:9px}
 tr.playoff td{background:var(--pl)}tr.playoff td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 tr.lib td,tr.camp td{background:var(--lib)}tr.lib td:first-child,tr.camp td:first-child{box-shadow:inset 3px 0 0 var(--gold)}
-.tag{font-size:.6rem;font-weight:700;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;margin-left:8px;white-space:nowrap}
+.tag{font-size:.6rem;font-weight:700;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;white-space:nowrap}
 tr.sud td{background:var(--sud)}tr.sud td:first-child{box-shadow:inset 3px 0 0 var(--acc2)}
 tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0 0 #ff3b5c}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.72rem;color:var(--muted);padding:10px 14px}
@@ -182,6 +182,7 @@ body.matchview .mrow2{gap:8px}
 .l5.v{background:rgba(76,175,80,.18);color:#66bb6a}
 .l5.e{background:rgba(133,147,161,.15);color:#9aa7b4}
 .l5.d{background:rgba(255,59,92,.15);color:#ff5f7e}
+.l5.live{background:rgba(255,214,10,.16);color:#ffd60a}
 .l5v{color:var(--muted);font-size:.68rem}
 .l5c{color:var(--muted);font-size:.64rem;font-weight:600;opacity:.85}
 .l5leg{font-size:.6rem;color:var(--muted);opacity:.75;font-weight:400;margin-left:6px}
@@ -363,9 +364,9 @@ function proj(t){let pj=0,gf=0,gc=0,pts=0;FX.forEach((f,i)=>{const r=res[i];if(!
  if(f[1]===t.c){pj++;gf+=r.gh;gc+=r.ga;pts+=r.gh>r.ga?3:r.gh===r.ga?1:0}
  else if(f[2]===t.c){pj++;gf+=r.ga;gc+=r.gh;pts+=r.ga>r.gh?3:r.gh===r.ga?1:0}});
  return{PJ:t.clPJ+pj,GF:t.clGF+gf,GC:t.clGC+gc,DG:t.clGF+gf-t.clGC-gc,Pts:t.clPts+pts}}
-const dg=n=>(n>0?"+":"")+n,nm=t=>`<span class="nm">${bdg(t.c)}${t.n}</span>`;
+const dg=n=>(n>0?"+":"")+n,nm=(t,x)=>`<span class="nm">${bdg(t.c)}${t.n}${liveSpan(t.c)}${x||''}</span>`;
 const NMC={GLP:'Gimnasia',GEM:'Gimnasia Mza',ERC:'Estudiantes RC',EST:'Estudiantes',CCO:'C. Córdoba',TAL:'Talleres',DRI:'Riestra',SAR:'Sarmiento',IRI:'I. Rivadavia',ATU:'Atl. Tucumán',BAR:'Barracas',UNI:'Unión',NOB:"Newell's",IND:'Independiente',ARG:'Argentinos',ROS:'Rosario Central',VEL:'Vélez',DYJ:'Defensa',INS:'Instituto',PLA:'Platense',LAN:'Lanús',SLO:'San Lorenzo',BOC:'Boca',RIV:'River',RAC:'Racing',BEL:'Belgrano',HUR:'Huracán',BAN:'Banfield',TIG:'Tigre',ALD:'Aldosivi'};
-const nmS=t=>`<span class="nm">${bdg(t.c)}${NMC[t.c]||t.n}</span>`;
+const nmS=t=>`<span class="nm">${bdg(t.c)}${NMC[t.c]||t.n}${liveSpan(t.c)}</span>`;
 const panel=(title,body,leg)=>`<div class="panel"><div class="ph">${title}</div><div class="tblwrap">${body}</div>${leg?`<div class="legend">${leg}</div>`:''}</div>`;
 function showPane(id,btn){document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+id));
  document.querySelectorAll('.tab').forEach(t=>{t.classList.toggle('on',t===btn);if(t.hasAttribute('role'))t.setAttribute('aria-selected',t===btn?'true':'false')});
@@ -390,7 +391,7 @@ function liveSpan(cod){
  return ` <span class="lv ${cls}">${gf}-${gc}</span>`}
 function zone(id,teams,title){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>b.p.Pts-a.p.Pts||b.p.DG-a.p.DG||b.p.GF-a.p.GF);
  let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr></thead><tbody>';
- r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i<8?'playoff':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}${liveSpan(x.t.c)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${x.p.GF}:${x.p.GC}</td><td>${dg(x.p.DG)}</td></tr>`);
+ r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i<8?'playoff':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${x.p.GF}:${x.p.GC}</td><td>${dg(x.p.DG)}</td></tr>`);
  flipWrap(document.getElementById(id),panel(title,h+'</tbody></table>','<span><span class="dot" style="background:var(--acc)"></span>Clasifica a playoffs (top 8)</span>'))}
 const worstProm=()=>ALL.map(t=>{const p=proj(t);return{c:t.c,a:(t.h24+t.h25+t.apPts+p.Pts)/(t.pj+16+p.PJ)}}).sort((x,y)=>x.a-y.a)[0];
 function anual(){const r=ALL.map(t=>{const p=proj(t);return{t,pts:t.apPts+p.Pts,d:t.apGF-t.apGC+p.DG,pj:16+p.PJ,gf:t.apGF+p.GF,gc:t.apGC+p.GC}}).sort((a,b)=>b.pts-a.pts||b.d-a.d);
@@ -398,11 +399,11 @@ function anual(){const r=ALL.map(t=>{const p=proj(t);return{t,pts:t.apPts+p.Pts,
  let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>F:C</th><th>DG</th></tr></thead><tbody>';
  let c3=0;const cls=r.map(x=>{if(x.t.c==='BEL')return 'camp';c3++;return c3<=3?'lib':c3<=9?'sud':''});
  r.forEach((x,i)=>{const c=i===di?'releg':cls[i];
- h+=`<tr data-c="${x.t.c}" class="${c}"><td>${i+1}</td><td class="eq">${nm(x.t)}${liveSpan(x.t.c)}${x.t.c==='BEL'?'<span class="tag">Campeón Apertura</span>':''}</td><td><b>${x.pts}</b></td><td>${x.pj}</td><td>${x.gf}:${x.gc}</td><td>${dg(x.d)}</td></tr>`});
+ h+=`<tr data-c="${x.t.c}" class="${c}"><td>${i+1}</td><td class="eq">${nm(x.t,x.t.c==='BEL'?'<span class="tag">Campeón Apertura</span>':'')}</td><td><b>${x.pts}</b></td><td>${x.pj}</td><td>${x.gf}:${x.gc}</td><td>${dg(x.d)}</td></tr>`});
  flipWrap(document.getElementById('ANUAL'),panel('Tabla anual',h+'</tbody></table>','<span><span class="dot" style="background:var(--gold)"></span>Libertadores (3 mejores sin título)</span><span><span class="dot" style="background:var(--acc2)"></span>Sudamericana (6 siguientes)</span><span><span class="dot" style="background:#ff3b5c"></span>Descenso por tabla anual</span><span style="flex-basis:100%">Belgrano ya tiene su lugar en la Libertadores como campeón del Apertura y no ocupa un cupo de la anual. Los campeones del Clausura y de la Copa Argentina también clasifican y liberarían su lugar si terminan arriba: eso todavía no está modelado.</span>'+(di===28?`<span style="flex-basis:100%">${r[29].t.n} es último en la anual y en los promedios: desciende por promedios, y el descenso de la anual pasa a ${r[28].t.n}.</span>`:'')))}
 function prom(){const r=ALL.map(t=>{const p=proj(t),pt=t.h24+t.h25+t.apPts+p.Pts,pj=t.pj+16+p.PJ;return{t,pt,pj,a:pt/pj}}).sort((a,b)=>b.a-a.a);
  let h='<table><thead><tr><th>#</th><th style="text-align:left">Equipo</th><th>Prom.</th><th>Pts</th><th>PJ</th></tr></thead><tbody>';
- r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i===29?'releg':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}${liveSpan(x.t.c)}</td><td><b>${x.a.toFixed(3)}</b></td><td>${x.pt}</td><td>${x.pj}</td></tr>`);
+ r.forEach((x,i)=>h+=`<tr data-c="${x.t.c}" class="${i===29?'releg':''}"><td>${i+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.a.toFixed(3)}</b></td><td>${x.pt}</td><td>${x.pj}</td></tr>`);
  flipWrap(document.getElementById('PROM'),panel('Promedios',h+'</tbody></table>','<span><span class="dot" style="background:#ff3b5c"></span>Peor promedio = desciende</span>'))}
 // Resultados reales de las fechas 1 a 10 (ya incluidos en la base de las tablas, solo se muestran)
 const PAST_RAW={1:"BEL-ROS 2-1,SAR-ARG 2-3,DYJ-ALD 1-1,GEM-CCO 1-0,RAC-GLP 2-1,VEL-INS 1-0,HUR-BAN 1-0,PLA-UNI 2-2,ERC-TIG 1-0,NOB-TAL 1-0,RIV-BAR 0-1,LAN-SLO 1-0,ATU-IRI 0-0,EST-IND 0-2,DRI-BOC 3-0",
@@ -441,9 +442,9 @@ const LIVEF=(()=>{for(let f=11;f<=16;f++)if(FX.some(m=>m[0]===f&&!m[4]&&!POSTP[p
 let curF=LIVEF;
 function setF(f){curF=Math.max(1,Math.min(16,f));fixture()}
 function goF(d){setF(curF+d)}
-function mrow(m,i){const lock=!!m[4],r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||res[i]!==null;
- const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" id="in-${k}-${i}" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}" aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)" onkeydown="keyNav(event,${i},'${k}')">`;
- return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="if(event.target.tagName!=='INPUT')openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
+function mrow(m,i){const lock=!!m[4],lv=i>=0?LIVEIN[i]:null,r=i<0?{gh:m[4][0],ga:m[4][1]}:(part[i]||{gh:'',ga:''}),fin=lock||(res[i]!==null&&!lv);
+ const lab=k=>`Goles de ${T[k==='gh'?m[1]:m[2]].n}`,inp=k=>lock?`<input type="text" value="${r[k]}" readonly tabindex="-1" aria-label="${lab(k)}">`:`<input type="text" id="in-${k}-${i}" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="${r[k]}"${lv?' readonly':''} aria-label="${lab(k)}" oninput="sc(${i},'${k}',this)" onkeydown="keyNav(event,${i},'${k}')">`;
+ return `<div class="match${m[3]&&!ALLI?' inter':''}"${i>=0?` onclick="if(event.target.tagName!=='INPUT')openMatch(${i})" role="button" tabindex="0" id="mx${i}"`:''}><div class="st${fin?' fin':''}${lv?' live':''}"${i>=0?` id="st${i}"`:''}>${fin?'Final':lv?lv.min:pend(i)}</div><div class="side h">${bdg(m[1])}<span class="t">${T[m[1]].n}</span></div>${inp('gh')}<div class="vs">-</div>${inp('ga')}<div class="side">${bdg(m[2])}<span class="t">${T[m[2]].n}</span></div>${i>=0?'<div class="chev" aria-hidden="true">&#9656;</div>':''}</div>`}
 function ctxRows(rows,cod,cols){
  const i=rows.findIndex(x=>x.t.c===cod);
  if(i<0)return'';
@@ -473,28 +474,28 @@ function zoneRows(teams,cods){const r=teams.map(t=>({t,p:proj(t)})).sort((a,b)=>
  let h='<table class="mini"><tr><th>#</th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>DG</th></tr>';
  r.forEach((x,k)=>{const hl=cods.includes(x.t.c)?` class="hi"`:'';h+=`<tr${hl}><td>${k+1}</td><td class="eq">${nm(x.t)}</td><td><b>${x.p.Pts}</b></td><td>${x.p.PJ}</td><td>${dg(x.p.DG)}</td></tr>`});
  return h+'</table>'}
-function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;const fin=!!(m[4]||res[i]!==null);
+function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;const lv=LIVEIN[i],fin=!!(m[4]||res[i]!==null);
  // para partidos ya jugados: Elo antes de esa fecha (probabilidad previa); para pendientes: Elo actual
  const E=(fin?eloRun(m[0]):eloRun()).R,dR=E[hC]+EL.HFA-E[aC],[lh,la]=lamElo(dR,2*avgG()),pH=pwin(lh,la),pD=pdraw(lh,la),pA=1-pH-pD;
  const pct=x=>(100*x).toFixed(0)+'%';
  const cell=(t,p,f)=>`<div class="pcell${f?' fav':''}"><span class="pl">${t}</span><b>${pct(p)}</b></div>`;
- let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="history.back()" aria-label="Volver a la calculadora">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${SCH[hC+'-'+aC]?SCH[hC+'-'+aC][0]+' · ':''}${fin?'Final · '+(SCH[hC+'-'+aC]?SCH[hC+'-'+aC][1]:''):pend(i)}</div></div>`;
+ let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="history.back()" aria-label="Volver a la calculadora">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${SCH[hC+'-'+aC]?SCH[hC+'-'+aC][0]+' · ':''}${lv?'En vivo · '+lv.min:fin?'Final · '+(SCH[hC+'-'+aC]?SCH[hC+'-'+aC][1]:''):pend(i)}</div></div>`;
  let h=hh+`<div class="pad"><div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
- h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'} según Elo, con ventaja de local. Posiciones al día de hoy.</div>`;
+ h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'}${lv?' · partido en vivo':''} según Elo, con ventaja de local. Posiciones al día de hoy.</div>`;
  // 6 mini-tablas: posicion con contexto en zona, anual y promedios para cada equipo
  const grp=(cod,tz)=>`<div class="mtab"><div class="mt">${zi(cod)?'Zona B':'Zona A'}</div>${ctxZone(tz,cod)}</div>`;
  const grpA=cod=>`<div class="mtab"><div class="mt">Tabla anual</div>${ctxAnual(cod)}</div>`;
  const grpP=cod=>`<div class="mtab"><div class="mt">Promedios</div>${ctxProm(cod)}</div>`;
  const last5=cod=>{
   const ps=[...PAST.filter(m=>m[4]&&(m[1]===cod||m[2]===cod)).map(m=>({f:m[0],h:m[1],a:m[2],g:m[4]})),
-   ...FX.map((m,i)=>({m,r:m[4]||res[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:x.r}))];
+   ...FX.map((m,i)=>({m,r:m[4]||res[i],v:!!LIVEIN[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:Array.isArray(x.r)?x.r:[x.r.gh,x.r.ga],v:x.v}))];
   const all=ps.sort((x,y)=>x.f-y.f).slice(-5).reverse();
   if(!all.length)return'';
   let t='<div class="mtab u5"><div class="mt">Últimos 5 <span class="l5leg">(L) local · (V) visita</span></div><table class="mini"><colgroup><col class="c-f"><col class="c-r"><col class="c-s"></colgroup><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
   all.forEach(m=>{
    const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
    const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
-   t+=`<tr><td>${m.f}</td><td class="eq u5r">${bdg(rival.c)}<span class="u5n"><span class="l5v">vs</span> ${NMC[rival.c]||rival.n} <span class="l5c">(${home?'L':'V'})</span></span></td><td><span class="l5 ${win}">${r}</span></td></tr>`});
+   t+=`<tr><td>${m.f}</td><td class="eq u5r">${bdg(rival.c)}<span class="u5n"><span class="l5v">vs</span> ${NMC[rival.c]||rival.n} <span class="l5c">(${home?'L':'V'})</span></span></td><td><span class="l5 ${win}${m.v?' live':''}">${r}</span></td></tr>`});
   return t+'</table></div>'};
  h+=`<div class="mtabs">
   <div class="mcol">
@@ -577,12 +578,14 @@ function liveMark(){
     stEl.textContent=det;
     stEl.classList.add('live');
     LIVEIN[i]={gh:gh||0,ga:ga||0,min:det};
+    part[i]={gh:String(gh!=null?gh:0),ga:String(ga!=null?ga:0)}; // provisional: cuenta en tablas, no se persiste
+    res[i]={gh:gh||0,ga:ga||0};
     const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
     if(inGh){inGh.value=gh!=null?gh:'';inGh.readOnly=true}
     if(inGa){inGa.value=ga!=null?ga:'';inGa.readOnly=true}
     tables();
    }else if(st==='post'){
-    if(LIVEIN[i]&&res[i]==null&&gh!=null&&ga!=null){
+    if((LIVEIN[i]||res[i]==null)&&gh!=null&&ga!=null){
      part[i]={gh:String(gh),ga:String(ga)};res[i]={gh,ga};save();
      const s=document.getElementById('st'+i);if(s){s.textContent='Final';s.classList.add('fin');s.classList.remove('live')}
      delete LIVEIN[i];
