@@ -124,6 +124,8 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .mteam{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;font-size:.92rem;text-align:center;min-width:120px}
 .mteam img,.mteam .bdg{width:52px;height:52px}
 .mscore{display:flex;align-items:center;gap:10px;font-size:1.6rem}
+.mscorewrap{display:flex;flex-direction:column;align-items:center;gap:2px}
+.mmin{color:#ffd60a;font-weight:800;font-size:1.3rem;line-height:1;letter-spacing:.02em}
 .mscore b{font-size:2.2rem;min-width:44px;text-align:center}
 .mscore span{color:var(--muted);font-size:.8rem;text-transform:uppercase}
 .msub{text-align:center;color:var(--muted);font-size:.78rem;margin-top:8px}
@@ -479,7 +481,7 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
  const E=(fin?eloRun(m[0]):eloRun()).R,dR=E[hC]+EL.HFA-E[aC],[lh,la]=lamElo(dR,2*avgG()),pH=pwin(lh,la),pD=pdraw(lh,la),pA=1-pH-pD;
  const pct=x=>(100*x).toFixed(0)+'%';
  const cell=(t,p,f)=>`<div class="pcell${f?' fav':''}"><span class="pl">${t}</span><b>${pct(p)}</b></div>`;
- let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="history.back()" aria-label="Volver a la calculadora">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${SCH[hC+'-'+aC]?SCH[hC+'-'+aC][0]+' · ':''}${lv?'En vivo · '+lv.min:fin?'Final · '+(SCH[hC+'-'+aC]?SCH[hC+'-'+aC][1]:''):pend(i)}</div></div>`;
+ let hh=`<div class="panel"><div class="mh"><button class="btn" onclick="history.back()" aria-label="Volver a la calculadora">&#8592; Volver</button><div class="mhead"><div class="mteam">${bdg(hC)}<span>${T[hC].n}</span></div><div class="mscorewrap">${lv?`<div class="mmin">${lv.min}</div>`:''}<div class="mscore"><b>${m[4]||res[i]?(m[4]?m[4][0]:res[i].gh):'-'}</b><span>vs</span><b>${m[4]||res[i]?(m[4]?m[4][1]:res[i].ga):'-'}</b></div></div><div class="mteam">${bdg(aC)}<span>${T[aC].n}</span></div></div><div class="msub">Fecha ${m[0]} · ${SCH[hC+'-'+aC]?SCH[hC+'-'+aC][0]+' · ':''}${lv?'En vivo':fin?'Final · '+(SCH[hC+'-'+aC]?SCH[hC+'-'+aC][1]:''):pend(i)}</div></div>`;
  let h=hh+`<div class="pad"><div class="probrow">${cell(nm(T[hC]),pH,pH>=Math.max(pA,pD))}${cell('Empate',pD,pD>pH&&pD>pA)}${cell(nm(T[aC]),pA,pA>=Math.max(pH,pD))}</div>`;
  h+=`<div class="detcap">Probabilidades ${fin?'previas al partido (Elo antes de la fecha)':'del partido'}${lv?' · partido en vivo':''} según Elo, con ventaja de local. Posiciones al día de hoy.</div>`;
  // 6 mini-tablas: posicion con contexto en zona, anual y promedios para cada equipo
@@ -509,13 +511,15 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
  </div>`;
  return h+'</div>'}
 function avgG(){const P=ALL.map(t=>proj(t));let G=0,N=0;ALL.forEach((t,i)=>{G+=t.apGF+P[i].GF;N+=16+P[i].PJ});return G/N}
+let curMatch=null;
 function openMatch(i){
  const m=FX[i];
  // bloqueo: se abren partidos de la fecha en curso y las dos anteriores
  if(m[0]<LIVEF-2)return;
- history.pushState({m:i},'','?m='+i);
+ history.pushState({m:i},'','?m='+i+(DEMO_LIVE?'&demo=1':''));
  showMatch(i)}
 function showMatch(i){
+ curMatch=i;
  const m=FX[i];
  document.getElementById('pane-MATCH').innerHTML=detBody(m,i);
  document.body.classList.add('matchview');
@@ -523,12 +527,12 @@ function showMatch(i){
  tb.textContent=T[m[1]].n+' vs '+T[m[2]].n;
  showPane('MATCH',tb);
  tb.hidden=false}
-function closeMatch(){history.pushState({},"",location.pathname);document.body.classList.remove('matchview');document.getElementById('tab-MATCH').textContent='Partido'}
+function closeMatch(){curMatch=null;history.pushState({},"",location.pathname+(DEMO_LIVE?'?demo=1':''));document.body.classList.remove('matchview');document.getElementById('tab-MATCH').textContent='Partido'}
 function toggleDet(i,ev){if(ev&&ev.target.tagName==='INPUT')return;openMatch(i)}
 if(typeof window!=='undefined'&&typeof window.addEventListener==='function'&&typeof URLSearchParams==='function'){
  window.addEventListener('popstate',()=>{
   const q=new URLSearchParams(location.search).get('m');
-  if(q!==null&&FX[+q]){showMatch(+q)}else{document.getElementById('tab-MATCH').hidden=true;document.getElementById('tab-MATCH').textContent='Partido';document.body.classList.remove('matchview');
+  if(q!==null&&FX[+q]){showMatch(+q)}else{curMatch=null;document.getElementById('tab-MATCH').hidden=true;document.getElementById('tab-MATCH').textContent='Partido';document.body.classList.remove('matchview');
    if(document.getElementById('pane-MATCH').classList.contains('on')){
     document.getElementById('pane-MATCH').classList.remove('on');
     document.getElementById('tab-zonas').classList.add('on');
@@ -557,14 +561,12 @@ function fitTables(){
   tb.classList.add('fitted')})}
 // ===== EN VIVO (ESPN publico, sin key): marcador en curso actualizado cada 60s =====
 const ESPN2COD={'9739':'ALD','3':'ARG','9785':'ATU','235':'BAN','10060':'BAR','4':'BEL','5':'BOC','11989':'CCO','8950':'DYJ','17702':'DRI','8':'EST','19685':'ERC','11972':'GEM','9':'GLP','10':'HUR','11':'IND','9744':'IRI','2975':'INS','12':'LAN','14':'NOB','7764':'PLA','15':'RAC','16':'RIV','17':'ROS','18':'SLO','10158':'SAR','19':'TAL','7767':'TIG','20':'UNI','21':'VEL'};
-const LIVEIN={};
+const LIVEIN={},DEMO_LIVE=(typeof location!=='undefined')?/[?&]demo=1/.test(location.search):false; // flag demo capturado al cargar: pushState de ?m= no lo borra
 function liveMark(){
  if(typeof fetch==='undefined')return;
- // ?demo=1: fetch a demo-live.json servido por la demo local (sin ESPN) — para probar el EN VIVO
- const DEMO=/[?&]demo=1/.test(location.search);
- if(!DEMO&&location.protocol==='file:'){return} // desde file:// el CORS de ESPN bloquea; el vivo funciona servido (Pages/local)
+ if(!DEMO_LIVE&&location.protocol==='file:'){return} // desde file:// el CORS de ESPN bloquea; el vivo funciona servido (Pages/local)
  let url;
- if(DEMO){url='demo-live.json?cb='+Date.now()}
+ if(DEMO_LIVE){url='demo-live.json?cb='+Date.now()}
  else{
   // rango ayer->pasado manana: cubre partidos que terminan cerca de la medianoche
   // y los que quedaron 'in' en un fetch anterior pero ya finalizaron
@@ -591,6 +593,7 @@ function liveMark(){
     const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
     if(inGh){inGh.value=gh!=null?gh:'';inGh.readOnly=true}
     if(inGa){inGa.value=ga!=null?ga:'';inGa.readOnly=true}
+    if(curMatch===i){const p=document.getElementById('pane-MATCH');const sc=p?p.scrollTop:0;showMatch(i);if(p){p.scrollTop=sc}} // pestaña del partido: minuto+marcador+8 tablas al dia
     tables();
    }else if(st==='post'){
     if((LIVEIN[i]||res[i]==null)&&gh!=null&&ga!=null){
@@ -601,6 +604,7 @@ function liveMark(){
      const inGh=document.getElementById('in-gh-'+i),inGa=document.getElementById('in-ga-'+i);
      if(inGh){inGh.readOnly=false}
      if(inGa){inGa.readOnly=false}
+     if(curMatch===i){const p=document.getElementById('pane-MATCH');const sc=p?p.scrollTop:0;showMatch(i);if(p){p.scrollTop=sc}}
      tables();
     }
    }
