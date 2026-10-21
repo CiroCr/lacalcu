@@ -198,6 +198,7 @@ body.matchview .mrow2{gap:8px}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
 .mtab .mini td,.mtab .mini th{padding:5px 4px;font-size:.74rem}
 @media(max-width:760px){.mtabs{grid-template-columns:1fr}}
+@media(max-width:760px){body.matchview .mrow2{grid-template-columns:1fr}.mrow2 .mtab{min-width:0}}
 .minitabs.two{max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .mt{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);margin:0 0 4px 2px}
 table.mini{width:100%;border-collapse:collapse;font-size:.8rem}
@@ -212,7 +213,9 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 #needSvg .sdot{opacity:0;animation:fadeDot .3s ease forwards}
 @keyframes fadeDot{to{opacity:1}}
 .gwrap2{display:grid;grid-template-columns:minmax(280px,1fr) minmax(180px,200px);gap:12px;align-items:stretch}
-@media(max-width:1024px){.gwrap2{grid-template-columns:1fr}.gside{min-height:0}}
+/* en ventanas donde el panel principal queda angosto (app-fija con fixture al lado),
+   la tarjeta de valores baja debajo del grafico para que este respire */
+@media(max-width:1240px){.gwrap2{grid-template-columns:1fr}.gside{min-height:0}}
 .gside{background:var(--inp);border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:2px;min-height:180px}
 .gs-hint{color:var(--muted);font-size:.75rem;margin:auto;text-align:center;line-height:1.4}
 .gs-title{color:var(--text);font-size:.85rem;font-weight:800;margin-bottom:8px}
@@ -237,20 +240,17 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 html,body{height:auto;overflow:auto}
 body{display:block}
 .shell{display:grid}
-/* vista de partido: 2 tablas por fila (1 columna de equipos por fila) */
+/* vista de partido: 1 columna de equipos por fila (2 tablas juntas legibles) */
 body.matchview .mtabs{grid-template-columns:1fr}
 }
 @media(max-width:760px){
-/* partido en 2 renglones: local arriba (estado+nombre+goles), visitante abajo (nombre+goles) */
-.match{grid-template-columns:auto 1fr 40px 12px;grid-template-areas:"st h gh ch" "st a ga ch";gap:2px 8px;padding:6px 8px;min-height:0;font-size:.82rem}
-.match .st{grid-area:st;font-size:.66rem;max-width:52px;align-self:center}
-.match .side.h{grid-area:h}
-.match .side:not(.h){grid-area:a}
-.match .vs{display:none}
-.match input{width:40px;height:36px}
-.match .side{gap:6px}
+/* fixture en 1 renglon (como siempre), compacto para angosto */
+.match{grid-template-columns:38px minmax(0,1.35fr) 34px 6px 34px minmax(0,1.35fr) 14px;gap:4px;font-size:.78rem;min-height:44px}
+.match .st{font-size:.62rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44px}
+.match input{width:34px;height:34px}
+.match .side{gap:5px}
 .match .bdg{width:22px;height:22px;flex:none}
-.match .chev{grid-area:ch;width:18px;padding-right:6px}
+.match .chev{width:16px;padding-right:2px}
 .match .t .full{display:none}
 .match .t .short{display:inline}
 .grid2{grid-template-columns:1fr}
