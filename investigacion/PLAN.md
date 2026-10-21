@@ -1,6 +1,16 @@
 # PLAN — La calcu del fútbol argentino (Clausura 2026)
 
-Estado al 20/10/2026 noche. HANDOFF.md = reglas base. Este archivo = estado + pendientes. Abajo, reglas de data vigentes.
+Estado al 20/10/2026 noche (2). HANDOFF.md = reglas base. Este archivo = estado + pendientes. Abajo, reglas de data vigentes.
+
+## BUG PENDIENTE (diagnosticado, NO arreglar sin pedir) — asimetria del header del partido
+El usuario ve el header del partido asimetrico y tiene razon (medido en 1428px):
+- Equipos OK: 432px de aire a cada lado.
+- PERO minuto (mmin) y marcador (mscore) quedan **22px a la izquierda** del centro real
+  (score.cx=691 vs mhead.cx=713). Causa: .mteam tiene min-width:120px pero el nombre derecho
+  ("Atlético Tucumán") mide 164px vs 120px del izquierdo; flex centra el GRUPO entero,
+  no el marcador. Fix sugerido: .mteam{flex:1} en los dos lados con max-width, o
+  posicionar .mscorewrap absoluto al centro, o grids `grid-template-columns:1fr auto 1fr`.
+- Revisar tambien si pasa en partidos con nombres de distinto largo en general (caso tipico).
 
 ## TAREA SIGUIENTE: adaptación de resoluciones
 **Que se vea bien en cualquier dispositivo.**
