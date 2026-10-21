@@ -226,12 +226,20 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .leg:hover{border-color:var(--lc)}
 .leg.off{opacity:.4;text-decoration:line-through}
 .gnote{font-size:.72rem;color:var(--muted);margin-top:10px;line-height:1.5}
-@media(max-width:760px){
+@media(max-width:1024px){
 .shell{grid-template-columns:minmax(0,1fr);gap:10px}.col-p{position:static;max-height:none;overflow:visible}
 .tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}.tab{white-space:nowrap;flex:none}
-.grid2{grid-template-columns:1fr}
+.grid2{grid-template-columns:1fr 1fr}
+html,body{height:auto;overflow:auto}
+body{display:block}
+.shell{display:grid}
+/* vista de partido: 2 tablas por fila (1 columna de equipos por fila) */
+body.matchview .mtabs{grid-template-columns:1fr}
+}
+@media(max-width:760px){
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
 .match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}
+.grid2{grid-template-columns:1fr}
 /* header del partido en pantallas angostas: apilado y centrado */
 body.matchview .mhead{display:flex;flex-direction:column;gap:6px;margin-top:6px}
 body.matchview .mhead .mteam{min-width:0}
@@ -245,7 +253,8 @@ main .pane th,main .pane td{padding-top:4.5px;padding-bottom:4.5px}
 main .pane .legend{padding-top:5px;padding-bottom:5px;font-size:.68rem}
 main .pane .ph{padding-top:7px;padding-bottom:7px}
 main .pane .panel{margin-bottom:0}
-main .pane .bar{padding-top:8px;padding-bottom:8px}
+main .pane .bar{padding-top:8px;padding-bottom:8px}}
+@media(min-width:1025px){ /* app fija sin scroll de pagina: solo desktop ancho */
 html,body{height:100%;overflow:hidden}
 body{display:flex;flex-direction:column}
 .top{flex:none}
