@@ -120,7 +120,9 @@ tr.releg td{background:var(--rel)}tr.releg td:first-child{box-shadow:inset 3px 0
 .match[aria-expanded="true"] .chev{transform:rotate(180deg);color:var(--acc)}
 .probrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
 .mh{padding:14px 16px 10px;background:var(--head)}
-.mhead{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:10px}
+.mhead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;margin-top:10px}
+.mhead .mteam:first-child{justify-self:end}
+.mhead .mteam:last-child{justify-self:start}
 .mteam{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;font-size:.92rem;text-align:center;min-width:120px}
 .mteam img,.mteam .bdg{width:52px;height:52px}
 .mscore{display:flex;align-items:center;gap:10px;font-size:1.6rem}
@@ -229,7 +231,15 @@ table.mini tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}.tab{white-space:nowrap;flex:none}
 .grid2{grid-template-columns:1fr}
 .match{grid-template-columns:44px 1fr 32px 6px 32px 1fr 18px;gap:4px;font-size:.78rem}
-.match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}}
+.match input{width:32px}.side{gap:5px}.bdg{width:22px;height:22px}.bdg2{width:22px;height:22px}
+/* header del partido en pantallas angostas: apilado y centrado */
+body.matchview .mhead{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+body.matchview .mhead .mteam{min-width:0}
+body.matchview .mhead .mscorewrap{order:2}
+body.matchview .mhead .mteam:first-child{order:1;justify-self:auto}
+body.matchview .mhead .mteam:last-child{order:3;justify-self:auto}
+body.matchview .mscore b{font-size:1.9rem}
+body.matchview .mmin{font-size:1.1rem}}
 @media(min-width:761px){
 main .pane th,main .pane td{padding-top:4.5px;padding-bottom:4.5px}
 main .pane .legend{padding-top:5px;padding-bottom:5px;font-size:.68rem}
