@@ -192,7 +192,9 @@ body.matchview .mrow2{gap:8px}
 .l5.live{background:rgba(255,214,10,.16);color:#ffd60a}
 .l5v{color:var(--muted);font-size:.68rem}
 .l5c{color:var(--muted);font-size:.64rem;font-weight:600;opacity:.85}
-.l5leg{font-size:.6rem;color:var(--muted);opacity:.75;font-weight:400;margin-left:6px}
+.l5leg{font-size:.6rem;color:var(--muted);opacity:.75;font-weight:400;margin-left:auto}
+.u5club{display:inline-flex;align-items:center;vertical-align:-2px;margin-left:2px}
+.u5club .bdg2{width:15px;height:15px;margin:0}
 .mcol{display:flex;flex-direction:column;gap:10px;min-width:0}
 .mrow2{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:0}
 .mtab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:hidden}
@@ -200,7 +202,8 @@ body.matchview .mrow2{gap:8px}
 @media(max-width:760px){.mtabs{grid-template-columns:1fr}}
 @media(max-width:760px){body.matchview .mrow2{grid-template-columns:1fr}.mrow2 .mtab{min-width:0}}
 .minitabs.two{max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.mt{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);margin:0 0 4px 2px}
+.mt{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);margin:0 0 4px 2px;display:flex;align-items:center}
+body.matchview .mtab .mt{display:flex}
 table.mini{width:100%;border-collapse:collapse;font-size:.8rem}
 table.mini th{padding:5px 6px;text-align:center;border-bottom:1px solid var(--line);color:var(--muted);font-size:.64rem;text-transform:uppercase}
 table.mini td{padding:5px 6px;text-align:center;border-bottom:1px solid rgba(28,90,46,.5)}
@@ -527,7 +530,7 @@ function detBody(m,i){const hC=m[1],aC=m[2];i=i===undefined?FX.indexOf(m):i;cons
    ...FX.map((m,i)=>({m,r:m[4]||res[i],v:!!LIVEIN[i]})).filter(x=>x.r&&(x.m[1]===cod||x.m[2]===cod)).map(x=>({f:x.m[0],h:x.m[1],a:x.m[2],g:Array.isArray(x.r)?x.r:[x.r.gh,x.r.ga],v:x.v}))];
   const all=ps.sort((x,y)=>x.f-y.f).slice(-5).reverse();
   if(!all.length)return'';
-  let t='<div class="mtab u5"><div class="mt">Últimos 5 <span class="l5leg">(L) local · (V) visita</span></div><table class="mini"><colgroup><col class="c-f"><col class="c-r"><col class="c-s"></colgroup><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
+  let t='<div class="mtab u5"><div class="mt">Últimos 5 de <span class="u5club">'+bdg(cod)+'</span><span class="l5leg">(L) local · (V) visita</span></div><table class="mini"><colgroup><col class="c-f"><col class="c-r"><col class="c-s"></colgroup><tr><th>F</th><th style="text-align:left">Rival</th><th>Res.</th></tr>';
   all.forEach(m=>{
    const home=m.h===cod,r=(home?m.g[0]+'-'+m.g[1]:m.g[1]+'-'+m.g[0]),gf=home?m.g[0]:m.g[1],ga=home?m.g[1]:m.g[0];
    const win=gf>ga?'v':gf===ga?'e':'d',rival=T[home?m.a:m.h];
