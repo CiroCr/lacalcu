@@ -1,0 +1,278 @@
+{
+ "usuario": {
+  "errores": [
+   "CONSOLE-error: Failed to load resource: the server responded with a status of 400 ()"
+  ],
+  "vistas": {
+   "inputGoles": {
+    "estado": "Final",
+    "res": "{\"gh\":2,\"ga\":1}"
+   },
+   "ANUAL": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "PROM": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "PROB": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "ELO": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "grafico": {
+    "svgW": 668,
+    "sideVisible": true,
+    "desborde": 0
+   },
+   "partido": {
+    "tablas": 8,
+    "desborde": 0,
+    "desvio": 0
+   },
+   "modales": [
+    "¿Cómo funciona?: abre",
+    "Términos y condiciones: abre",
+    "Legal: abre"
+   ],
+   "reset": {
+    "localStorage": false,
+    "pendientes": 45
+   }
+  }
+ },
+ "notebook": {
+  "errores": [
+   "CONSOLE-error: Failed to load resource: the server responded with a status of 400 ()"
+  ],
+  "vistas": {
+   "inputGoles": {
+    "estado": "Final",
+    "res": "{\"gh\":2,\"ga\":1}"
+   },
+   "ANUAL": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "PROM": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "PROB": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "ELO": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "grafico": {
+    "svgW": 591,
+    "sideVisible": true,
+    "desborde": 0
+   },
+   "partido": {
+    "tablas": 8,
+    "desborde": 0,
+    "desvio": 0
+   },
+   "modales": [
+    "¿Cómo funciona?: abre",
+    "Términos y condiciones: abre",
+    "Legal: abre"
+   ],
+   "reset": {
+    "localStorage": false,
+    "pendientes": 45
+   }
+  }
+ },
+ "laptop": {
+  "errores": [
+   "CONSOLE-error: Failed to load resource: the server responded with a status of 400 ()"
+  ],
+  "vistas": {
+   "inputGoles": {
+    "estado": "Final",
+    "res": "{\"gh\":2,\"ga\":1}"
+   },
+   "ANUAL": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "PROM": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "PROB": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "ELO": {
+    "desborde": 0,
+    "tieneContenido": true
+   },
+   "grafico": {
+    "svgW": 621,
+    "sideVisible": true,
+    "desborde": 0
+   },
+   "partido": {
+    "tablas": 8,
+    "desborde": 0,
+    "desvio": 0
+   },
+   "modales": [
+    "¿Cómo funciona?: abre",
+    "Términos y condiciones: abre",
+    "Legal: abre"
+   ],
+   "reset": {
+    "localStorage": false,
+    "pendientes": 45
+   }
+  }
+ },
+ "tablet-h": {
+  "errores": [
+   "CONSOLE-error: Failed to load resource: the server responded with a status of 400 ()"
+  ],
+  "vistas": {
+   "inputGoles": {
+    "estado": "Final",
+    "res": "{\"gh\":2,\"ga\":1}"
+   },
+   "ANUAL": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "PROM": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "PROB": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "ELO": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "grafico": {
+    "svgW": 916,
+    "sideVisible": true,
+    "desborde": -10
+   },
+   "partido": {
+    "tablas": 8,
+    "desborde": -10,
+    "desvio": 0
+   },
+   "modales": [
+    "¿Cómo funciona?: abre",
+    "Términos y condiciones: abre",
+    "Legal: abre"
+   ],
+   "reset": {
+    "localStorage": false,
+    "pendientes": 45
+   }
+  }
+ },
+ "tablet-v": {
+  "errores": [
+   "CONSOLE-error: Failed to load resource: the server responded with a status of 400 ()"
+  ],
+  "vistas": {
+   "inputGoles": {
+    "estado": "Final",
+    "res": "{\"gh\":2,\"ga\":1}"
+   },
+   "ANUAL": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "PROM": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "PROB": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "ELO": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "grafico": {
+    "svgW": 660,
+    "sideVisible": true,
+    "desborde": -10
+   },
+   "partido": {
+    "tablas": 8,
+    "desborde": -10,
+    "desvio": 0
+   },
+   "modales": [
+    "¿Cómo funciona?: abre",
+    "Términos y condiciones: abre",
+    "Legal: abre"
+   ],
+   "reset": {
+    "localStorage": false,
+    "pendientes": 45
+   }
+  }
+ },
+ "movil": {
+  "errores": [
+   "CONSOLE-error: Failed to load resource: the server responded with a status of 400 ()"
+  ],
+  "vistas": {
+   "inputGoles": {
+    "estado": "Final",
+    "res": "{\"gh\":2,\"ga\":1}"
+   },
+   "ANUAL": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "PROM": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "PROB": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "ELO": {
+    "desborde": -10,
+    "tieneContenido": true
+   },
+   "grafico": {
+    "svgW": 282,
+    "sideVisible": true,
+    "desborde": -10
+   },
+   "partido": {
+    "tablas": 8,
+    "desborde": -10,
+    "desvio": 0
+   },
+   "modales": [
+    "¿Cómo funciona?: abre",
+    "Términos y condiciones: abre",
+    "Legal: abre"
+   ],
+   "reset": {
+    "localStorage": false,
+    "pendientes": 45
+   }
+  }
+ }
+}

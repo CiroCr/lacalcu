@@ -600,14 +600,13 @@ function liveMark(){
  if(typeof fetch==='undefined')return;
  if(!DEMO_LIVE&&location.protocol==='file:'){return} // desde file:// el CORS de ESPN bloquea; el vivo funciona servido (Pages/local)
  let url;
- if(DEMO_LIVE){url='demo-live.json?cb='+Date.now()}
+ if(DEMO_LIVE){url=['demo-live.json?cb='+Date.now()]}
  else{
-  // rango ayer->pasado manana: cubre partidos que terminan cerca de la medianoche
-  // y los que quedaron 'in' en un fetch anterior pero ya finalizaron
+  // ESPN solo acepta UNA fecha por request: 4 fetchs (ayer..pasado manana) unificados
   const hoy=new Date(),df=n=>n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();
-  const rango=[df(new Date(hoy.getTime()-864e5)),df(hoy),df(new Date(hoy.getTime()+864e5)),df(new Date(hoy.getTime()+2*864e5))].join('-');
-  url='https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/scoreboard?dates='+rango+'&limit=100'}
- fetch(url).then(r=>r.json()).then(d=>{
+  url=[-1,0,1,2].map(k=>df(new Date(hoy.getTime()+k*864e5))).map(d=>'https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/scoreboard?dates='+d)}
+ Promise.all(url.map(u=>fetch(u).then(r=>r.json()).catch(()=>({events:[]})))).then(arr=>{
+  const d={events:arr.reduce((a,x)=>a.concat(x.events||[]),[])};
   const evs=d.events||[];
   evs.forEach(ev=>{
    const c=ev.competitions[0],st=c.status.type.state;
@@ -643,7 +642,7 @@ function liveMark(){
     }
    }
   });
- }).catch(e=>{if(typeof console!=='undefined')console.warn('live:',e)});
+ });
  setTimeout(liveMark,60000)}
 if(typeof window!=='undefined'&&typeof document!=='undefined'){
  setTimeout(liveMark,1500)}
