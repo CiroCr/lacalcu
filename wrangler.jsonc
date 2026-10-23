@@ -1,0 +1,9 @@
+// Config de Cloudflare: los archivos estaticos estan en la raiz del repo
+// (la pagina + el demo-live.json). Sin build: se publican tal cual.
+{
+  "name": "lacalcu",
+  "compatibility_date": "2026-10-23",
+  "assets": {
+    "directory": "./"
+  }
+}
