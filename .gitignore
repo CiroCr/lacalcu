@@ -11,3 +11,11 @@ desktop.ini
 # Cache de Python
 __pycache__/
 *.pyc
+
+# Publicacion (Cloudflare/GitHub Pages): al repo publico solo va la pagina.
+# Esto es desarrollo interno o regenerable:
+tests/
+datos/
+investigacion/
+HANDOFF.md
+PROMPT-AUDITORIA-CLAUDE.md
